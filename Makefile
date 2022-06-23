@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/16 23:28:13 by alida-si         ###   ########.fr        #
+#    Updated: 2022/06/23 21:17:37 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBFT = libft.a
 LIBFT_DIR = ./libft/
 HEADER = -I includes -I $(LIBFT_DIR)includes
 LIB_FLAGS = -L $(LIBFT_DIR) -lft
+READLINE_FLAG = -lreadline
 
 # COMPILATION #
 
@@ -66,7 +67,7 @@ $(NAME): $(LIBFT) $(OBJS)
 		@echo "\n$(CYAN)----------------------------------------"
 		@echo "------------ MAKE MINISHELL ------------"
 		@echo "----------------------------------------\n$(DEFAULT)"
-		@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) $(HEADER) -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) $(READLINE_FLAG) $(HEADER) -o $(NAME)
 
 $(OBJS): | $(OBJ_DIR)
 
@@ -102,7 +103,7 @@ normi:
 		@echo "\n$(YELLOW)----------------------------------------"
 		@echo "-------------- NORMINETTE -------------"
 		@echo "----------------------------------------\n$(DEFAULT)"
-		@norminette includes libft/includes libft/src 
+		@norminette includes libft/includes libft/src
 
 debug: CFLAGS+=-g
 debug: fclean
