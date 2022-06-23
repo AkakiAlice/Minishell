@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:45:04 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/23 21:08:02 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:41:59 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/includes/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #endif
