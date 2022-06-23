@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 19:35:46 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/19 08:48:52 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/22 08:18:30 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+void	ft_matrix_free(char **split);
 int		ft_atoi(const char *str);
 void	ft_bzero(void *str, size_t n);
 void	*ft_calloc(size_t count, size_t size);
