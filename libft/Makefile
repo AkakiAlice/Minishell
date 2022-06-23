@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/30 19:35:16 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/19 09:39:48 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/22 08:18:50 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ RM = rm -f
 SRC_DIR = ./src/
 
 VPATH = $(SRC_DIR)\
+		$(SRC_DIR)free\
 		$(SRC_DIR)gnl\
 		$(SRC_DIR)is\
 		$(SRC_DIR)lst\
@@ -39,7 +40,8 @@ VPATH = $(SRC_DIR)\
 
 # FILES #
 
-FILES = ft_isalnum.c \
+FILES = ft_matrix_free.c \
+		ft_isalnum.c \
 		ft_isalpha.c \
 		ft_isascii.c \
 		ft_isdigit.c \
@@ -124,4 +126,35 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# **************************************************************************** #
+
+## TESTS ##
+
+TEST_DIR = ./tests/
+TEST_FLAG = -lcriterion
+
+# main file cannot be included in the tests
+TEST_FILES = $(wildcard $(TEST_DIR)str/*.c)
+TEST_FILES += $(wildcard ./src/gnl/*.c)
+TEST_FILES += $(wildcard ./src/is/*.c)
+TEST_FILES += $(wildcard ./src/lst/*.c)
+TEST_FILES += $(wildcard ./src/mem/*.c)
+TEST_FILES += $(wildcard ./src/printf/*.c)
+TEST_FILES += $(wildcard ./src/put/*.c)
+TEST_FILES += $(wildcard ./src/str/*.c)
+TEST_FILES += $(wildcard ./src/to/*.c)
+
+TEST_OBJS = $(TEST_FILES:.c=.o)
+
+test:
+	@mkdir -p $(TEST_DIR)bin/
+	@gcc $(CFLAGS) $(TEST_FILES) $(HEADER) -o $(TEST_DIR)bin/test $(TEST_FLAG)
+
+
+run_tests: test
+	$(TEST_DIR)bin/test
+
+run_tests_v: test
+	$(TEST_DIR)bin/test --verbose
+
+.PHONY: all clean fclean re run_tests run_tests_v
