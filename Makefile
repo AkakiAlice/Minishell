@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/16 23:28:13 by alida-si         ###   ########.fr        #
+#    Updated: 2022/06/21 08:48:55 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,11 +42,13 @@ RM = rm -rf
 
 SRC_DIR = ./src/
 
-VPATH = $(SRC_DIR)
+VPATH = $(SRC_DIR)\
+		$(SRC_DIR)system
 
 # FILES #
 
-FILES = main.c
+FILES = main.c\
+		env.c
 
 # COMPILED_SOURCES #
 
@@ -78,12 +80,11 @@ $(LIBFT):
 
 clean:
 		@make clean --no-print-directory -C $(LIBFT_DIR)
-		@$(RM) $(OBJ_DIR)
+		@$(RM) $(OBJ_DIR) $(TEST_OBJS) *.gc*
 
 fclean: clean
 		@make fclean --no-print-directory -C $(LIBFT_DIR)
-		@$(RM) $(NAME)
-		@$(RM) valgrind-out.txt
+		@$(RM) $(NAME) $(TEST_DIR)bin/ valgrind-out.txt
 		@echo "\n$(MAGENTA)----------------------------------------"
 		@echo "------------- CLEANING DONE ------------"
 		@echo "----------------------------------------\n$(DEFAULT)"
@@ -96,16 +97,33 @@ release: CFLAGS+=-g -fsanitize=address
 release: fclean
 release: $(NAME)
 
-# NORMINETTE #
-
-normi:
-		@echo "\n$(YELLOW)----------------------------------------"
-		@echo "-------------- NORMINETTE -------------"
-		@echo "----------------------------------------\n$(DEFAULT)"
-		@norminette includes libft/includes libft/src 
-
 debug: CFLAGS+=-g
 debug: fclean
 debug: $(NAME)
 
-.PHONY: all clean fclean re release val full-val normi
+# **************************************************************************** #
+
+## TESTS ##
+
+TEST_DIR = ./tests/
+TEST_FLAG = -lcriterion
+
+# main file cannot be included in the tests
+TEST_FILES = $(wildcard $(TEST_DIR)*.c)
+TEST_FILES += $(wildcard ./src/system/*.c)
+
+TEST_OBJS = $(TEST_FILES:.c=.o)
+
+test: CFLAGS+=-fsanitize=address
+test:
+	@mkdir -p $(TEST_DIR)bin/
+	@gcc $(CFLAGS) $(TEST_FILES) $(HEADER) $(LIB_FLAGS) -o $(TEST_DIR)bin/test $(TEST_FLAG)
+
+
+run_tests: fclean $(LIBFT) test
+	$(TEST_DIR)bin/test
+
+run_tests_v: fclean $(LIBFT) test
+	$(TEST_DIR)bin/test --verbose
+
+.PHONY: all clean fclean re release val full-val normi run_tests run_tests_v
