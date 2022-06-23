@@ -12,76 +12,61 @@
 
 #include "libft.h"
 
-static size_t	token_count(char const *s, char c)
+static size_t	count_words(char const *s, char c)
 {
-	size_t	i;
-	size_t	nb;
+	size_t	word_count;
+	int		skip;
 
-	i = 0;
-	nb = 0;
-	while (s[i])
+	word_count = 0;
+	skip = 1;
+	while (*s)
 	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i] != c && s[i])
+		if (*s != c && skip)
 		{
-			nb++;
-			while (s[i] != c && s[i])
-				i++;
+			skip = 0;
+			word_count++;
 		}
+		else if (*s == c)
+			skip = 1;
+		s++;
 	}
-	return (nb);
+	return (word_count);
 }
 
-static char	**free_matrix(char **matrix, size_t i)
+static void	make_words(char **words, char const *s, char c, size_t n_words)
 {
-	while ((int)i >= 0)
-	{
-		free(matrix[i]);
-		matrix[i] = NULL;
-		i--;
-	}
-	free(matrix);
-	matrix = NULL;
-	return (matrix);
-}
+	char	*ptr_c;
 
-static void	letter_aloc(char **matrix, char const *s, char c, size_t nb_token)
-{
-	size_t	len_ptr;
-	size_t	i;
-
-	i = 0;
-	while (i < nb_token)
+	while (*s && *s == c)
+		s++;
+	while (n_words--)
 	{
-		if (*s == c)
-			s++;
-		else if (*s != c)
+		ptr_c = ft_strchr(s, c);
+		if (ptr_c != NULL)
 		{
-			len_ptr = 0;
-			while (s[len_ptr] != c && s[len_ptr])
-				len_ptr++;
-			matrix[i] = ft_substr(s, 0, len_ptr);
-			if (matrix[i] == NULL)
-				free_matrix(matrix, i);
-			s = s + len_ptr;
-			i++;
+			*words = ft_substr(s, 0, ptr_c - s);
+			while (*ptr_c && *ptr_c == c)
+				ptr_c++;
+			s = ptr_c;
 		}
+		else
+			*words = ft_substr(s, 0, ft_strlen(s) + 1);
+		words++;
 	}
-	matrix[i] = NULL;
+	*words = NULL;
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**matrix;
-	size_t	nb_token;
+	char	**words;
+	size_t	num_words;
 
 	if (!s)
 		return (NULL);
-	nb_token = token_count(s, c);
-	matrix = (char **)malloc(((sizeof(char *)) * (nb_token + 1)));
-	if (!matrix)
+	num_words = count_words(s, c);
+	words = (char **)malloc(((sizeof(char *)) * (num_words + 1)));
+	if (!words)
 		return (NULL);
-	letter_aloc(matrix, s, c, nb_token);
-	return (matrix);
+	make_words(words, s, c, num_words);
+	return (words);
 }
