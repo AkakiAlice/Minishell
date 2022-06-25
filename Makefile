@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/25 15:38:29 by alida-si         ###   ########.fr        #
+#    Updated: 2022/06/25 15:43:51 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,14 +45,16 @@ SRC_DIR = ./src/
 
 VPATH = $(SRC_DIR)\
 		$(SRC_DIR)system\
-		$(SRC_DIR)utils
+		$(SRC_DIR)utils\
+		$(SRC_DIR)parser
 
 # FILES #
 
 FILES = main.c\
 		env.c\
 		get_prompt.c\
-		free_matrix.c
+		free_matrix.c\
+		tokenizer.c
 
 # COMPILED_SOURCES #
 

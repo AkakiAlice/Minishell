@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/25 15:42:33 by alida-si         ###   ########.fr       */
+/*   Created: 2022/06/25 15:42:40 by alida-si          #+#    #+#             */
+/*   Updated: 2022/06/25 15:44:19 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	tokenizer(t_data *data)
 {
-	t_data	data;
-
-	while(1)
+	int	i = 0;
+	data->splited_cmdl = ft_split2(data->cmd_line, ' ');
+	while (data->splited_cmdl[i] != NULL)
 	{
-		get_prompt(&data);
-		tokenizer(&data);
-		free(data.cmd_line);
-		free_matrix(data.splited_cmdl);
+		ft_printf("%s\n", data->splited_cmdl[i]);
+		i++;
 	}
-	return (0);
 }
