@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:45:04 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/25 00:39:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/06/25 01:05:19 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct s_data
 {
 	char	*cmd_line;
+	char	**splited_cmdl;
 }	t_data;
 
 #endif
