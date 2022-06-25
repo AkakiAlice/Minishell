@@ -6,16 +6,27 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 18:45:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/24 06:59:43 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/25 07:48:48 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: refactor
-// TODO: add comment
 // TODO: check norm
 
+/*	ENV_LST_ADD_BACK
+**	------------
+**	DESCRIPTION
+**	Add the node at the end of the circular linked list and change the env_last
+**	pointer to the last node added.
+**	PARAMETERS
+**	#1. The pointer to list (env_last);
+**	#2. The pointer to environment name (name);
+**	#3. The pointer to environment value (value);
+**	RETURN VALUES
+**	Return 0 if successful and 1 if there is memory allocation error or if there
+**	is no content in name and value
+*/
 int	env_lst_add_back(t_env **env_last, char *name, char *value)
 {
 	t_env	*new_node;
@@ -38,6 +49,16 @@ int	env_lst_add_back(t_env **env_last, char *name, char *value)
 	return (EXIT_SUCCESS);
 }
 
+/*	GET_ENV_VALUE
+**	------------
+**	DESCRIPTION
+**	Get the environment value after the equal sign.
+**	PARAMETERS
+**	#1. The pointer to environment variable (envp);
+**	#2. The pointer to environment name (env_name);
+**	RETURN VALUES
+**	Return allocated memory from environment value
+*/
 char	*get_env_value(char *envp, char *env_name)
 {
 	int		key_len;
@@ -52,6 +73,16 @@ char	*get_env_value(char *envp, char *env_name)
 	return (env_value);
 }
 
+/*	SAVE_ENV
+**	------------
+**	DESCRIPTION
+**	Save environment variables in circular linked list.
+**	PARAMETERS
+**	#1. The last node of the circular linked list (env);
+**	#2. The array of pointers to environment variables (envp);
+**	RETURN VALUES
+**	-
+*/
 void	save_env(t_env **env, char **envp)
 {
 	int		i;
