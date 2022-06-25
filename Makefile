@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/25 07:53:06 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/25 15:30:35 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ VPATH = $(SRC_DIR)\
 # FILES #
 
 FILES = main.c\
-		env.c
+		env.c\
+		get_prompt.c
 
 # COMPILED_SOURCES #
 
