@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/21 08:48:55 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/25 07:53:06 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBFT = libft.a
 LIBFT_DIR = ./libft/
 HEADER = -I includes -I $(LIBFT_DIR)includes
 LIB_FLAGS = -L $(LIBFT_DIR) -lft
+READLINE_FLAG = -lreadline
 
 # COMPILATION #
 
@@ -68,7 +69,7 @@ $(NAME): $(LIBFT) $(OBJS)
 		@echo "\n$(CYAN)----------------------------------------"
 		@echo "------------ MAKE MINISHELL ------------"
 		@echo "----------------------------------------\n$(DEFAULT)"
-		@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) $(HEADER) -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) $(READLINE_FLAG) $(HEADER) -o $(NAME)
 
 $(OBJS): | $(OBJ_DIR)
 

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/24 06:55:01 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/25 07:53:57 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -28,5 +30,6 @@ typedef struct s_env
 void	save_env(t_env **env, char **envp);
 int		env_lst_add_back(t_env **env_last, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
+
 
 #endif
