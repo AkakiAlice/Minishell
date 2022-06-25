@@ -6,13 +6,11 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 18:45:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/25 07:48:48 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/25 07:49:51 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// TODO: check norm
 
 /*	ENV_LST_ADD_BACK
 **	------------
@@ -95,7 +93,7 @@ void	save_env(t_env **env, char **envp)
 		if (split_env[0] != NULL)
 		{
 			env_lst_add_back(env, ft_strdup(split_env[0]),
-			get_env_value(envp[i], split_env[0]));
+				get_env_value(envp[i], split_env[0]));
 		}
 		ft_matrix_free(split_env);
 		i++;
