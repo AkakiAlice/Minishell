@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/25 15:30:35 by alida-si         ###   ########.fr        #
+#    Updated: 2022/06/25 15:38:29 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,13 +44,15 @@ RM = rm -rf
 SRC_DIR = ./src/
 
 VPATH = $(SRC_DIR)\
-		$(SRC_DIR)system
+		$(SRC_DIR)system\
+		$(SRC_DIR)utils
 
 # FILES #
 
 FILES = main.c\
 		env.c\
-		get_prompt.c
+		get_prompt.c\
+		free_matrix.c
 
 # COMPILED_SOURCES #
 

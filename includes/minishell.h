@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:19:57 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/25 15:25:38 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:37:36 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	save_env(t_env **env, char **envp);
 int		env_lst_add_back(t_env **env_last, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
 void	get_prompt(t_data *data);
+void	free_matrix(char **ptr);
 
 #endif
