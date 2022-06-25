@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/25 07:53:06 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/25 13:35:10 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,9 @@ release: $(NAME)
 debug: CFLAGS+=-g
 debug: fclean
 debug: $(NAME)
+
+valgrind: re
+	@valgrind --suppressions=./readline.supp --leak-check=full ./minishell
 
 # **************************************************************************** #
 
