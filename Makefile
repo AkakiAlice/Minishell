@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/25 13:35:10 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/27 07:05:42 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ VPATH = $(SRC_DIR)\
 # FILES #
 
 FILES = main.c\
-		env.c
+		env_lst.c\
+		save_env.c
 
 # COMPILED_SOURCES #
 

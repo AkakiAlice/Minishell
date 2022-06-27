@@ -1,51 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   save_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 18:45:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/25 07:49:51 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/27 07:00:20 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*	ENV_LST_ADD_BACK
-**	------------
-**	DESCRIPTION
-**	Add the node at the end of the circular linked list and change the env_last
-**	pointer to the last node added.
-**	PARAMETERS
-**	#1. The pointer to list (env_last);
-**	#2. The pointer to environment name (name);
-**	#3. The pointer to environment value (value);
-**	RETURN VALUES
-**	Return 0 if successful and 1 if there is memory allocation error or if there
-**	is no content in name and value
-*/
-int	env_lst_add_back(t_env **env_last, char *name, char *value)
-{
-	t_env	*new_node;
-
-	if (!name || !value)
-		return (EXIT_FAILURE);
-	new_node = (t_env *)malloc(sizeof(t_env));
-	if (!new_node)
-		return (EXIT_FAILURE);
-	new_node->name = name;
-	new_node->value = value;
-	if ((*env_last) == NULL)
-		new_node->next = new_node;
-	else
-	{
-		new_node->next = (*env_last)->next;
-		(*env_last)->next = new_node;
-	}
-	*env_last = new_node;
-	return (EXIT_SUCCESS);
-}
 
 /*	GET_ENV_VALUE
 **	------------
