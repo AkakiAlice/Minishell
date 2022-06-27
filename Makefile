@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/27 13:57:11 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/27 13:57:50 by alida-si         ###   ########.fr        #
+#    Updated: 2022/06/27 14:00:55 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ VPATH = $(SRC_DIR)\
 # FILES #
 
 FILES = main.c\
-		env.c\
 		get_prompt.c\
 		tokenizer.c\
 		env_lst.c\
