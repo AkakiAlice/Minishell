@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/27 07:05:42 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/27 07:49:22 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ VPATH = $(SRC_DIR)\
 
 FILES = main.c\
 		env_lst.c\
-		save_env.c
+		save_env.c\
+		lexer.c
 
 # COMPILED_SOURCES #
 
@@ -106,6 +107,11 @@ debug: $(NAME)
 valgrind: re
 	@valgrind --suppressions=./readline.supp --leak-check=full ./minishell
 
+# NORMINETTE #
+norm:
+	norminette $(find -name '*.c' -not -path '*/tests/*')
+	norminette $(find -name '*.h' -not -path '*/tests/*')
+
 # **************************************************************************** #
 
 ## TESTS ##
@@ -116,6 +122,7 @@ TEST_FLAG = -lcriterion
 # main file cannot be included in the tests
 TEST_FILES = $(wildcard $(TEST_DIR)*.c)
 TEST_FILES += $(wildcard ./src/system/*.c)
+TEST_FILES += ./src/lexer.c
 
 TEST_OBJS = $(TEST_FILES:.c=.o)
 
@@ -131,4 +138,4 @@ run_tests: fclean $(LIBFT) test
 run_tests_v: fclean $(LIBFT) test
 	$(TEST_DIR)bin/test --verbose
 
-.PHONY: all clean fclean re release val full-val normi run_tests run_tests_v
+.PHONY: all clean fclean re release valgrind norm run_tests run_tests_v
