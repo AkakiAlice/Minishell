@@ -5,10 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/25 15:55:19 by alida-si         ###   ########.fr        #
+#    Created: 2022/06/27 13:57:11 by alida-si          #+#    #+#              #
+#    Updated: 2022/06/27 13:57:50 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
 
 ## COLORS ##
 
@@ -52,7 +54,9 @@ VPATH = $(SRC_DIR)\
 FILES = main.c\
 		env.c\
 		get_prompt.c\
-		tokenizer.c
+		tokenizer.c\
+		env_lst.c\
+		save_env.c
 
 # COMPILED_SOURCES #
 
@@ -104,6 +108,9 @@ release: $(NAME)
 debug: CFLAGS+=-g
 debug: fclean
 debug: $(NAME)
+
+valgrind: re
+	@valgrind --suppressions=./readline.supp --leak-check=full ./minishell
 
 # **************************************************************************** #
 
