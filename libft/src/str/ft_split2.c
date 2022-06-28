@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 23:26:26 by alida-si          #+#    #+#             */
-/*   Updated: 2022/04/27 19:27:16 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/06/28 22:29:50 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ static size_t	token_count(char const *s, char c)
 				while (s[i] != '\'')
 					i++;
 			}
+			else if (s[i] == '\"')
+			{
+				i++;
+				while (s[i] != '\"')
+					i++;
+			}
 			nb++;
 			while (s[i] != c && s[i])
 				i++;
@@ -52,16 +58,16 @@ static char	**free_matrix(char **matrix, size_t i)
 	return (matrix);
 }
 
-static char const	*quote_alloc(char const *s, char **matrix, char c, int i)
+static char const	*quote_alloc(char const *s, char **matrix, char c, int i, char quote)
 {
 	int	len_ptr;
 
 	len_ptr = 0;
-	s++;
-	while (s[len_ptr] != '\'')
+	while (s[len_ptr + 1] != quote)
 		len_ptr++;
-	matrix[i] = ft_substr(s, 0, len_ptr);
+	matrix[i] = ft_substr(s, 0, (len_ptr + 2));
 	s = s + len_ptr;
+	s++;
 	s++;
 	while (*s == c)
 		s++;
@@ -79,7 +85,7 @@ static void	letter_aloc(char **matrix, char const *s, char c, size_t nb_token)
 	{
 		if (*s == c)
 			s++;
-		if (*s != c && *s != '\'')
+		if (*s != c && *s != '\'' && *s != '\"')
 		{
 			len_ptr = 0;
 			while (s[len_ptr] != c && s[len_ptr])
@@ -90,7 +96,9 @@ static void	letter_aloc(char **matrix, char const *s, char c, size_t nb_token)
 			s = s + len_ptr;
 		}
 		if (*s == '\'')
-			s = quote_alloc(s, matrix, c, i);
+			s = quote_alloc(s, matrix, c, i, '\'');
+		else if (*s == '\"')
+			s = quote_alloc(s, matrix, c, i, '\"');
 		i++;
 	}
 	matrix[i] = NULL;
