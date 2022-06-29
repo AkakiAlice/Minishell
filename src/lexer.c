@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/27 07:52:12 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/29 07:34:10 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,52 @@ void	free_token_lst(t_token **last_token)
 	*last_token = NULL;
 }
 
+/*	FT_STRNCMP_EQ
+**	------------
+**	DESCRIPTION
+**	Compares s1 and s2 not more than n characters.
+**	PARAMETERS
+**	#1. The string (s1);
+**	#2. The string (s2);
+**	#3. The amount of character will be compared (n);
+**	RETURN VALUES
+**	Return 1 if strings are equal and 0 if it's different.
+*/
+int	ft_strncmp_eq(char *s1, char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (i < n && (*(s1 + i) || *(s2 + i)))
+	{
+		if (*(s1 + i) != *(s2 + i))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	check_cmd_char(t_token **last_token, char *cmd)
+{
+	if (ft_strncmp_eq(cmd, "|", 1))
+		token_lst_add_back(last_token, PIPE);
+}
 
 void	lexer(t_token **last_token, char **cmd)
 {
 	int	i;
+	int	cmd_len;
 
 	i = 0;
 	while (cmd[i])
 	{
-		if (ft_strchr(cmd[i], '|') != NULL)
-			token_lst_add_back(last_token, PIPE);
+		cmd_len = ft_strlen(cmd[i]);
+		if (cmd_len < 3)
+			check_cmd_char(last_token, cmd[i]);
+		else
+			token_lst_add_back(last_token, -1);
 		i++;
 	}
 	return ;
