@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/29 07:20:52 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/29 07:39:55 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # define FAILURE 1
 
 # define PIPE 0
+# define INPUT 1
+# define HEREDOC 2
+# define TRUNC 3
+# define APPEND 4
+# define WORD 5
 
 typedef struct s_env
 {

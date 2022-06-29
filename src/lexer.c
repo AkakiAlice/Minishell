@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/29 07:34:10 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/06/29 07:53:05 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,19 @@ int	ft_strncmp_eq(char *s1, char *s2, size_t n)
 	return (1);
 }
 
-void	check_cmd_char(t_token **last_token, char *cmd)
+int	check_cmd_char(t_token **last_token, char *cmd)
 {
 	if (ft_strncmp_eq(cmd, "|", 1))
-		token_lst_add_back(last_token, PIPE);
+		return (token_lst_add_back(last_token, PIPE));
+	if (ft_strncmp_eq(cmd, "<<", 2))
+		return (token_lst_add_back(last_token, HEREDOC));
+	if (ft_strncmp_eq(cmd, "<", 1))
+		return (token_lst_add_back(last_token, INPUT));
+	if (ft_strncmp_eq(cmd, ">>", 2))
+		return (token_lst_add_back(last_token, APPEND));
+	if (ft_strncmp_eq(cmd, ">", 1))
+		return (token_lst_add_back(last_token, TRUNC));
+	return (token_lst_add_back(last_token, WORD));
 }
 
 void	lexer(t_token **last_token, char **cmd)
@@ -114,7 +123,7 @@ void	lexer(t_token **last_token, char **cmd)
 		if (cmd_len < 3)
 			check_cmd_char(last_token, cmd[i]);
 		else
-			token_lst_add_back(last_token, -1);
+			token_lst_add_back(last_token, WORD);
 		i++;
 	}
 	return ;
