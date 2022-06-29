@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/29 08:03:44 by pmitsuko         ###   ########.fr       */
+/*   Created: 2022/06/29 08:13:46 by pmitsuko          #+#    #+#             */
+/*   Updated: 2022/06/29 08:16:51 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 **	last_token pointer to the last node added.
 **	PARAMETERS
 **	#1. The pointer to list (last_token);
-**	#3. The pointer to token value (value);
+**	#2. The pointer to token value (value);
 **	RETURN VALUES
 **	Return 0 if successful and 1 if there is memory allocation error
 */
@@ -67,37 +67,4 @@ void	free_token_lst(t_token **last_token)
 	}
 	free((*last_token));
 	*last_token = NULL;
-}
-
-int	check_cmd_char(t_token **last_token, char *cmd)
-{
-	if (ft_strncmp_eq(cmd, "|", 1))
-		return (token_lst_add_back(last_token, PIPE));
-	if (ft_strncmp_eq(cmd, "<<", 2))
-		return (token_lst_add_back(last_token, HEREDOC));
-	if (ft_strncmp_eq(cmd, "<", 1))
-		return (token_lst_add_back(last_token, INPUT));
-	if (ft_strncmp_eq(cmd, ">>", 2))
-		return (token_lst_add_back(last_token, APPEND));
-	if (ft_strncmp_eq(cmd, ">", 1))
-		return (token_lst_add_back(last_token, TRUNC));
-	return (token_lst_add_back(last_token, WORD));
-}
-
-void	lexer(t_token **last_token, char **cmd)
-{
-	int	i;
-	int	cmd_len;
-
-	i = 0;
-	while (cmd[i])
-	{
-		cmd_len = ft_strlen(cmd[i]);
-		if (cmd_len < 3)
-			check_cmd_char(last_token, cmd[i]);
-		else
-			token_lst_add_back(last_token, WORD);
-		i++;
-	}
-	return ;
 }

@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/29 08:11:13 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/29 08:12:57 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,7 +125,7 @@ TEST_FLAG = -lcriterion
 # main file cannot be included in the tests
 TEST_FILES = $(wildcard $(TEST_DIR)*.c)
 TEST_FILES += $(wildcard ./src/system/*.c)
-TEST_FILES += ./src/lexer.c
+TEST_FILES += $(wildcard ./src/parser/*.c)
 
 TEST_OBJS = $(TEST_FILES:.c=.o)
 
