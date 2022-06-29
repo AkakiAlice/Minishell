@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/30 19:35:16 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/22 08:18:50 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/29 08:04:49 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ FILES = ft_matrix_free.c \
 		ft_memchr.c \
 		ft_memcmp.c \
 		ft_strncmp.c \
+		ft_strncmp_eq.c \
 		ft_strnstr.c \
 		ft_strchr.c \
 		ft_strrchr.c \
