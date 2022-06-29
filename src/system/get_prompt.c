@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 18:12:09 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/27 14:41:08 by alida-si         ###   ########.fr       */
+/*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
+/*   Updated: 2022/06/27 14:52:16 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strcat(char *s1, char *s2)
+void	get_prompt(t_data *data)
 {
-	size_t	i;
-	size_t	len;
-	char	*result;
+	char	*cwd;
+	char	aux[1024];
 
-	len = (ft_strlen(s1) + ft_strlen(s2));
-	result = (char *)malloc(sizeof(char *) * (len + 1));
-	i = 0;
-	while(*s1)
+	getcwd(aux, sizeof(aux));
+	cwd = ft_strcat(aux, "$ ");
+	data->cmd_line = readline(cwd);
+	if (*data->cmd_line)
 	{
-		result[i] = *s1;
-		i++;
-		s1++;
+		add_history(data->cmd_line);
+		free(cwd);
 	}
-	while(*s2)
+	else
 	{
-		result[i] = *s2;
-		s2++;
-		i++;
+		free(cwd);
+		free(data->cmd_line);
+		exit(0);
 	}
-	result[i] = '\0';
-	return (result);
 }

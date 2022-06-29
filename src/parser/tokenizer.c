@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 18:12:09 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/27 14:41:08 by alida-si         ###   ########.fr       */
+/*   Created: 2022/06/25 15:42:40 by alida-si          #+#    #+#             */
+/*   Updated: 2022/06/27 18:28:40 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strcat(char *s1, char *s2)
+void	tokenizer(t_data *data)
 {
-	size_t	i;
-	size_t	len;
-	char	*result;
-
-	len = (ft_strlen(s1) + ft_strlen(s2));
-	result = (char *)malloc(sizeof(char *) * (len + 1));
-	i = 0;
-	while(*s1)
+	int	i = 0;
+	data->splited_cmdl = ft_split2(data->cmd_line, ' ');
+	while (data->splited_cmdl[i] != NULL)
 	{
-		result[i] = *s1;
-		i++;
-		s1++;
-	}
-	while(*s2)
-	{
-		result[i] = *s2;
-		s2++;
+		ft_printf("%s\n", data->splited_cmdl[i]);
 		i++;
 	}
-	result[i] = '\0';
-	return (result);
 }

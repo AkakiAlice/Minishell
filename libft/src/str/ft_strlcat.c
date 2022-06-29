@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 14:29:52 by alida-si          #+#    #+#             */
-/*   Updated: 2021/08/05 14:29:56 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:50:51 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 			j++;
 			i++;
 		}
-		dst[j] = 0;
+		dst[j] = '\0';
 	}
 	if (dstlen >= dstsize)
 		dstlen = dstsize;

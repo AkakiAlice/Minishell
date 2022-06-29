@@ -6,34 +6,22 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/24 00:21:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:54:19 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_prompt(void)
-{
-	char	*cmd_line;
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	ft_strlcat(cwd, "$ ", (ft_strlen(cwd) + 3));
-	while (1)
-	{
-		cmd_line = readline(cwd);
-		if (*cmd_line)
-		{
-			add_history(cmd_line);
-			free(cmd_line);
-		}
-		else
-			break ;
-	}
-}
-
 int	main(void)
 {
-	get_prompt();
+	t_data	data;
+
+	while(1)
+	{
+		get_prompt(&data);
+		tokenizer(&data);
+		free(data.cmd_line);
+		ft_matrix_free(data.splited_cmdl);
+	}
 	return (0);
 }

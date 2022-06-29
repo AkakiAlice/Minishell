@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/27 07:49:22 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/29 08:08:47 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,14 @@ RM = rm -rf
 SRC_DIR = ./src/
 
 VPATH = $(SRC_DIR)\
-		$(SRC_DIR)system
+		$(SRC_DIR)system\
+		$(SRC_DIR)parser
 
 # FILES #
 
 FILES = main.c\
+		get_prompt.c\
+		tokenizer.c\
 		env_lst.c\
 		save_env.c\
 		lexer.c
