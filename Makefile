@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/29 08:08:47 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/06/29 08:11:13 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -132,7 +132,7 @@ TEST_OBJS = $(TEST_FILES:.c=.o)
 test: CFLAGS+=-fsanitize=address
 test:
 	@mkdir -p $(TEST_DIR)bin/
-	@gcc $(CFLAGS) $(TEST_FILES) $(HEADER) $(LIB_FLAGS) -o $(TEST_DIR)bin/test $(TEST_FLAG)
+	@gcc $(CFLAGS) $(TEST_FILES) $(HEADER) $(LIB_FLAGS) $(READLINE_FLAG) -o $(TEST_DIR)bin/test $(TEST_FLAG)
 
 
 run_tests: fclean $(LIBFT) test
