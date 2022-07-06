@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/25 15:54:19 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/06 00:19:06 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(void)
 {
 	t_data	data;
 
-	while(1)
+	while (1)
 	{
 		get_prompt(&data);
 		tokenizer(&data);
