@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/29 08:09:30 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:47:46 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -51,6 +53,8 @@ int		env_lst_add_back(t_env **last_env, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
 void	get_prompt(t_data *data);
 void	tokenizer(t_data *data);
+void	exec_cmd(t_data *data);
+void	fork_it(t_data *data);
 void	free_env_lst(t_env **last_env);
 
 void	lexer(t_token **last_token, char **cmd);

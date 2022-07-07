@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 15:42:40 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/07 01:06:38 by alida-si         ###   ########.fr       */
+/*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
+/*   Updated: 2022/07/07 01:47:37 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	TOKENIZER
-**	------------
-**	DESCRIPTION
-**	Create tokens from the command line using space as a separator.
-**	PARAMETERS
-**	#1. The pointer to structure that contains the command line (data);
-**	RETURN VALUES
-**	-
-*/
-void	tokenizer(t_data *data)
+void	exec_cmd(t_data *data)
 {
-	/*int	i;
+	char	*path="/bin/ls";
 
-	i = 0;*/
-	data->splited_cmdl = ft_split2(data->cmd_line, ' ');
-	/*while (data->splited_cmdl[i] != NULL)
-	{
-		ft_printf("%s\n", data->splited_cmdl[i]);
-		i++;
-	}*/
+	execve(path, data->splited_cmdl, NULL);
+}
+
+void	fork_it(t_data *data)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+		exec_cmd(data);
+	waitpid(0, NULL, 0);
 }

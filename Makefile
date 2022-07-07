@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/06 00:25:24 by alida-si         ###   ########.fr        #
+#    Updated: 2022/07/06 23:53:30 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC_DIR = ./src/
 
 VPATH = $(SRC_DIR)\
 		$(SRC_DIR)system\
+		$(SRC_DIR)exec\
 		$(SRC_DIR)parser
 
 # FILES #
@@ -55,6 +56,7 @@ FILES = main.c\
 		env_lst.c\
 		save_env.c\
 		token_lst.c\
+		exec_cmd.c\
 		lexer.c
 
 # COMPILED_SOURCES #
