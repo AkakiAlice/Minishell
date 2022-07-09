@@ -40,7 +40,7 @@ Test(var, validate_var_name_start)
 
 	result = save_var(&last_var, cmd);
 	cr_expect_eq(result, FAILURE,
-	"Ensure dont save variable name and return 1 if failure");
+	"Ensure dont save variable name with - character and return 1 if failure");
 }
 
 Test(var, validate_var_name_middle)
@@ -51,7 +51,7 @@ Test(var, validate_var_name_middle)
 
 	result = save_var(&last_var, cmd);
 	cr_expect_eq(result, FAILURE,
-	"Ensure dont save variable name and return 1 if failure");
+	"Ensure dont save variable name with * character and return 1 if failure");
 }
 
 Test(var, validate_var_name_last)
@@ -62,7 +62,7 @@ Test(var, validate_var_name_last)
 
 	result = save_var(&last_var, cmd);
 	cr_expect_eq(result, FAILURE,
-	"Ensure dont save variable name and return 1 if failure");
+	"Ensure dont save variable name with ! character and return 1 if failure");
 }
 
 Test(var, validate_var_name_first_num)
@@ -73,5 +73,49 @@ Test(var, validate_var_name_first_num)
 
 	result = save_var(&last_var, cmd);
 	cr_expect_eq(result, FAILURE,
-	"Ensure dont save variable name and return 1 if failure");
+	"Ensure dont save variable name with the first char being number and return 1 if failure");
+}
+
+Test(var, not_equal)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_eq(result, FAILURE,
+	"Ensure dont save variable without equal sign and return 1 if failure");
+}
+
+Test(var, space_between_equal)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL = /bin/bash"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_eq(result, FAILURE,
+	"Ensure dont save variable with space between equal sign and return 1 if failure");
+}
+
+Test(var, space_before_equal)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL =/bin/bash"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_eq(result, FAILURE,
+	"Ensure dont save variable with space before equal sign and return 1 if failure");
+}
+
+Test(var, space_after_equal)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL= /bin/bash"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_eq(result, FAILURE,
+	"Ensure dont save variable with space after equal sign and return 1 if failure");
 }
