@@ -202,3 +202,42 @@ Test(var, space_after_var)
 	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
 	free_env_lst(&last_var);
 }
+
+Test(var, var_empty)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL="};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "",
+		"Ensure save variable value as empty");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
+}
+
+Test(var, var_empty_with_spaces)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL=     "};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "",
+		"Ensure save variable value as empty");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
+}
+
+Test(var, var_multiple_equal_sign)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL=="};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "=",
+		"Ensure save variable value as equal");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
+}
