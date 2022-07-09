@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/09 08:39:53 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/09 10:57:36 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,34 @@ char	*get_var_value(char *cmd, char *var_name)
 	return (var_value);
 }
 
+/*	VALIDATE_VAR_NAME
+**	------------
+**	DESCRIPTION
+**	Variable name validation. The name of variable can contain only letters
+**	(a to z or A to Z), numbers (0 to 9) or the underscore character (_). The
+**	first character cannot be a number.
+**	PARAMETERS
+**	#1. The pointers to variable name (var_name);
+**	RETURN VALUES
+**	Return 0 if variable name contains only allowed characters and 0 if it's
+** not.
+*/
+int	validate_var_name(char *var_name)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(var_name[i]))
+		return (FAILURE);
+	while (var_name[i])
+	{
+		if (!ft_isalnum(var_name[i]) && var_name[i] != '_')
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 /*	SAVE_VAR
 **	------------
 **	DESCRIPTION
@@ -46,16 +74,21 @@ char	*get_var_value(char *cmd, char *var_name)
 **	RETURN VALUES
 **	-
 */
-void	save_var(t_env **last_var, char *cmd)
+int	save_var(t_env **last_var, char *cmd)
 {
 	char	**split_cmd;
 
 	split_cmd = ft_split(cmd, '=');
 	if (split_cmd != NULL && split_cmd[0] != NULL)
 	{
+		if (validate_var_name(split_cmd[0]) == FAILURE)
+		{
+			ft_matrix_free(split_cmd);
+			return (FAILURE);
+		}
 		env_lst_add_back(last_var, ft_strdup(split_cmd[0]),
 			get_var_value(cmd, split_cmd[0]));
 	}
 	ft_matrix_free(split_cmd);
-	return ;
+	return (SUCCESS);
 }
