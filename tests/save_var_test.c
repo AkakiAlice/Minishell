@@ -119,3 +119,25 @@ Test(var, space_after_equal)
 	cr_expect_eq(result, FAILURE,
 	"Ensure dont save variable with space after equal sign and return 1 if failure");
 }
+
+Test(var, word_before_var)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"ls  MINISHELL=/bin/bash"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_eq(result, FAILURE,
+	"Ensure dont save variable with word before variable declaration and return 1 if failure");
+}
+
+Test(var, word_after_var)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL=/bin/bash  ls"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_eq(result, FAILURE,
+	"Ensure dont save variable with word after variable declaration and return 1 if failure");
+}
