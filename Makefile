@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/06 00:25:24 by alida-si         ###   ########.fr        #
+#    Updated: 2022/07/09 08:28:16 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,6 +127,7 @@ TEST_FLAG = -lcriterion
 TEST_FILES = $(wildcard $(TEST_DIR)*.c)
 TEST_FILES += $(wildcard ./src/system/*.c)
 TEST_FILES += $(wildcard ./src/parser/*.c)
+TEST_FILES += ./src/save_var.c
 
 TEST_OBJS = $(TEST_FILES:.c=.o)
 
