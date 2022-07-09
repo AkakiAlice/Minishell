@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/09 17:04:50 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/09 19:49:55 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,6 @@ int	is_variable(char *cmd)
 	return (SUCCESS);
 }
 
-// TODO: criar uma função que verifica se a string tem espaço
-// TODO: criar uma função que remove o espaço do começo e do final da linha
-
 /*	VALIDATE_VAR_VALUE
 **	------------
 **	DESCRIPTION
@@ -100,6 +97,32 @@ int	validate_var_value(char *var_value)
 	return (FAILURE);
 }
 
+/*	REMOVE_SPACES_AROUND_STR
+**	------------
+**	DESCRIPTION
+**	The space characters that are at the beginning and end of the string are
+**	removed.
+**	PARAMETERS
+**	#1. The string (str);
+**	RETURN VALUES
+**	Return allocated memory from new string
+*/
+char	*remove_spaces_around_str(char *str)
+{
+	char	*new_str;
+	int		str_len;
+
+	if (!str)
+		return (NULL);
+	while(*str == ' ')
+		str++;
+	str_len = ft_strlen(str) - 1;
+	while(str[str_len] == ' ')
+		str_len--;
+	new_str = ft_substr(str, 0, str_len + 1);
+	return new_str;
+}
+
 /*	SAVE_VAR
 **	------------
 **	DESCRIPTION
@@ -114,16 +137,21 @@ int	save_var(t_env **last_var, char *cmd)
 {
 	char	**split_cmd;
 	char	*var_value;
+	char	*new_cmd;
 
 	if (is_variable(cmd) == FAILURE)
 		return (FAILURE);
-	split_cmd = ft_split(cmd, '=');
+	new_cmd = remove_spaces_around_str(cmd);
+	if (new_cmd == NULL)
+		return (FAILURE);
+	split_cmd = ft_split(new_cmd, '=');
 	if (split_cmd != NULL && split_cmd[0] != NULL)
 	{
-		var_value = get_var_value(cmd, split_cmd[0]);
+		var_value = get_var_value(new_cmd, split_cmd[0]);
 		if (validate_var_name(split_cmd[0]) == FAILURE || validate_var_value(var_value) == FAILURE)
 		{
 			free(var_value);
+			free(new_cmd);
 			ft_matrix_free(split_cmd);
 			return (FAILURE);
 		}
@@ -131,6 +159,7 @@ int	save_var(t_env **last_var, char *cmd)
 			ft_strdup(var_value));
 	}
 	free(var_value);
+	free(new_cmd);
 	ft_matrix_free(split_cmd);
 	return (SUCCESS);
 }
