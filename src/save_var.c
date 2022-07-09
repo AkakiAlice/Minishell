@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/09 10:57:36 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:36:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*get_var_value(char *cmd, char *var_name)
 **	PARAMETERS
 **	#1. The pointers to variable name (var_name);
 **	RETURN VALUES
-**	Return 0 if variable name contains only allowed characters and 0 if it's
-** not.
+**	Return 0 if variable name contains only allowed characters and 1 if it's
+**	not.
 */
 int	validate_var_name(char *var_name)
 {
@@ -64,6 +64,22 @@ int	validate_var_name(char *var_name)
 	return (SUCCESS);
 }
 
+/*	IS_VARIABLE
+**	------------
+**	DESCRIPTION
+**	Check the command line is a variable declaration.
+**	PARAMETERS
+**	#1. The pointers to command line (cmd);
+**	RETURN VALUES
+**	Return 0 if command line is variable declaration and 1 if it's not.
+*/
+int	is_variable(char *cmd)
+{
+	if (ft_strchr(cmd, '=') == NULL)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 /*	SAVE_VAR
 **	------------
 **	DESCRIPTION
@@ -78,6 +94,8 @@ int	save_var(t_env **last_var, char *cmd)
 {
 	char	**split_cmd;
 
+	if (is_variable(cmd) == FAILURE)
+		return (FAILURE);
 	split_cmd = ft_split(cmd, '=');
 	if (split_cmd != NULL && split_cmd[0] != NULL)
 	{
