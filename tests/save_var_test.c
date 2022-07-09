@@ -76,7 +76,7 @@ Test(var, validate_var_name_first_num)
 	"Ensure dont save variable name with the first char being number and return 1 if failure");
 }
 
-Test(var, not_equal)
+Test(var, not_equal_sign)
 {
 	t_env	*last_var = NULL;
 	char	*cmd = {"MINISHELL"};
@@ -140,4 +140,65 @@ Test(var, word_after_var)
 	result = save_var(&last_var, cmd);
 	cr_expect_eq(result, FAILURE,
 	"Ensure dont save variable with word after variable declaration and return 1 if failure");
+}
+
+Test(remove_spaces_around_str, ptr_null)
+{
+	char	*str = NULL;
+	char	*new_str;
+
+	new_str = remove_spaces_around_str(str);
+	cr_expect_null(new_str, "Ensure return null if pointer string is null");
+	if (new_str != NULL)
+		free(new_str);
+}
+
+Test(remove_spaces_around_str, spaces_around_str)
+{
+	char	*str = {"       MINISHELL=/bin/bash   "};
+	char	*new_str;
+
+	new_str = remove_spaces_around_str(str);
+	cr_expect_str_eq(new_str, "MINISHELL=/bin/bash",
+		"Ensure return string without spaces around word");
+	if (new_str != NULL)
+		free(new_str);
+}
+
+Test(remove_spaces_around_str, spaces_middle_str)
+{
+	char	*str = {"       MINISHELL='/bin  /bash'   "};
+	char	*new_str;
+
+	new_str = remove_spaces_around_str(str);
+	cr_expect_str_eq(new_str, "MINISHELL='/bin  /bash'",
+		"Ensure return string without spaces around word and not space inside the word");
+	if (new_str != NULL)
+		free(new_str);
+}
+
+Test(var, space_before_var)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"       MINISHELL=/bin/bash"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->name, "MINISHELL",
+		"Ensure save variable name without space");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
+}
+
+Test(var, space_after_var)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL=/bin/bash      "};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "/bin/bash",
+		"Ensure save variable value without space");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
 }
