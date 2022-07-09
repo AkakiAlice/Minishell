@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/09 16:36:14 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:04:50 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,26 @@ int	is_variable(char *cmd)
 	return (SUCCESS);
 }
 
+// TODO: criar uma função que verifica se a string tem espaço
+// TODO: criar uma função que remove o espaço do começo e do final da linha
+
+/*	VALIDATE_VAR_VALUE
+**	------------
+**	DESCRIPTION
+**	Variable value validation. The value cannot contain space char ( ).
+**	PARAMETERS
+**	#1. The pointers to variable value (var_value);
+**	RETURN VALUES
+**	Return 0 if variable value contains only allowed characters and 1 if it's
+**	not.
+*/
+int	validate_var_value(char *var_value)
+{
+	if (ft_strchr(var_value, ' ') == NULL)
+		return (SUCCESS);
+	return (FAILURE);
+}
+
 /*	SAVE_VAR
 **	------------
 **	DESCRIPTION
@@ -93,20 +113,24 @@ int	is_variable(char *cmd)
 int	save_var(t_env **last_var, char *cmd)
 {
 	char	**split_cmd;
+	char	*var_value;
 
 	if (is_variable(cmd) == FAILURE)
 		return (FAILURE);
 	split_cmd = ft_split(cmd, '=');
 	if (split_cmd != NULL && split_cmd[0] != NULL)
 	{
-		if (validate_var_name(split_cmd[0]) == FAILURE)
+		var_value = get_var_value(cmd, split_cmd[0]);
+		if (validate_var_name(split_cmd[0]) == FAILURE || validate_var_value(var_value) == FAILURE)
 		{
+			free(var_value);
 			ft_matrix_free(split_cmd);
 			return (FAILURE);
 		}
 		env_lst_add_back(last_var, ft_strdup(split_cmd[0]),
-			get_var_value(cmd, split_cmd[0]));
+			ft_strdup(var_value));
 	}
+	free(var_value);
 	ft_matrix_free(split_cmd);
 	return (SUCCESS);
 }
