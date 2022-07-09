@@ -21,6 +21,17 @@ Test(var, save_var_value)
 	free_env_lst(&last_var);
 }
 
+Test(var, save_var_multi_value)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINI_SHELL=/bin/bash:/bin/sh"};
+
+	save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "/bin/bash:/bin/sh",
+		"Ensure save multiple variable value");
+	free_env_lst(&last_var);
+}
+
 Test(var, validate_var_name_start)
 {
 	t_env	*last_var = NULL;
