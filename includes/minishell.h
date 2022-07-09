@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/29 08:09:30 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/09 08:27:46 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ void	free_env_lst(t_env **last_env);
 void	lexer(t_token **last_token, char **cmd);
 int		token_lst_add_back(t_token **last_token, int value);
 void	free_token_lst(t_token **last_token);
+
+void	save_var(t_env **last_var, char *cmd);
 
 #endif
