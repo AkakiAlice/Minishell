@@ -241,3 +241,33 @@ Test(var, var_multiple_equal_sign)
 	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
 	free_env_lst(&last_var);
 }
+
+Test(is_quote, not_signal)
+{
+	char	*cmd = {"MINISHELL="};
+	int		result;
+
+	result = is_quote(cmd);
+	cr_expect_eq(result, -1,
+		"Ensure returns -1 if the command not contain quotes");
+}
+
+Test(is_quote, simple_quote)
+{
+	char	*cmd = {"MINISHELL=ok'"};
+	int		result;
+
+	result = is_quote(cmd);
+	cr_expect_eq(result, S_QUOTE,
+		"Ensure returns 39 if the command contain simple quote");
+}
+
+Test(is_quote, double_quote)
+{
+	char	*cmd = {"MINISHELL=ok\""};
+	int		result;
+
+	result = is_quote(cmd);
+	cr_expect_eq(result, D_QUOTE,
+		"Ensure returns 34 if the command contain double quote");
+}
