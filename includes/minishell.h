@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/10 16:39:25 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:52:15 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int		save_var(t_env **last_var, char *cmd);
 char	*remove_spaces_around_str(char *str);
 int		validate_var_value(char *var_value);
 int		is_quote(char *str);
+int		count_char(char *str, char ch);
 
 #endif

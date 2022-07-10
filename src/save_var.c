@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/10 16:44:16 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:52:02 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,30 @@ int	is_quote(char *str)
 		str++;
 	}
 	return (-1);
+}
+
+/*	COUNT_CHAR
+**	------------
+**	DESCRIPTION
+**	Counts the number of characters (ch) that have been repeated in the string.
+**	PARAMETERS
+**	#1. The pointers (str);
+**	#1. The character (ch);
+**	RETURN VALUES
+**	Returns repeat count.
+*/
+int	count_char(char *str, char ch)
+{
+	int	count;
+
+	count = 0;
+	while (*str)
+	{
+		if (*str == ch)
+			count++;
+		str++;
+	}
+	return (count);
 }
 
 /*	REMOVE_SPACES_AROUND_STR
