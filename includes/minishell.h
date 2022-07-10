@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/09 19:33:15 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:39:25 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-# define PIPE 0
-# define INPUT 1
-# define HEREDOC 2
-# define TRUNC 3
-# define APPEND 4
-# define WORD 5
+# define PIPE 124
+# define INPUT 60
+# define HEREDOC 6060
+# define TRUNC 62
+# define APPEND 6262
+# define WORD 42
+# define S_QUOTE 39
+# define D_QUOTE 34
 
 typedef struct s_env
 {
@@ -59,5 +61,7 @@ void	free_token_lst(t_token **last_token);
 
 int		save_var(t_env **last_var, char *cmd);
 char	*remove_spaces_around_str(char *str);
+int		validate_var_value(char *var_value);
+int		is_quote(char *str);
 
 #endif

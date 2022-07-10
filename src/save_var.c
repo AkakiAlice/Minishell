@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/09 19:49:55 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:44:16 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,30 @@ int	validate_var_value(char *var_value)
 	if (ft_strchr(var_value, ' ') == NULL)
 		return (SUCCESS);
 	return (FAILURE);
+}
+
+/*	IS_QUOTE
+**	------------
+**	DESCRIPTION
+**	Check pointers contains simple quote or double quote and returns the first
+**	occurrence of them.
+**	PARAMETERS
+**	#1. The pointers (str);
+**	RETURN VALUES
+**	Return 39 if the first occurrence is in single quotes, 34 for double quotes
+**	and -1 if dont have quotes.
+*/
+int	is_quote(char *str)
+{
+	while (*str)
+	{
+		if (*str == S_QUOTE)
+			return (S_QUOTE);
+		if (*str == D_QUOTE)
+			return (D_QUOTE);
+		str++;
+	}
+	return (-1);
 }
 
 /*	REMOVE_SPACES_AROUND_STR
