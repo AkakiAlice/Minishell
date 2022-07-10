@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/10 16:52:02 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:11:35 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,29 @@ int	count_char(char *str, char ch)
 		str++;
 	}
 	return (count);
+}
+
+/*	VALIDATE_QUOTE_CLOSED
+**	------------
+**	DESCRIPTION
+**	Check for unclosed quotes.
+**	PARAMETERS
+**	#1. The pointers to variable value (var_value);
+**	RETURN VALUES
+**	Return 0 if the quotes are closed and 1 if aren't not.
+*/
+int	validate_quote_closed(char *var_value)
+{
+	int	quote_type;
+	int	count_quotes;
+
+	quote_type = is_quote(var_value);
+	if (quote_type == -1)
+		return (FAILURE);
+	count_quotes = count_char(var_value, quote_type);
+	if (count_quotes % 2 == 0)
+		return (SUCCESS);
+	return (FAILURE);
 }
 
 /*	REMOVE_SPACES_AROUND_STR
