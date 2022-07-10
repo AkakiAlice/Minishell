@@ -301,3 +301,43 @@ Test(count_char, mix_quote)
 	cr_expect_eq(count, 3,
 		"Ensure returns the numbers of single quotes");
 }
+
+Test(validate_quote_closed, single_quote_unclosed)
+{
+	char	*str = {"te''s""t'e"};
+	int		result;
+
+	result = validate_quote_closed(str);
+	cr_expect_eq(result, FAILURE,
+		"Ensure returns 1 if the single quotes are unclosed");
+}
+
+Test(validate_quote_closed, single_quote_closed)
+{
+	char	*str = {"te's\"t'e"};
+	int		result;
+
+	result = validate_quote_closed(str);
+	cr_expect_eq(result, SUCCESS,
+		"Ensure returns 0 if the single quotes are closed");
+}
+
+Test(validate_quote_closed, double_quote_unclosed)
+{
+	char	*str = {"te\"\"s't\"e"};
+	int		result;
+
+	result = validate_quote_closed(str);
+	cr_expect_eq(result, FAILURE,
+		"Ensure returns 1 if the double quotes are unclosed");
+}
+
+Test(validate_quote_closed, double_quote_closed)
+{
+	char	*str = {"te\"s''t\"e"};
+	int		result;
+
+	result = validate_quote_closed(str);
+	cr_expect_eq(result, SUCCESS,
+		"Ensure returns 0 if the double quotes are closed");
+}
