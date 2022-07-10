@@ -271,3 +271,33 @@ Test(is_quote, double_quote)
 	cr_expect_eq(result, D_QUOTE,
 		"Ensure returns 34 if the command contain double quote");
 }
+
+Test(count_char, simple_quote)
+{
+	char	*cmd = {"MINISHELL=te''st'e"};
+	int		count;
+
+	count = count_char(cmd, S_QUOTE);
+	cr_expect_eq(count, 3,
+		"Ensure returns the numbers of single quotes");
+}
+
+Test(count_char, double_quote)
+{
+	char	*cmd = {"MINISHELL=te\"\"st\"e"};
+	int		count;
+
+	count = count_char(cmd, D_QUOTE);
+	cr_expect_eq(count, 3,
+		"Ensure returns the numbers of double quotes");
+}
+
+Test(count_char, mix_quote)
+{
+	char	*cmd = {"MINISHELL=te''s""t'e"};
+	int		count;
+
+	count = count_char(cmd, S_QUOTE);
+	cr_expect_eq(count, 3,
+		"Ensure returns the numbers of single quotes");
+}
