@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/10 17:11:35 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/11 06:41:38 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,15 @@ int	count_char(char *str, char ch)
 	return (count);
 }
 
+int	is_quote_type(char ch)
+{
+	if (ch == S_QUOTE)
+		return (S_QUOTE);
+	if (ch == D_QUOTE)
+		return (D_QUOTE);
+	return (-1);
+}
+
 /*	VALIDATE_QUOTE_CLOSED
 **	------------
 **	DESCRIPTION
@@ -154,18 +163,25 @@ int	count_char(char *str, char ch)
 **	RETURN VALUES
 **	Return 0 if the quotes are closed and 1 if aren't not.
 */
-int	validate_quote_closed(char *var_value)
+bool	validate_quote_closed(char *var_value)
 {
-	int	quote_type;
-	int	count_quotes;
+	int		quote_type;
+	bool	quote_closed;
 
-	quote_type = is_quote(var_value);
-	if (quote_type == -1)
-		return (FAILURE);
-	count_quotes = count_char(var_value, quote_type);
-	if (count_quotes % 2 == 0)
-		return (SUCCESS);
-	return (FAILURE);
+	quote_closed = true;
+	while (*var_value)
+	{
+		if (quote_closed)
+		{
+			quote_type = is_quote_type(*var_value);
+			if (quote_type != -1)
+				quote_closed = false;
+		}
+		else if (*var_value == quote_type)
+			quote_closed = true;
+		var_value++;
+	}
+	return (quote_closed);
 }
 
 /*	REMOVE_SPACES_AROUND_STR

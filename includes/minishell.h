@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/10 17:08:39 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/11 06:39:40 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -64,6 +65,6 @@ char	*remove_spaces_around_str(char *str);
 int		validate_var_value(char *var_value);
 int		is_quote(char *str);
 int		count_char(char *str, char ch);
-int		validate_quote_closed(char *var_value);
+bool	validate_quote_closed(char *var_value);
 
 #endif
