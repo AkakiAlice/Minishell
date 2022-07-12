@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/11 06:39:40 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/12 05:39:01 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ void	lexer(t_token **last_token, char **cmd);
 int		token_lst_add_back(t_token **last_token, int value);
 void	free_token_lst(t_token **last_token);
 
-int		save_var(t_env **last_var, char *cmd);
 char	*remove_spaces_around_str(char *str);
-int		validate_var_value(char *var_value);
-int		is_quote(char *str);
-int		count_char(char *str, char ch);
+
+int		save_var(t_env **last_var, char *cmd);
+bool	validate_var(char *var_name, char *var_value);
+int		is_variable(char *cmd);
+int		free_variable(char **var_value, char **cmd, char ***split, int status);
+
 bool	validate_quote_closed(char *var_value);
 
 #endif
