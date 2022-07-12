@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:07:13 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/12 05:16:46 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/12 06:02:04 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ static bool	validate_var_value(char *var_value)
 bool	validate_var(char *var_name, char *var_value)
 {
 	if (validate_var_name(var_name) && validate_var_value(var_value))
-		return true;
-	return false;
+		return (true);
+	return (false);
 }

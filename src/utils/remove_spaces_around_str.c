@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:03:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/12 05:03:38 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/12 06:02:27 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ char	*remove_spaces_around_str(char *str)
 
 	if (!str)
 		return (NULL);
-	while(*str == ' ')
+	while (*str == ' ')
 		str++;
 	str_len = ft_strlen(str) - 1;
-	while(str[str_len] == ' ')
+	while (str[str_len] == ' ')
 		str_len--;
 	new_str = ft_substr(str, 0, str_len + 1);
-	return new_str;
+	return (new_str);
 }
