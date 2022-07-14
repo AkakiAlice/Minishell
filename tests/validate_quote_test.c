@@ -80,3 +80,58 @@ Test(validate_quote_closed, advanced_4)
 	cr_expect_eq(result, true,
 		"Ensure returns false if the quotes are closed");
 }
+
+Test(str_without_quotes, simple_quote)
+{
+	char	*str = {"tes'ter'"};
+	char	*result;
+
+	result = str_without_quotes(str);
+	cr_expect_str_eq(result, "tester",
+		"Ensure returns string without quotes");
+	free(result);
+}
+
+Test(str_without_quotes, double_quote)
+{
+	char	*str = {"tes\"ter\""};
+	char	*result;
+
+	result = str_without_quotes(str);
+	cr_expect_str_eq(result, "tester",
+		"Ensure returns string without quotes");
+	free(result);
+}
+
+Test(str_without_quotes, without_char_outside_quotes)
+{
+	char	*str = {"'minishell'"};
+	char	*result;
+
+	result = str_without_quotes(str);
+	cr_expect_str_eq(result, "minishell",
+		"Ensure returns string without quotes");
+	free(result);
+}
+
+Test(str_without_quotes, advanced_1)
+{
+	char	*str = {"'mini''''shell'"};
+	char	*result;
+
+	result = str_without_quotes(str);
+	cr_expect_str_eq(result, "minishell",
+		"Ensure returns string without quotes");
+	free(result);
+}
+
+Test(str_without_quotes, advanced_2)
+{
+	char	*str = {"'mini'' 'shell"};
+	char	*result;
+
+	result = str_without_quotes(str);
+	cr_expect_str_eq(result, "mini shell",
+		"Ensure returns string without quotes");
+	free(result);
+}
