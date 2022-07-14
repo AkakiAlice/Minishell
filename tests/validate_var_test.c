@@ -99,3 +99,69 @@ Test(validate_var, word_after_var)
 	cr_expect_eq(result, false,
 		"Ensure returns false if the variable with word after variable declaration");
 }
+
+Test(validate_var, word_with_space)
+{
+	char	*var_name = {"MINISHELL"};
+	char	*var_value = {"'/bin/bash ls'"};
+	bool	result;
+
+	result = validate_var(var_name, var_value);
+	cr_expect_eq(result, true,
+		"Ensure returns true if the variable value with space between quotes");
+}
+
+Test(validate_var, word_with_space_quotes)
+{
+	char	*var_name = {"MINISHELL"};
+	char	*var_value = {"/bin/bash' 'ls"};
+	bool	result;
+
+	result = validate_var(var_name, var_value);
+	cr_expect_eq(result, true,
+		"Ensure returns true if the variable value with space between quotes");
+}
+
+Test(validate_var, space_outside_quotes_1)
+{
+	char	*var_name = {"MINISHELL"};
+	char	*var_value = {"   /bin/bash' 'ls"};
+	bool	result;
+
+	result = validate_var(var_name, var_value);
+	cr_expect_eq(result, false,
+		"Ensure returns false if the variable value with space outside quotes");
+}
+
+Test(validate_var, space_outside_quotes_2)
+{
+	char	*var_name = {"MINISHELL"};
+	char	*var_value = {"/bin/bash' 'ls    -a"};
+	bool	result;
+
+	result = validate_var(var_name, var_value);
+	cr_expect_eq(result, false,
+		"Ensure returns false if the variable value with space outside quotes");
+}
+
+Test(validate_var, space_outside_quotes_3)
+{
+	char	*var_name = {"MINISHELL"};
+	char	*var_value = {"   /bin/bash' 'ls    -a"};
+	bool	result;
+
+	result = validate_var(var_name, var_value);
+	cr_expect_eq(result, false,
+		"Ensure returns false if the variable value with space outside quotes");
+}
+
+Test(validate_var, space_outside_quotes_4)
+{
+	char	*var_name = {"MINISHELL"};
+	char	*var_value = {"/bin/bash' 'ls  \"-a\""};
+	bool	result;
+
+	result = validate_var(var_name, var_value);
+	cr_expect_eq(result, false,
+		"Ensure returns false if the variable value with space outside quotes");
+}
