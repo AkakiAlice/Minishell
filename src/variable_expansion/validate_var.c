@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:07:13 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/12 06:02:04 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/14 05:57:54 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static bool	validate_var_name(char *var_name)
 */
 static bool	validate_var_value(char *var_value)
 {
-	if (ft_strchr(var_value, ' ') == NULL)
-		return (true);
-	return (false);
+	return (validate_quote_space(var_value));
 }
 
 /*	VALIDATE_VAR
