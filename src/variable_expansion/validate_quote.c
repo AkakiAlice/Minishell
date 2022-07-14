@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:33:53 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/14 05:57:52 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/14 06:57:20 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,64 @@ bool	validate_quote_space(char *var_value)
 		var_value++;
 	}
 	return (true);
+}
+
+int	count_quotes_closed(char *var_value)
+{
+	int		quote_type;
+	bool	quote_closed;
+	int		count_quotes;
+
+	quote_closed = true;
+	count_quotes = 0;
+	while (*var_value)
+	{
+		if (quote_closed)
+		{
+			quote_type = is_quote_type(*var_value);
+			if (quote_type != -1)
+			{
+				quote_closed = false;
+				count_quotes++;
+			}
+		}
+		else if (*var_value == quote_type)
+			quote_closed = true;
+		var_value++;
+	}
+	return (count_quotes * 2);
+}
+
+char	*str_without_quotes(char *str)
+{
+	int		quote_type;
+	bool	quote_closed;
+	char	*result;
+	int		len;
+	int		i;
+
+	len = ft_strlen(str) - count_quotes_closed(str) + 1;
+	result = (char *)malloc(sizeof(char *) * (len));
+	if (!result)
+		return (NULL);
+	quote_closed = true;
+	i = 0;
+	while (*str)
+	{
+		if (quote_closed)
+		{
+			quote_type = is_quote_type(*str);
+			if (quote_type != -1)
+				quote_closed = false;
+			else
+				result[i++] = *str;
+		}
+		else if (*str == quote_type)
+			quote_closed = true;
+		else
+			result[i++] = *str;
+		str++;
+	}
+	result[i] = '\0';
+	return (result);
 }
