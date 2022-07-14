@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/07 01:47:46 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/12 17:21:48 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_token
 typedef struct s_data
 {
 	char	*cmd_line;
+	char	*env_value;
+	char	*cmd_path;
 	char	**splited_cmdl;
 }	t_data;
 
@@ -56,6 +58,8 @@ void	tokenizer(t_data *data);
 void	exec_cmd(t_data *data);
 void	fork_it(t_data *data);
 void	free_env_lst(t_env **last_env);
+char	*get_path(t_env *env_list);
+void	check_cmd(char *env_value, t_data *data);
 
 void	lexer(t_token **last_token, char **cmd);
 int		token_lst_add_back(t_token **last_token, int value);

@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/06 23:53:30 by alida-si         ###   ########.fr        #
+#    Updated: 2022/07/12 15:51:09 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,8 @@ FILES = main.c\
 		save_env.c\
 		token_lst.c\
 		exec_cmd.c\
+		get_path.c\
+		check_cmd.c\
 		lexer.c
 
 # COMPILED_SOURCES #

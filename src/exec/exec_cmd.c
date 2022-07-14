@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/07 01:47:37 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/12 17:34:56 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	exec_cmd(t_data *data)
 {
-	char	*path="/bin/ls";
-
-	execve(path, data->splited_cmdl, NULL);
+	execve(data->cmd_path, data->splited_cmdl, NULL);
 }
 
 void	fork_it(t_data *data)
