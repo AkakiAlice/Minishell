@@ -6,13 +6,13 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/07 17:02:35 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:17:07 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_name()
+char	*get_name(void)
 {
 	char	*temp;
 	char	*temp2;
@@ -26,7 +26,7 @@ char	*get_name()
 	name = ft_strcat(temp, temp2);
 	free(temp);
 	free(temp2);
-	return(name);
+	return (name);
 }
 
 /*	GET_PROMPT
