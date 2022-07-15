@@ -6,14 +6,38 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/15 04:05:32 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:47:06 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	check_is_dir(t_data *data)
+{
+	DIR	*dir;
+
+	dir = opendir(data->splited_cmdl[0]);
+	if (dir)
+	{
+		write(2, data->splited_cmdl[0], ft_strlen(data->splited_cmdl[0]));
+		write(2, ": Is a directory\n", 17);
+		closedir(dir);
+		exit(126);
+	}
+	else if (ENOENT == errno && data->cmd_path == NULL)
+	{
+		write(2, data->splited_cmdl[0], ft_strlen(data->splited_cmdl[0]));
+		write(2, ": No such file or directory\n", 28);
+		exit(127);
+	}
+	else if ((access(data->splited_cmdl[0], X_OK) == 0))
+		data->cmd_path = data->splited_cmdl[0];
+}
+
 void	exec_cmd(t_data *data)
 {
+	if (data->splited_cmdl[0][0] == '/')
+		check_is_dir(data);
 	if (data->cmd_path == NULL)
 	{
 		write(2, data->splited_cmdl[0], ft_strlen(data->splited_cmdl[0]));
