@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/14 19:17:07 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/15 01:33:12 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	get_prompt(t_data *data)
 	else
 	{
 		free(cwd);
+		free(name);
 		free(prompt_line);
 		free(data->cmd_line);
 		exit(0);
