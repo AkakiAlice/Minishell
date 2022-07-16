@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/12 05:35:23 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:07:32 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	save_var(t_env **last_var, char *cmd)
 		if (!validate_var(split_cmd[0], var_value))
 			return (free_variable(&var_value, &new_cmd, &split_cmd, FAILURE));
 		env_lst_add_back(last_var, ft_strdup(split_cmd[0]),
-			ft_strdup(var_value));
+			str_without_quotes(var_value));
 	}
 	return (free_variable(&var_value, &new_cmd, &split_cmd, SUCCESS));
 }
