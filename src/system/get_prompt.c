@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/15 01:33:12 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:55:48 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ char	*get_name(void)
 	temp = ft_strcat(getenv("USER"), "@");
 	if (getenv("HOSTNAME") != NULL)
 		temp2 = ft_strcat(getenv("HOSTNAME"), ":");
-	else
+	else if (getenv("NAME") != NULL)
 		temp2 = ft_strcat(getenv("NAME"), ":");
+	else if (getenv("HOSTNAME") != NULL && getenv("NAME") != NULL)
+		temp2 = "minishell:";
 	name = ft_strcat(temp, temp2);
 	free(temp);
 	free(temp2);
