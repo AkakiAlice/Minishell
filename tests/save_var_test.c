@@ -107,3 +107,29 @@ Test(save_var, var_multiple_equal_sign)
 	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
 	free_env_lst(&last_var);
 }
+
+Test(save_var, var_value_with_space)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL='/bin/bash ls'"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "/bin/bash ls",
+		"Ensure save variable value with space");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
+}
+
+Test(save_var, var_value_with_space_quotes)
+{
+	t_env	*last_var = NULL;
+	char	*cmd = {"MINISHELL=/bin/bash' 'ls"};
+	int		result;
+
+	result = save_var(&last_var, cmd);
+	cr_expect_str_eq(last_var->value, "/bin/bash ls",
+		"Ensure save variable value with space");
+	cr_expect_eq(result, SUCCESS, "Ensure return 0 if success");
+	free_env_lst(&last_var);
+}

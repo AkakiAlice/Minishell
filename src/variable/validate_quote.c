@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:33:53 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 11:23:58 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:56:07 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ bool	validate_quote_space(char *var_value)
 	return (true);
 }
 
+/*	COUNT_QUOTES_CLOSED
+**	------------
+**	DESCRIPTION
+**	Count quotes closed.
+**	PARAMETERS
+**	#1. The pointers to variable value (var_value);
+**	RETURN VALUES
+**	Return count quotes.
+*/
 int	count_quotes_closed(char *var_value)
 {
 	int		quote_type;
@@ -119,6 +128,15 @@ int	count_quotes_closed(char *var_value)
 	return (count_quotes * 2);
 }
 
+/*	STR_WITHOUT_QUOTES
+**	------------
+**	DESCRIPTION
+**	Save string without quotes.
+**	PARAMETERS
+**	#1. The pointers to string (str);
+**	RETURN VALUES
+**	Return allocated memory.
+*/
 char	*str_without_quotes(char *str)
 {
 	int		quote_type;
@@ -153,6 +171,15 @@ char	*str_without_quotes(char *str)
 	return (result);
 }
 
+/*	CHECK_VAR_EXPANSION
+**	------------
+**	DESCRIPTION
+**	Check exists variable expansion in double quotes.
+**	PARAMETERS
+**	#1. The pointers to variable value (var_value);
+**	RETURN VALUES
+**	Return true if contains variable expansion and false if its not.
+*/
 bool	check_var_expansion(char *var_value)
 {
 	int		quote_type;

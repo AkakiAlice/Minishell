@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:00:04 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/12 05:32:32 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:11:42 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 **	PARAMETERS
 **	#1. The pointers to command line (cmd);
 **	RETURN VALUES
-**	Return 0 if command line is variable declaration and 1 if it's not.
+**	Return true if command line is variable declaration and false if it's not.
 */
-int	is_variable(char *cmd)
+bool	is_variable(char *cmd)
 {
 	if (ft_strchr(cmd, '=') == NULL)
-		return (FAILURE);
-	return (SUCCESS);
+		return (false);
+	return (true);
 }
 
 /*	FREE_VARIABLE

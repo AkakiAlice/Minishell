@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/12 05:40:29 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/16 12:09:15 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,10 +127,10 @@ TEST_FLAG = -lcriterion
 TEST_FILES = $(wildcard $(TEST_DIR)*.c)
 TEST_FILES += $(wildcard ./src/system/*.c)
 TEST_FILES += $(wildcard ./src/parser/*.c)
-TEST_FILES += ./src/variable_expansion/save_var.c
-TEST_FILES += ./src/variable_expansion/validate_var.c
-TEST_FILES += ./src/variable_expansion/validate_quote.c
-TEST_FILES += ./src/variable_expansion/var_utils.c
+TEST_FILES += ./src/variable/save_var.c
+TEST_FILES += ./src/variable/validate_var.c
+TEST_FILES += ./src/variable/validate_quote.c
+TEST_FILES += ./src/variable/var_utils.c
 TEST_FILES += ./src/utils/remove_spaces_around_str.c
 
 TEST_OBJS = $(TEST_FILES:.c=.o)

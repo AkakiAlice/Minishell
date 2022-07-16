@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:07:13 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/14 05:57:54 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:49:49 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	validate_var_name(char *var_name)
 /*	VALIDATE_VAR_VALUE
 **	------------
 **	DESCRIPTION
-**	Variable value validation. The value cannot contain space char ( ).
+**	Variable value validation.
 **	PARAMETERS
 **	#1. The pointers to variable value (var_value);
 **	RETURN VALUES
