@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 23:26:26 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/28 22:29:50 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:54:40 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,12 @@ static void	letter_aloc(char **matrix, char const *s, char c, size_t nb_token)
 	while (i < nb_token)
 	{
 		if (*s == c)
-			s++;
+		{
+			while(*s == c)
+			{
+				s++;
+			}
+		}
 		if (*s != c && *s != '\'' && *s != '\"')
 		{
 			len_ptr = 0;
