@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/16 13:55:48 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:44:20 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*get_name(void)
 		temp2 = ft_strcat(getenv("HOSTNAME"), ":");
 	else if (getenv("NAME") != NULL)
 		temp2 = ft_strcat(getenv("NAME"), ":");
-	else if (getenv("HOSTNAME") != NULL && getenv("NAME") != NULL)
-		temp2 = "minishell:";
+	else if (getenv("HOSTNAME") == NULL && getenv("NAME") == NULL)
+		temp2 = ft_strdup("minishell:");
 	name = ft_strcat(temp, temp2);
 	free(temp);
 	free(temp2);
