@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:33:53 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/14 06:57:20 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 11:23:58 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,4 +151,28 @@ char	*str_without_quotes(char *str)
 	}
 	result[i] = '\0';
 	return (result);
+}
+
+bool	check_var_expansion(char *var_value)
+{
+	int		quote_type;
+	bool	quote_closed;
+
+	quote_closed = true;
+	quote_type = -1;
+	while (*var_value)
+	{
+		if (quote_type == D_QUOTE && !quote_closed && *var_value == '$')
+			return (true);
+		if (quote_closed)
+		{
+			quote_type = is_quote_type(*var_value);
+			if (quote_type != -1)
+				quote_closed = false;
+		}
+		else if (*var_value == quote_type)
+			quote_closed = true;
+		var_value++;
+	}
+	return (false);
 }

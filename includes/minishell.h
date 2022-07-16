@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/14 05:58:02 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 11:14:13 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ int		free_variable(char **var_value, char **cmd, char ***split, int status);
 
 bool	validate_quote_closed(char *var_value);
 bool	validate_quote_space(char *var_value);
+char	*str_without_quotes(char *str);
+bool	check_var_expansion(char *var_value);
 
 #endif
