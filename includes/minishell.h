@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 12:11:43 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:32:18 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ typedef struct s_token
 	struct s_token	*next;
 }		t_token;
 
+typedef struct s_quotes
+{
+	int		type;
+	bool	in;
+}	t_quotes;
+
 typedef struct s_data
 {
 	char	*cmd_line;
@@ -67,6 +73,7 @@ bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
 
+int		is_quote_type(char ch);
 bool	validate_quote_closed(char *var_value);
 bool	validate_quote_space(char *var_value);
 char	*str_without_quotes(char *str);

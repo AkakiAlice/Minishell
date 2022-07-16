@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/16 12:09:15 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/16 14:04:19 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,11 @@ RM = rm -rf
 SRC_DIR = ./src/
 
 VPATH = $(SRC_DIR)\
+		$(SRC_DIR)parser\
+		$(SRC_DIR)quotes\
 		$(SRC_DIR)system\
-		$(SRC_DIR)parser
+		$(SRC_DIR)utils\
+		$(SRC_DIR)variable\
 
 # FILES #
 
@@ -55,7 +58,13 @@ FILES = main.c\
 		env_lst.c\
 		save_env.c\
 		token_lst.c\
-		lexer.c
+		lexer.c\
+		str_withou_quotes.c\
+		validate_quote.c\
+		remove_spaces_around_str.c\
+		save_var.c\
+		validate_var.c\
+		var_utils.c\
 
 # COMPILED_SOURCES #
 
@@ -127,11 +136,9 @@ TEST_FLAG = -lcriterion
 TEST_FILES = $(wildcard $(TEST_DIR)*.c)
 TEST_FILES += $(wildcard ./src/system/*.c)
 TEST_FILES += $(wildcard ./src/parser/*.c)
-TEST_FILES += ./src/variable/save_var.c
-TEST_FILES += ./src/variable/validate_var.c
-TEST_FILES += ./src/variable/validate_quote.c
-TEST_FILES += ./src/variable/var_utils.c
-TEST_FILES += ./src/utils/remove_spaces_around_str.c
+TEST_FILES += $(wildcard ./src/quotes/*.c)
+TEST_FILES += $(wildcard ./src/utils/*.c)
+TEST_FILES += $(wildcard ./src/variable/*.c)
 
 TEST_OBJS = $(TEST_FILES:.c=.o)
 
