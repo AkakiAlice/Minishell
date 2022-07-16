@@ -135,3 +135,33 @@ Test(str_without_quotes, advanced_2)
 		"Ensure returns string without quotes");
 	free(result);
 }
+
+Test(check_var_expansion, single_quotes)
+{
+	char	*str = {"'$HOME'"};
+	bool	result;
+
+	result = check_var_expansion(str);
+	cr_expect_eq(result, false,
+		"Ensure returns false if variable expansion in single quotes");
+}
+
+Test(check_var_expansion, double_quotes)
+{
+	char	*str = {"\"$HOME\""};
+	bool	result;
+
+	result = check_var_expansion(str);
+	cr_expect_eq(result, true,
+		"Ensure returns true if variable expansion in double quotes");
+}
+
+Test(check_var_expansion, advanced_1)
+{
+	char	*str = {"\"Hello\"'$HOME'"};
+	bool	result;
+
+	result = check_var_expansion(str);
+	cr_expect_eq(result, false,
+		"Ensure returns false if variable expansion in single quotes");
+}
