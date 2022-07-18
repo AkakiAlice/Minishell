@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/16 14:04:19 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/18 07:02:00 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ FILES = main.c\
 		save_var.c\
 		validate_var.c\
 		var_utils.c\
+		error.c\
 
 # COMPILED_SOURCES #
 
