@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/15 01:36:31 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:29:08 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[], char *envp[])
 	oi = get_path(last_env);
 	while (1)
 	{
-		get_prompt(&data);
+		get_prompt(&data, &last_env);
 		tokenizer(&data);
 		check_cmd(oi, &data);
 		fork_it(&data);
