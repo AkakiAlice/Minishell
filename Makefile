@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/18 07:02:00 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/19 14:10:28 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ FILES = main.c\
 		lexer.c\
 		str_withou_quotes.c\
 		validate_quote.c\
+		put_msg.c\
 		remove_spaces_around_str.c\
 		save_var.c\
 		validate_var.c\

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:33:53 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 13:09:46 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/18 07:15:49 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_quote_type(char ch)
 **	PARAMETERS
 **	#1. The pointers to variable value (var_value);
 **	RETURN VALUES
-**	Return 0 if the quotes are closed and 1 if aren't not.
+**	Return true if the quotes are closed and false if aren't not.
 */
 bool	validate_quote_closed(char *var_value)
 {

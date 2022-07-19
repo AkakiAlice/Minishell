@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/18 07:01:46 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:12:41 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 # define S_QUOTE 39
 # define D_QUOTE 34
 
-# define TOO_MANY_ARG "Too many arguments"
+# define TOO_MANY_ARG "too many arguments"
+# define UNCLOSED_QUOTES "unclosed quotes"
 
 typedef struct s_env
 {
@@ -68,6 +69,7 @@ void	lexer(t_token **last_token, char **cmd);
 int		token_lst_add_back(t_token **last_token, int value);
 void	free_token_lst(t_token **last_token);
 
+void	put_msg(char *title, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
 
 int		save_var(t_env **last_var, char *cmd);
@@ -81,6 +83,6 @@ bool	validate_quote_space(char *var_value);
 char	*str_without_quotes(char *str);
 bool	check_var_expansion(char *var_value);
 
-void	error_msg_exit(char *msg, int fd);
+void	error_msg_exit(char *title, char *msg, int fd);
 
 #endif
