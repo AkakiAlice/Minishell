@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/19 16:30:32 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/19 19:27:57 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	get_prompt(t_data *data, t_env **last_env)
 		add_history(data->cmd_line);
 		free(cwd);
 		free(prompt_line);
+		free(name);
 	}
 	else
 	{
@@ -65,6 +66,8 @@ void	get_prompt(t_data *data, t_env **last_env)
 		free(prompt_line);
 		free_env_lst(last_env);
 		free(data->cmd_line);
+		if (data->cmd_path != NULL)
+			free(data->cmd_path);
 		exit(0);
 	}
 }

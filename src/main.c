@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/19 16:29:08 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/19 19:29:24 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*oi;
 
 	last_env = NULL;
+	data.cmd_path = NULL;
 	save_env(&last_env, envp);
 	oi = get_path(last_env);
 	while (1)
@@ -26,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 		get_prompt(&data, &last_env);
 		tokenizer(&data);
 		check_cmd(oi, &data);
-		fork_it(&data);
+		fork_it(&data, &last_env);
 		free(data.cmd_line);
 		ft_matrix_free(data.splited_cmdl);
 	}
