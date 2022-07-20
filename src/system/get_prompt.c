@@ -6,29 +6,29 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/19 19:27:57 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/20 13:50:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_name(void)
+char	*get_login(void)
 {
-	char	*temp;
-	char	*temp2;
-	char	*name;
+	char	*user;
+	char	*hostname;
+	char	*login;
 
-	temp = ft_strcat(getenv("USER"), "@");
+	user = ft_strcat(getenv("USER"), "@");
 	if (getenv("HOSTNAME") != NULL)
-		temp2 = ft_strcat(getenv("HOSTNAME"), ":");
+		hostname = ft_strcat(getenv("HOSTNAME"), ":");
 	else if (getenv("NAME") != NULL)
-		temp2 = ft_strcat(getenv("NAME"), ":");
+		hostname = ft_strcat(getenv("NAME"), ":");
 	else if (getenv("HOSTNAME") == NULL && getenv("NAME") == NULL)
-		temp2 = ft_strdup("minishell:");
-	name = ft_strcat(temp, temp2);
-	free(temp);
-	free(temp2);
-	return (name);
+		hostname = ft_strdup("minishell:");
+	login = ft_strcat(user, hostname);
+	free(user);
+	free(hostname);
+	return (login);
 }
 
 /*	GET_PROMPT
@@ -47,7 +47,7 @@ void	get_prompt(t_data *data, t_env **last_env)
 	char	*name;
 	char	*prompt_line;
 
-	name = get_name();
+	name = get_login();
 	getcwd(aux, sizeof(aux));
 	cwd = ft_strcat(aux, "$ ");
 	prompt_line = ft_strcat(name, cwd);
