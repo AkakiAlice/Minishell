@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 06:57:58 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/19 14:17:23 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/21 07:09:59 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 */
 void	error_msg_exit(char *title, char *msg, int fd)
 {
-	put_msg(title, msg, fd);
+	put_msg(title, msg, fd, 1);
 	exit(EXIT_FAILURE);
 }
