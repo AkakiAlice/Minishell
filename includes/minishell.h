@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/21 05:32:13 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/21 06:48:51 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 
 # define TOO_MANY_ARG "too many arguments"
 # define UNCLOSED_QUOTES "unclosed quotes"
+# define SYNTAX_ERR_PIPE "syntax error near unexpected token `|'"
+# define SYNTAX_ERR_NEWLINE "syntax error near unexpected token `newline'"
 
 typedef struct s_env
 {
