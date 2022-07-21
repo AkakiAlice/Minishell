@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 19:03:10 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:41:48 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ void	fork_it(t_data *data, t_env **last_env)
 	waitpid(0, &data->status, 0);
 	if (WIFEXITED(data->status))
 		p_status = WEXITSTATUS(data->status);
-	ft_printf("%i\n", p_status);
+	data->status = p_status;
 }
