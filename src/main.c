@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 07:08:38 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/21 07:23:43 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		get_prompt(&data);
 		if (!validate_quote_closed(data.cmd_line))
+		{
 			put_msg("minishell", UNCLOSED_QUOTES, 2, 1);
+			free(data.cmd_line);
+		}
 		else
 		{
 			tokenizer(&data);
