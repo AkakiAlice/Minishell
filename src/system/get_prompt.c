@@ -6,12 +6,23 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/20 17:06:29 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:32:34 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	FREE_PROMPT_LINE
+**	------------
+**	DESCRIPTION
+**	Frees the pointers that make up the command line.
+**	PARAMETERS
+**	#1. The pointer to the current working directory string (cwd);
+**	#2. The pointer to the login name (user@hostname) (login);
+**	#3. The pointer to the prompt line (prompt_line);
+**	RETURN VALUES
+**	-
+*/
 void	free_prompt_line(char *cwd, char *login, char *prompt_line)
 {
 	free(cwd);
@@ -19,6 +30,15 @@ void	free_prompt_line(char *cwd, char *login, char *prompt_line)
 	free(prompt_line);
 }
 
+/*	GET_LOGIN
+**	------------
+**	DESCRIPTION
+**	Concatenates the values ​​of the USER and HOSTNAME variables.
+**	PARAMETERS
+**	-
+**	RETURN VALUES
+**	Returns the login name (user@hostname) as a string
+*/
 char	*get_login(void)
 {
 	char	*user;

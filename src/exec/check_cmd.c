@@ -6,12 +6,22 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 18:41:45 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:55:38 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	CHECK_CMD
+**	------------
+**	DESCRIPTION
+**	Checks if the cmd received from the terminal exists in the PATH variable.
+**	PARAMETERS
+**	#1. The pointer to PATH value (env_value);
+**	#2. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 void	check_cmd(char *env_value, t_data *data)
 {
 	char	**path_list;

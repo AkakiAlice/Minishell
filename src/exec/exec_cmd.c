@@ -6,12 +6,22 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/19 18:00:29 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:03:10 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	CHECK_IS_DIR
+**	------------
+**	DESCRIPTION
+**	Checks if the argument received from the terminal is a dir or an executable.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (last_env);
+**	RETURN VALUES
+**	-
+*/
 void	check_is_dir(t_data *data, t_env **last_env)
 {
 	DIR	*dir;
@@ -38,6 +48,16 @@ void	check_is_dir(t_data *data, t_env **last_env)
 		data->cmd_path = data->splited_cmdl[0];
 }
 
+/*	EXEC_CMD
+**	------------
+**	DESCRIPTION
+**	Executes the command received from the terminal with execve function.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (last_env);
+**	RETURN VALUES
+**	-
+*/
 void	exec_cmd(t_data *data, t_env **last_env)
 {
 	if (data->splited_cmdl[0][0] == '/')
@@ -53,6 +73,16 @@ void	exec_cmd(t_data *data, t_env **last_env)
 	execve(data->cmd_path, data->splited_cmdl, NULL);
 }
 
+/*	FORK_IT
+**	------------
+**	DESCRIPTION
+**	Creates a child process.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (last_env);
+**	RETURN VALUES
+**	-
+*/
 void	fork_it(t_data *data, t_env **last_env)
 {
 	int	pid;
