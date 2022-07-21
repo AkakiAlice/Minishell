@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/21 06:14:20 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/21 06:21:19 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int	parser(t_token *last_token)
 			return (1);
 		}
 		current = current->next;
+	}
+	if (last_token->value == PIPE)
+	{
+		put_msg("minishell", "syntax error near unexpected token `|'", 2);
+		return (1);
 	}
 	return (0);
 }
