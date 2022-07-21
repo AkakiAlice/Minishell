@@ -69,3 +69,27 @@ Test(parser, pipe_empty)
 	cr_expect_eq(result, 1, "Ensure return 1 if after pipe there is nothing");
 	free_token_lst(&last_token);
 }
+
+Test(parser, redirect_pipe)
+{
+	t_token	*last_token = NULL;
+	int	result;
+
+	token_lst_add_back(&last_token, INPUT);
+	token_lst_add_back(&last_token, PIPE);
+	token_lst_add_back(&last_token, WORD);
+	result = parser(last_token);
+	cr_expect_eq(result, 1, "Ensure return 1 if after redirect there is pipe");
+	free_token_lst(&last_token);
+}
+
+Test(parser, redirect_empty)
+{
+	t_token	*last_token = NULL;
+	int	result;
+
+	token_lst_add_back(&last_token, APPEND);
+	result = parser(last_token);
+	cr_expect_eq(result, 1, "Ensure return 1 if after redirect there is nothing");
+	free_token_lst(&last_token);
+}
