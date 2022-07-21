@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/19 14:12:41 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/21 05:32:13 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	free_env_lst(t_env **last_env);
 void	lexer(t_token **last_token, char **cmd);
 int		token_lst_add_back(t_token **last_token, int value);
 void	free_token_lst(t_token **last_token);
+int		parser(t_token *last_token);
 
 void	put_msg(char *title, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
