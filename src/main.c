@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/19 19:29:24 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:57:37 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	last_env = NULL;
 	data.cmd_path = NULL;
+	data.cmd_line = NULL;
 	save_env(&last_env, envp);
 	oi = get_path(last_env);
 	while (1)
