@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 07:24:47 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/22 06:06:34 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	main(int argc, char *argv[], char *envp[])
 		else
 		{
 			tokenizer(&data);
+			if (ft_strncmp_eq(data.splited_cmdl[0], "exit", 4))
+				exit_cmd(&data);
 			last_token = NULL;
 			lexer(&last_token, data.splited_cmdl);
 			parser(last_token);
