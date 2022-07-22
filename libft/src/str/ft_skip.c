@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   ft_skip.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 15:42:40 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/16 12:55:20 by alida-si         ###   ########.fr       */
+/*   Created: 2022/07/21 21:29:49 by alida-si          #+#    #+#             */
+/*   Updated: 2022/07/21 21:30:15 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/*	TOKENIZER
-**	------------
-**	DESCRIPTION
-**	Create tokens from the command line using space as a separator.
-**	PARAMETERS
-**	#1. The pointer to structure that contains the command line (data);
-**	RETURN VALUES
-**	-
-*/
-void	tokenizer(t_data *data)
+int	skip(const char *s, int i, char c)
 {
-	data->splited_cmdl = ft_split2(data->cmd_line, ' ');
+	i++;
+	while (s[i] != c)
+		i++;
+	return (i);
 }

@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 15:42:40 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/16 12:55:20 by alida-si         ###   ########.fr       */
+/*   Created: 2022/07/12 14:51:39 by alida-si          #+#    #+#             */
+/*   Updated: 2022/07/21 19:11:13 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	TOKENIZER
+/*	GET_PATH
 **	------------
 **	DESCRIPTION
-**	Create tokens from the command line using space as a separator.
+**	Loops through the environment list and look for the PATH value.
 **	PARAMETERS
-**	#1. The pointer to structure that contains the command line (data);
+**	#1. The pointer to list (env_list);
 **	RETURN VALUES
-**	-
+**	Returns the string of the PATH value
 */
-void	tokenizer(t_data *data)
+char	*get_path(t_env *env_list)
 {
-	data->splited_cmdl = ft_split2(data->cmd_line, ' ');
+	t_env	*ptr;
+
+	ptr = env_list;
+	while (ptr->next != env_list)
+	{
+		if (ft_strncmp("PATH", ptr->name, 4) == 0)
+			return (ptr->value);
+		ptr = ptr->next;
+	}
+	return (ptr->value);
 }

@@ -6,13 +6,13 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 23:26:26 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/28 22:29:50 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:50:17 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	token_count(char const *s, char c)
+size_t	token_count(char const *s, char c)
 {
 	size_t	i;
 	size_t	nb;
@@ -26,17 +26,9 @@ static size_t	token_count(char const *s, char c)
 		if (s[i] != c && s[i])
 		{
 			if (s[i] == '\'')
-			{
-				i++;
-				while (s[i] != '\'')
-					i++;
-			}
+				skip(s, i, '\'');
 			else if (s[i] == '\"')
-			{
-				i++;
-				while (s[i] != '\"')
-					i++;
-			}
+				skip(s, i, '\"');
 			nb++;
 			while (s[i] != c && s[i])
 				i++;
@@ -45,27 +37,14 @@ static size_t	token_count(char const *s, char c)
 	return (nb);
 }
 
-static char	**free_matrix(char **matrix, size_t i)
-{
-	while ((int)i >= 0)
-	{
-		free(matrix[i]);
-		matrix[i] = NULL;
-		i--;
-	}
-	free(matrix);
-	matrix = NULL;
-	return (matrix);
-}
-
-static char const	*quote_alloc(char const *s, char **matrix, char c, int i, char quote)
+char const	*quote_alloc(char const *s, char **matrix, char c, char quote)
 {
 	int	len_ptr;
 
 	len_ptr = 0;
 	while (s[len_ptr + 1] != quote)
 		len_ptr++;
-	matrix[i] = ft_substr(s, 0, (len_ptr + 2));
+	*matrix = ft_substr(s, 0, (len_ptr + 2));
 	s = s + len_ptr;
 	s++;
 	s++;
@@ -74,7 +53,20 @@ static char const	*quote_alloc(char const *s, char **matrix, char c, int i, char
 	return (s);
 }
 
-static void	letter_aloc(char **matrix, char const *s, char c, size_t nb_token)
+int	is_not_quote(const char *s, char c, int i, char **matrix)
+{
+	int	len_ptr;
+
+	len_ptr = 0;
+	while (s[len_ptr] != c && s[len_ptr])
+		len_ptr++;
+	matrix[i] = ft_substr(s, 0, len_ptr);
+	if (matrix[i] == NULL)
+		ft_matrix_free(matrix);
+	return (len_ptr);
+}
+
+void	letter_alloc(char **matrix, char const *s, char c, size_t nb_token)
 {
 	size_t	len_ptr;
 	size_t	i;
@@ -84,21 +76,19 @@ static void	letter_aloc(char **matrix, char const *s, char c, size_t nb_token)
 	while (i < nb_token)
 	{
 		if (*s == c)
-			s++;
+		{
+			while (*++s == c)
+				;
+		}
 		if (*s != c && *s != '\'' && *s != '\"')
 		{
-			len_ptr = 0;
-			while (s[len_ptr] != c && s[len_ptr])
-				len_ptr++;
-			matrix[i] = ft_substr(s, 0, len_ptr);
-			if (matrix[i] == NULL)
-				free_matrix(matrix, i);
+			len_ptr = is_not_quote(s, c, i, matrix);
 			s = s + len_ptr;
 		}
 		if (*s == '\'')
-			s = quote_alloc(s, matrix, c, i, '\'');
+			s = quote_alloc(s, &matrix[i], c, '\'');
 		else if (*s == '\"')
-			s = quote_alloc(s, matrix, c, i, '\"');
+			s = quote_alloc(s, &matrix[i], c, '\"');
 		i++;
 	}
 	matrix[i] = NULL;
@@ -115,6 +105,6 @@ char	**ft_split2(char const *s, char c)
 	matrix = (char **)malloc(((sizeof(char *)) * (nb_token + 1)));
 	if (!matrix)
 		return (NULL);
-	letter_aloc(matrix, s, c, nb_token);
+	letter_alloc(matrix, s, c, nb_token);
 	return (matrix);
 }

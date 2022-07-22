@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/30 19:35:16 by alida-si          #+#    #+#              #
-#    Updated: 2022/06/29 08:04:49 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/21 21:31:37 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ FILES = ft_matrix_free.c \
 		ft_lstdelone.c \
 		ft_lstclear.c \
 		ft_lstiter.c \
+		ft_skip.c \
 		ft_lstmap.c
 
 

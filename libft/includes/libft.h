@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 19:35:46 by alida-si          #+#    #+#             */
-/*   Updated: 2022/06/29 08:04:23 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:30:40 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ char	*extract_line(char **save);
 int		ft_strrncmp(const char *s1, const char *s2, size_t len);
 char	*ft_strcat(char *s1, char *s2);
 char	**ft_split2(char const *s, char c);
+int		skip(const char *s, int i, char c);
 
 #endif

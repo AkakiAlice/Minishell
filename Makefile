@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/22 06:13:06 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/22 17:54:20 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ VPATH = $(SRC_DIR)\
 		$(SRC_DIR)system\
 		$(SRC_DIR)utils\
 		$(SRC_DIR)variable\
+		$(SRC_DIR)exec
 
 # FILES #
 
@@ -71,6 +72,9 @@ FILES = main.c\
 		parser.c\
 		exit_cmd.c\
 		builtin.c\
+		exec_cmd.c\
+		get_path.c\
+		check_cmd.c
 
 # COMPILED_SOURCES #
 
