@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/19 16:48:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/22 15:07:09 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_data
 	char	*env_value;
 	char	*cmd_path;
 	char	**splited_cmdl;
+	char	*prompt_line;
 	int		status;
 }	t_data;
 

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 19:32:34 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/22 15:06:41 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,22 @@ void	get_prompt(t_data *data, t_env **last_env)
 	char	*cwd;
 	char	aux[1024];
 	char	*login;
-	char	*prompt_line;
 
 	login = get_login();
 	getcwd(aux, sizeof(aux));
 	cwd = ft_strcat(aux, "$ ");
-	prompt_line = ft_strcat(login, cwd);
-	data->cmd_line = readline(prompt_line);
+	data->prompt_line = ft_strcat(login, cwd);
+	data->cmd_line = readline(data->prompt_line);
 	if (*data->cmd_line)
 	{
 		add_history(data->cmd_line);
-		free_prompt_line(cwd, login, prompt_line);
+		free_prompt_line(cwd, login, data->prompt_line);
+		if (data->cmd_path != NULL)
+			free(data->cmd_path);
 	}
 	else
 	{
-		free_prompt_line(cwd, login, prompt_line);
+		free_prompt_line(cwd, login, data->prompt_line);
 		free_env_lst(last_env);
 		free(data->cmd_line);
 		if (data->cmd_path != NULL)
