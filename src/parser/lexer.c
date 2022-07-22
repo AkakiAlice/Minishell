@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/07 07:40:32 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:06:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ void	lexer(t_token **last_token, char **cmd)
 			token_lst_add_back(last_token, WORD);
 		i++;
 	}
-	ft_printf("[%d]\n", (*last_token)->value);
 	return ;
 }
