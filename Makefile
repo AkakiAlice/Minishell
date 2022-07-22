@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/22 06:06:48 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/07/22 06:13:06 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ FILES = main.c\
 		error.c\
 		parser.c\
 		exit_cmd.c\
+		builtin.c\
 
 # COMPILED_SOURCES #
 

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/22 06:06:40 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/22 06:12:59 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_data
 	char	**splited_cmdl;
 }	t_data;
 
+void	builtin(t_data *data);
 void	exit_cmd(t_data *data);
 
 void	save_env(t_env **env, char **envp);
