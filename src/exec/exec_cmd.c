@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/22 16:47:17 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/23 14:20:49 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	is_dir_exit(t_data *data, t_env **last_env)
 {
 	write(2, data->splited_cmdl[0], ft_strlen(data->splited_cmdl[0]));
 	write(2, ": Is a directory\n", 17);
+	free_token_lst(&data->last_token);
 	ft_matrix_free(data->splited_cmdl);
 	free_env_lst(last_env);
 	exit(126);
@@ -46,6 +47,7 @@ void	no_such_file_exit(t_data *data, t_env **last_env)
 {
 	write(2, data->splited_cmdl[0], ft_strlen(data->splited_cmdl[0]));
 	write(2, ": No such file or directory\n", 28);
+	free_token_lst(&data->last_token);
 	ft_matrix_free(data->splited_cmdl);
 	free_env_lst(last_env);
 	exit(127);
@@ -96,6 +98,7 @@ void	exec_cmd(t_data *data, t_env **last_env)
 	{
 		write(2, data->splited_cmdl[0], ft_strlen(data->splited_cmdl[0]));
 		write(2, ": command not found\n", 20);
+		free_token_lst(&data->last_token);
 		free_env_lst(last_env);
 		ft_matrix_free(data->splited_cmdl);
 		exit(127);

@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/22 17:54:20 by alida-si         ###   ########.fr        #
+#    Updated: 2022/07/23 14:03:54 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,8 @@ FILES = main.c\
 		builtin.c\
 		exec_cmd.c\
 		get_path.c\
+		free_minishell.c\
+		init_minishell.c\
 		check_cmd.c
 
 # COMPILED_SOURCES #
@@ -128,7 +130,7 @@ debug: fclean
 debug: $(NAME)
 
 valgrind: re
-	@valgrind --suppressions=./readline.supp --leak-check=full ./minishell
+	@valgrind --suppressions=./readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
 # NORMINETTE #
 norm:

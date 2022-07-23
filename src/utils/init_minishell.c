@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_free.c                                   :+:      :+:    :+:   */
+/*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/21 07:50:44 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/23 13:44:03 by alida-si         ###   ########.fr       */
+/*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
+/*   Updated: 2022/07/23 14:09:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/*	FT_MATRIX_FREE
+/*	MINISHELL_INIT
 **	------------
 **	DESCRIPTION
-**	Free all memory allocated within matrix.
+**	Initialize values from data struct.
 **	PARAMETERS
-**	#1. The array of strings (matrix);
+**	#1. Pointer to struct data (data);
 **	RETURN VALUES
 **	-
 */
-void	ft_matrix_free(char **matrix)
+void	minishell_init(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (*(matrix + i))
-	{
-		free(*(matrix + i));
-		i++;
-	}
-	free(matrix);
-	return ;
+	data->last_env = NULL;
+	data->cmd_path = NULL;
+	data->cmd_line = NULL;
+	data->last_token = NULL;
+	data->splited_cmdl = NULL;
+	data->status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/22 17:55:28 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/23 14:21:33 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ typedef struct s_quotes
 
 typedef struct s_data
 {
-	char	*cmd_line;
-	char	*env_value;
-	char	*cmd_path;
-	char	**splited_cmdl;
-	char	*prompt_line;
-	int		status;
+	t_token		*last_token;
+	t_env		*last_env;
+	char		*cmd_line;
+	char		*env_value;
+	char		*cmd_path;
+	char		**splited_cmdl;
+	char		*prompt_line;
+	int			status;
 }	t_data;
 
 void	builtin(t_data *data);
@@ -89,6 +91,8 @@ int		parser(t_token *last_token);
 
 int		put_msg(char *title, char *msg, int fd, int status);
 char	*remove_spaces_around_str(char *str);
+void	free_minishell(t_data *data);
+void	minishell_init(t_data *data);
 
 int		save_var(t_env **last_var, char *cmd);
 bool	validate_var(char *var_name, char *var_value);
