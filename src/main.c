@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 15:38:41 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/23 22:01:26 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*path_value;
 
 	(void)argv;
-	(void)argc;
-	/*if (argc > 1)
-		error_msg_exit("minishell", TOO_MANY_ARG, 2);*/
+	if (argc > 1)
+		error_msg_exit("minishell", TOO_MANY_ARG, 2);
 	minishell_init(&data);
 	save_env(&data.last_env, envp);
 	path_value = get_path(data.last_env);
