@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 14:20:49 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:57:33 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	fork_it(t_data *data, t_env **last_env)
 	int	pid;
 	int	p_status;
 
+	p_status = 0;
 	pid = fork();
 	if (pid == 0)
 	{

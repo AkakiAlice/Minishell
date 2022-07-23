@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/22 15:06:41 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:56:24 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_login(void)
 		hostname = ft_strcat(getenv("HOSTNAME"), ":");
 	else if (getenv("NAME") != NULL)
 		hostname = ft_strcat(getenv("NAME"), ":");
-	else if (getenv("HOSTNAME") == NULL && getenv("NAME") == NULL)
+	else
 		hostname = ft_strdup("minishell:");
 	login = ft_strcat(user, hostname);
 	free(user);
