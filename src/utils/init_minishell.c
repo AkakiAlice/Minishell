@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 14:09:14 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/27 14:50:00 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 */
 void	minishell_init(t_data *data)
 {
+	data->head_cmd = NULL;
 	data->last_env = NULL;
 	data->cmd_path = NULL;
 	data->cmd_line = NULL;

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 21:57:33 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/27 14:49:44 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	is_dir_exit(t_data *data, t_env **last_env)
 	write(2, ": Is a directory\n", 17);
 	free_token_lst(&data->last_token);
 	ft_matrix_free(data->splited_cmdl);
+	free_cmd_lst(&data->head_cmd);
 	free_env_lst(last_env);
 	exit(126);
 }
@@ -49,6 +50,7 @@ void	no_such_file_exit(t_data *data, t_env **last_env)
 	write(2, ": No such file or directory\n", 28);
 	free_token_lst(&data->last_token);
 	ft_matrix_free(data->splited_cmdl);
+	free_cmd_lst(&data->head_cmd);
 	free_env_lst(last_env);
 	exit(127);
 }
@@ -100,6 +102,7 @@ void	exec_cmd(t_data *data, t_env **last_env)
 		write(2, ": command not found\n", 20);
 		free_token_lst(&data->last_token);
 		free_env_lst(last_env);
+		free_cmd_lst(&data->head_cmd);
 		ft_matrix_free(data->splited_cmdl);
 		exit(127);
 	}

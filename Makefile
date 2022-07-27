@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/23 14:03:54 by alida-si         ###   ########.fr        #
+#    Updated: 2022/07/27 13:17:04 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ VPATH = $(SRC_DIR)\
 		$(SRC_DIR)system\
 		$(SRC_DIR)utils\
 		$(SRC_DIR)variable\
+		$(SRC_DIR)command_table\
 		$(SRC_DIR)exec
 
 # FILES #
@@ -76,6 +77,7 @@ FILES = main.c\
 		get_path.c\
 		free_minishell.c\
 		init_minishell.c\
+		create_cmd_table.c\
 		check_cmd.c
 
 # COMPILED_SOURCES #

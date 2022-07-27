@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 14:21:02 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/27 14:50:18 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	free_minishell(t_data *data)
 	free_token_lst(&data->last_token);
 	if (data->cmd_line != NULL)
 		free(data->cmd_line);
+	free_cmd_lst(&data->head_cmd);
 	ft_matrix_free(data->splited_cmdl);
 }
