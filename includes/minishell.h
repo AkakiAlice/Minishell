@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/23 14:21:33 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/27 07:14:27 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	check_cmd(char *env_value, t_data *data);
 void	lexer(t_token **last_token, char **cmd);
 int		token_lst_add_back(t_token **last_token, int value);
 void	free_token_lst(t_token **last_token);
-int		parser(t_token *last_token);
+int		parser(t_data *data);
 
-int		put_msg(char *title, char *msg, int fd, int status);
+void	put_msg(char *title, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
 void	free_minishell(t_data *data);
 void	minishell_init(t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 22:16:40 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/27 07:14:39 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ void	run_cmd(t_data *data, char	*path_value)
 	put_exit_code(data);
 	builtin(data);
 	lexer(&data->last_token, data->splited_cmdl);
-	if (parser(data->last_token) == FAILURE)
-	{
-		data->status = 2;
+	if (parser(data) == FAILURE)
 		return ;
-	}
 	check_cmd(path_value, data);
 	fork_it(data, &data->last_env);
 }
@@ -63,7 +60,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (validate_quote_closed(data.cmd_line))
 			run_cmd(&data, path_value);
 		else
-			put_msg("minishell", UNCLOSED_QUOTES, 2, 1);
+			put_msg("minishell", UNCLOSED_QUOTES, 2);
 		free_minishell(&data);
 	}
 	return (0);
