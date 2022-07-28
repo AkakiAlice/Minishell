@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/26 13:28:08 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/28 05:56:40 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,35 +78,52 @@ static bool	is_word(int value)
 	return (false);
 }
 
+/*	SYNTAX_ERROR
+**	------------
+**	DESCRIPTION
+**	Output message and set exit code.
+**	PARAMETERS
+**	#1. The pointer to data struct (data);
+**	#2. The output message (msg);
+**	RETURN VALUES
+**	Return 1
+*/
+int	syntax_error(t_data *data, char *msg)
+{
+	put_msg("minishell", msg, 2);
+	data->status = 2;
+	return (1);
+}
+
 /*	PARSER
 **	------------
 **	DESCRIPTION
 **	Checks the order of tokens to ensure it is grammatical.
 **	PARAMETERS
-**	#1. The pointer to list (last_token);
+**	#1. The pointer to data struct (data);
 **	RETURN VALUES
 **	Return 0 if successful and 1 if not
 */
-int	parser(t_token *last_token)
+int	parser(t_data *data)
 {
 	t_token	*current;
 
-	if (last_token == NULL)
+	if (data->last_token == NULL)
 		return (0);
-	current = last_token->next;
+	current = data->last_token->next;
 	if (is_pipe(current->value))
-		return (put_msg("minishell", SYNTAX_ERR_PIPE, 2, 1));
-	while (current != last_token)
+		return (syntax_error(data, SYNTAX_ERR_PIPE));
+	while (current != data->last_token)
 	{
 		if (is_pipe_pipe(current->value, current->next->value))
-			return (put_msg("minishell", SYNTAX_ERR_PIPE, 2, 1));
+			return (syntax_error(data, SYNTAX_ERR_PIPE));
 		else if (is_redirect_pipe(current->value, current->next->value))
-			return (put_msg("minishell", SYNTAX_ERR_PIPE, 2, 1));
+			return (syntax_error(data, SYNTAX_ERR_PIPE));
 		current = current->next;
 	}
-	if (is_pipe(last_token->value))
-		return (put_msg("minishell", SYNTAX_ERR_PIPE, 2, 1));
-	else if (!is_word(last_token->value))
-		return (put_msg("minishell", SYNTAX_ERR_NEWLINE, 2, 1));
+	if (is_pipe(data->last_token->value))
+		return (syntax_error(data, SYNTAX_ERR_PIPE));
+	else if (!is_word(data->last_token->value))
+		return (syntax_error(data, SYNTAX_ERR_NEWLINE));
 	return (0);
 }
