@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/27 13:17:04 by alida-si         ###   ########.fr        #
+#    Updated: 2022/07/28 08:09:11 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,8 @@ FILES = main.c\
 		free_minishell.c\
 		init_minishell.c\
 		create_cmd_table.c\
-		check_cmd.c
+		check_cmd.c\
+		syntax_error.c\
 
 # COMPILED_SOURCES #
 

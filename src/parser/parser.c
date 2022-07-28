@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/28 05:56:40 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/28 08:07:48 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,6 @@ static bool	is_word(int value)
 	if (value == WORD)
 		return (true);
 	return (false);
-}
-
-/*	SYNTAX_ERROR
-**	------------
-**	DESCRIPTION
-**	Output message and set exit code.
-**	PARAMETERS
-**	#1. The pointer to data struct (data);
-**	#2. The output message (msg);
-**	RETURN VALUES
-**	Return 1
-*/
-int	syntax_error(t_data *data, char *msg)
-{
-	put_msg("minishell", msg, 2);
-	data->status = 2;
-	return (1);
 }
 
 /*	PARSER
