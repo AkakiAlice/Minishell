@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/28 05:55:13 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/07/28 08:08:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define UNCLOSED_QUOTES "unclosed quotes"
 # define SYNTAX_ERR_PIPE "syntax error near unexpected token `|'"
 # define SYNTAX_ERR_NEWLINE "syntax error near unexpected token `newline'"
+# define IS_DIR "Is a directory"
+# define NO_FILE_DIR "No such file or directory"
+# define CMD_NOT_FOUND "command not found"
 
 typedef struct s_env
 {
@@ -100,6 +103,7 @@ int		token_lst_add_back(t_token **last_token, int value);
 void	free_token_lst(t_token **last_token);
 void	tokenizer(t_data *data);
 int		parser(t_data *data);
+int		syntax_error(t_data *data, char *msg);
 
 void	put_msg(char *title, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);

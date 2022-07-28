@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/22 14:56:51 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/07/28 07:09:31 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	check_cmd(char *env_value, t_data *data)
 	int		i;
 
 	path_list = ft_split(env_value, ':');
-	aux = ft_strcat("/", data->splited_cmdl[0]);
+	aux = ft_strcat("/", data->head_cmd->word[0]);
 	i = 0;
 	while (path_list[i])
 	{
