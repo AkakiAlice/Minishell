@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/28 08:09:11 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/02 05:52:42 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ FILES = main.c\
 		create_cmd_table.c\
 		check_cmd.c\
 		syntax_error.c\
+		remove_spaces_str.c\
 
 # COMPILED_SOURCES #
 
@@ -149,9 +150,12 @@ TEST_FLAG = -lcriterion
 
 # main file cannot be included in the tests
 TEST_FILES = $(wildcard $(TEST_DIR)*.c)
-TEST_FILES += $(wildcard ./src/system/*.c)
+TEST_FILES += $(wildcard ./src/builtins/*.c)
+TEST_FILES += $(wildcard ./src/command_table/*.c)
+TEST_FILES += $(wildcard ./src/exec/*.c)
 TEST_FILES += $(wildcard ./src/parser/*.c)
 TEST_FILES += $(wildcard ./src/quotes/*.c)
+TEST_FILES += $(wildcard ./src/system/*.c)
 TEST_FILES += $(wildcard ./src/utils/*.c)
 TEST_FILES += $(wildcard ./src/variable/*.c)
 
