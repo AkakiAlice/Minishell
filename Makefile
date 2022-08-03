@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/02 05:52:42 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/03 05:46:17 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ FILES = main.c\
 		create_cmd_table.c\
 		check_cmd.c\
 		syntax_error.c\
-		remove_spaces_str.c\
+		remove_spaces_outside_quotes.c\
 
 # COMPILED_SOURCES #
 
