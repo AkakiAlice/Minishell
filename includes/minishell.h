@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/03 05:51:01 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/04 06:21:27 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+# define SPC 32
 # define PIPE 124
 # define INPUT 60
 # define HEREDOC 6060
@@ -110,6 +111,7 @@ char	*remove_spaces_around_str(char *str);
 char	*remove_spaces_outside_quote(char *str);
 void	free_minishell(t_data *data);
 void	minishell_init(t_data *data);
+char	**split_cmd(char *cmd);
 
 int		save_var(t_env **last_var, char *cmd);
 bool	validate_var(char *var_name, char *var_value);
