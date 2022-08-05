@@ -297,6 +297,84 @@ Test(split_cmd, string_quote) {
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
-	matrix_printf(result);
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, string_quote_space) {
+	char	*str = "echo   mini's'hell \"ls -la \" pwd";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], "\"ls -la \"", "Ensure split string, index:2");
+	cr_expect_str_eq(result[3], "pwd", "Ensure split string, index:3");
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, string_quote_trunc) {
+	char	*str = "echo   mini's'hell>outfile";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], ">", "Ensure split string, index:2");
+	cr_expect_str_eq(result[3], "outfile", "Ensure split string, index:3");
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, string_quote_input) {
+	char	*str = "echo   mini's'hell<file";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], "<", "Ensure split string, index:2");
+	cr_expect_str_eq(result[3], "file", "Ensure split string, index:3");
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, string_quote_append) {
+	char	*str = "echo   mini's'hell>>file";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], ">>", "Ensure split string, index:2");
+	cr_expect_str_eq(result[3], "file", "Ensure split string, index:3");
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, string_quote_heredoc) {
+	char	*str = "echo   mini's'hell<<file";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], "<<", "Ensure split string, index:2");
+	cr_expect_str_eq(result[3], "file", "Ensure split string, index:3");
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, string_quote_pipe) {
+	char	*str = "echo   mini's'hell|ls|cat";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], "|", "Ensure split string, index:2");
+	cr_expect_str_eq(result[3], "ls", "Ensure split string, index:3");
+	cr_expect_str_eq(result[4], "|", "Ensure split string, index:4");
+	cr_expect_str_eq(result[5], "cat", "Ensure split string, index:5");
 	ft_matrix_free(result);
 }
