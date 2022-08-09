@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/09 06:28:45 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/09 08:54:50 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,6 @@ FILES = main.c\
 		reserved_word.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
-		split_cmd.c\
 
 # COMPILED_SOURCES #
 
