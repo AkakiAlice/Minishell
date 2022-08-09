@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/04 06:21:27 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/09 06:29:18 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ typedef struct s_quotes
 	bool	in;
 }	t_quotes;
 
+typedef struct s_split
+{
+	char	**words;
+	int		num_word;
+}	t_split;
+
 typedef struct s_cmdtable
 {
 	char				**word;
@@ -105,6 +111,13 @@ void	free_token_lst(t_token **last_token);
 void	tokenizer(t_data *data);
 int		parser(t_data *data);
 int		syntax_error(t_data *data, char *msg);
+int		count_cmd_words(char *cmd);
+int		is_reserved_word(char c);
+void	skip_char(char **str, char ch);
+bool	check_reserved_word(char **cmd, int *word_count, bool is_word);
+int		find_first_reserved_char(char *cmd);
+void	save_word_with_quotes(t_split *split, char **cmd, int *i);
+void	save_reserved_word(t_split *split, char **cmd, int *i);
 
 void	put_msg(char *title, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
@@ -123,6 +136,7 @@ bool	validate_quote_closed(char *var_value);
 bool	validate_quote_space(char *var_value);
 char	*str_without_quotes(char *str);
 bool	check_var_expansion(char *var_value);
+void	skip_quotes(char **cmd);
 
 void	error_msg_exit(char *title, char *msg, int fd);
 

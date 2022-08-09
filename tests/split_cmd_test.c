@@ -378,3 +378,33 @@ Test(split_cmd, string_quote_pipe) {
 	cr_expect_str_eq(result[5], "cat", "Ensure split string, index:5");
 	ft_matrix_free(result);
 }
+
+Test(split_cmd, quote_pipe) {
+	char	*str = "ls '|' cat";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "ls", "Ensure split string, index:0");
+	cr_expect_str_eq(result[1], "'|'", "Ensure split string, index:1");
+	cr_expect_str_eq(result[2], "cat", "Ensure split string, index:2");
+	ft_matrix_free(result);
+}
+
+Test(split_cmd, skip_space_1) {
+	char	*str = "                ";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_expect(result == NULL, "Ensure returns NULL if string is empty");
+}
+
+Test(split_cmd, skip_space_2) {
+	char	*str = "                ls      ";
+	char	**result = NULL;
+
+	result = split_cmd(str);
+	cr_assert(result, "Ensure split string");
+	cr_expect_str_eq(result[0], "ls", "Ensure split string, index:0");
+	ft_matrix_free(result);
+}
