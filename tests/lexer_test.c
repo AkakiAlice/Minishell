@@ -1,31 +1,37 @@
 #include <criterion/criterion.h>
 #include "minishell.h"
 
+static int	count_nodes(t_token *last_token)
+{
+	t_token	*current;
+	int	result;
+
+	if (last_token == NULL)
+		return (0);
+	current = last_token->next;
+	result = 0;
+	while (current != last_token)
+	{
+		result++;
+		current = current->next;
+	}
+	result++;
+	return (result);
+}
+
 Test(lexer, is_pipe)
 {
 	char	**cmd;
 	t_token	*last_token = NULL;
+	int		count_token_nodes = 0;
 
 	cmd = malloc(sizeof(char *) * 2);
 	cmd[0] = strdup("|");
 	cmd[1] = NULL;
 	lexer(&last_token, cmd);
-	cr_expect_eq(last_token->value, PIPE, "Ensure return 0 if PIPE");
-	free_token_lst(&last_token);
-	ft_matrix_free(cmd);
-}
-
-Test(lexer, pipe_with_space)
-{
-	char	**cmd;
-	t_token	*last_token = NULL;
-
-	cmd = malloc(sizeof(char *) * 2);
-	cmd[0] = strdup("   | ");
-	cmd[1] = NULL;
-	lexer(&last_token, cmd);
-	cr_expect_neq(last_token->value, PIPE,
-		"Ensure return not 0 if there are other characters");
+	count_token_nodes = count_nodes(last_token);
+	cr_expect_eq(last_token->value, PIPE, "Ensure return 124 if PIPE");
+	cr_expect_eq(count_token_nodes, 1, "Ensure save 1 node in token list");
 	free_token_lst(&last_token);
 	ft_matrix_free(cmd);
 }
@@ -34,13 +40,16 @@ Test(lexer, pipe_with_simple_quote)
 {
 	char	**cmd;
 	t_token	*last_token = NULL;
+	int		count_token_nodes = 0;
 
 	cmd = malloc(sizeof(char *) * 2);
 	cmd[0] = strdup("'|'");
 	cmd[1] = NULL;
 	lexer(&last_token, cmd);
+	count_token_nodes = count_nodes(last_token);
 	cr_expect_neq(last_token->value, PIPE,
 		"Ensure return not 0 if there are other characters");
+	cr_expect_eq(count_token_nodes, 1, "Ensure save 1 node in token list");
 	free_token_lst(&last_token);
 	ft_matrix_free(cmd);
 }
@@ -49,12 +58,15 @@ Test(lexer, is_input)
 {
 	char	**cmd;
 	t_token	*last_token = NULL;
+	int		count_token_nodes = 0;
 
 	cmd = malloc(sizeof(char *) * 2);
 	cmd[0] = strdup("<");
 	cmd[1] = NULL;
 	lexer(&last_token, cmd);
+	count_token_nodes = count_nodes(last_token);
 	cr_expect_eq(last_token->value, INPUT, "Ensure return 1 if INPUT");
+	cr_expect_eq(count_token_nodes, 1, "Ensure save 1 node in token list");
 	free_token_lst(&last_token);
 	ft_matrix_free(cmd);
 }
@@ -63,13 +75,16 @@ Test(lexer, is_not_input)
 {
 	char	**cmd;
 	t_token	*last_token = NULL;
+	int		count_token_nodes = 0;
 
 	cmd = malloc(sizeof(char *) * 2);
 	cmd[0] = strdup("   < ");
 	cmd[1] = NULL;
 	lexer(&last_token, cmd);
+	count_token_nodes = count_nodes(last_token);
 	cr_expect_neq(last_token->value, INPUT,
 		"Ensure return not 1 if there are other characters");
+	cr_expect_eq(count_token_nodes, 1, "Ensure save 1 node in token list");
 	free_token_lst(&last_token);
 	ft_matrix_free(cmd);
 }
@@ -78,12 +93,15 @@ Test(lexer, is_heredoc)
 {
 	char	**cmd;
 	t_token	*last_token = NULL;
+	int		count_token_nodes = 0;
 
 	cmd = malloc(sizeof(char *) * 2);
 	cmd[0] = strdup("<<");
 	cmd[1] = NULL;
 	lexer(&last_token, cmd);
+	count_token_nodes = count_nodes(last_token);
 	cr_expect_eq(last_token->value, HEREDOC, "Ensure return 2 if HEREDOC");
+	cr_expect_eq(count_token_nodes, 1, "Ensure save 1 node in token list");
 	free_token_lst(&last_token);
 	ft_matrix_free(cmd);
 }
