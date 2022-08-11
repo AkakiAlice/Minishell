@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/28 05:56:25 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/11 07:40:01 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	run_cmd(t_data *data, char	*path_value)
 	lexer(&data->last_token, data->splited_cmdl);
 	if (parser(data) == FAILURE)
 		return ;
-	create_cmd_table(data);
+	create_cmd_table(&data->head_cmd, data->last_token, data->splited_cmdl);
 	check_cmd(path_value, data);
 	fork_it(data, &data->last_env);
 }

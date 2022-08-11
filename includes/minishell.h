@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/09 06:29:18 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/11 07:54:56 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,9 @@ typedef struct s_data
 void	builtin(t_data *data);
 void	exit_cmd(t_data *data);
 
-void	create_cmd_table(t_data *data);
-void	cmd_lst_add_front(t_cmdtable **head_cmd, char *pipe_line);
+void	create_cmd_table(t_cmdtable **head_cmd, t_token *last_token,
+			char **cmd);
+void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word);
 void	free_cmd_lst(t_cmdtable **head_cmd);
 
 void	check_cmd(char *env_value, t_data *data);
