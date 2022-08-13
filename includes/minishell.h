@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/09 06:29:18 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/13 14:24:26 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_data
 	char		*cmd_path;
 	char		**splited_cmdl;
 	char		*prompt_line;
+	char		*path_value;
 	int			status;
 }	t_data;
 
@@ -94,9 +95,9 @@ void	create_cmd_table(t_data *data);
 void	cmd_lst_add_front(t_cmdtable **head_cmd, char *pipe_line);
 void	free_cmd_lst(t_cmdtable **head_cmd);
 
-void	check_cmd(char *env_value, t_data *data);
+void	check_cmd(t_data *data);
 void	fork_it(t_data *data, t_env **last_env);
-void	exec_cmd(t_data *data, t_env **last_env);
+void	exec_cmd(t_data *data, t_env **last_env, char **word);
 char	*get_path(t_env *env_list);
 
 void	save_env(t_env **env, char **envp);
