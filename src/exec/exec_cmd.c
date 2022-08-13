@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/13 14:38:19 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/13 19:25:24 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,44 @@ void	exec_cmd(t_data *data, t_env **last_env, char **word)
 		free_env_lst(last_env);
 		exit(127);
 	}
+	//dprintf(2, "%s\n", word[0]);
 	execve(data->cmd_path, word, NULL);
+}
+
+void	open_pipe(t_data *data)
+{
+	int			pipe_fd[2];
+	t_cmdtable	*temp;
+
+	temp = data->head_cmd;
+	while (temp != NULL)
+	{
+		if (temp->next != NULL)
+		{
+			pipe(pipe_fd);
+			temp->fdout = pipe_fd[1];
+			temp->next->fdin = pipe_fd[0];
+		}
+		temp = temp->next;
+	}
+}
+
+void	wait_all_pids(int pid[1024], int id, t_data *data)
+{
+	int	p_status;
+	int	j;
+
+	p_status = 0;
+	j = 0;
+	while (j <= id)
+	{
+		//ft_printf("pid[%i]\n", j);
+		waitpid(pid[j], &data->status, 0);
+		j++;
+	}
+	if (WIFEXITED(data->status))
+		p_status = WEXITSTATUS(data->status);
+	data->status = p_status;
 }
 
 /*	FORK_IT
@@ -136,43 +173,37 @@ void	exec_cmd(t_data *data, t_env **last_env, char **word)
 */
 void	fork_it(t_data *data, t_env **last_env)
 {
-	int	pid;
-	int	p_status;
-	int	pipe_fd[2];
-	int	index;
+	int	pid[1024];
+	int	id;
 
-	index = 0;
-	pipe(pipe_fd);
+	id = -1;
+	open_pipe(data);
 	while (data->head_cmd != NULL)
 	{
-		p_status = 0;
-		pid = fork();
-		if (pid == 0 && index == 0)
+		pid[++id] = fork();
+		if (pid[id] == 0)
 		{
 			if (ft_strchr(data->head_cmd->word[0], '/') != NULL)
 				check_is_dir(data, last_env);
-			dup2(pipe_fd[1], 1);
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
+			if (data->head_cmd->fdout > 2)
+			{
+				dup2(data->head_cmd->fdout, 1);
+				close(data->head_cmd->fdout);
+			}
+			if (data->head_cmd->fdin > 2)
+			{
+				dup2(data->head_cmd->fdin, 0);
+				close(data->head_cmd->fdin);
+			}
 			exec_cmd(data, last_env, data->head_cmd->word);
 		}
-		if (pid == 0 && index == 1)
-		{
-			if (ft_strchr(data->head_cmd->word[0], '/') != NULL)
-				check_is_dir(data, last_env);
-			dup2(pipe_fd[0], 0);
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			exec_cmd(data, last_env, data->head_cmd->word);
-		}
-		index++;
+		if (data->head_cmd->fdout > 2)
+			close(data->head_cmd->fdout);
+		if (data->head_cmd->fdin > 2)
+			close(data->head_cmd->fdin);
 		data->head_cmd = data->head_cmd->next;
-		waitpid(0, &data->status, 0);
-		close(pipe_fd[1]);
-		if (WIFEXITED(data->status))
-			p_status = WEXITSTATUS(data->status);
-		data->status = p_status;
 	}
+	wait_all_pids(pid, id, data);
 }
 
 

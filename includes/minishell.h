@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/13 14:24:26 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/13 17:04:31 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_split
 typedef struct s_cmdtable
 {
 	char				**word;
+	int					fdin;
+	int					fdout;
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 

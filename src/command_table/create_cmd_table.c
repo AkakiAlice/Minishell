@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/27 14:49:15 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/13 17:54:58 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	cmd_lst_add_front(t_cmdtable **head_cmd, char *pipe_line)
 	if (ptr != NULL)
 	{
 		ptr->word = ft_split2(pipe_line, ' ');
+		ptr->fdin = 0;
+		ptr->fdout = 1;
 		if ((*head_cmd) == NULL)
 		{
 			ptr -> next = NULL;
