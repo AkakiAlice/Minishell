@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 18:05:54 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 19:05:51 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	get_prompt(t_data *data, t_env **head_env);
 void	free_env_lst(t_env **head_env);
 
 void	lexer(t_token **head_token, char **cmd);
+int		get_token(char *cmd);
 int		token_lst_add_back(t_token **head_token, int value);
 void	free_token_lst(t_token **head_token);
 void	tokenizer(t_data *data);

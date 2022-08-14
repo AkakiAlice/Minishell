@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/14 18:20:46 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 19:14:31 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,16 @@ void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word)
 	}
 }
 
+bool	is_redirect(char *cmd)
+{
+	int	token;
+
+	token = get_token(cmd);
+	if (token != WORD && token != PIPE)
+		return (true);
+	return (false);
+}
+
 /*	SAVE_WORD
 **	------------
 **	DESCRIPTION
@@ -122,11 +132,16 @@ char	**save_word(int word_counter, char ***cmd)
 	if (!words)
 		return (NULL);
 	i = 0;
-	while (word_counter > 0)
+	while (**cmd && word_counter > 0)
 	{
-		words[i++] = str_without_quotes(**cmd);
-		(*cmd)++;
-		word_counter--;
+		if (is_redirect(**cmd))
+			(*cmd) += 2;
+		else
+		{
+			words[i++] = str_without_quotes(**cmd);
+			(*cmd)++;
+			word_counter--;
+		}
 	}
 	words[i] = NULL;
 	return (words);
@@ -146,21 +161,32 @@ char	**save_word(int word_counter, char ***cmd)
 */
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
 {
-	int	counter;
+	int		word_counter;
+	bool	is_file;
 
-	counter = 0;
+	word_counter = 0;
+	is_file = false;
 	while (head_token != NULL)
 	{
 		if (head_token->value == PIPE)
 		{
-			cmd_lst_add_front(head_cmd, save_word(counter, &cmd));
-			counter = 0;
+			cmd_lst_add_front(head_cmd, save_word(word_counter, &cmd));
+			word_counter = 0;
 			cmd++;
 		}
+		else if (head_token->value == INPUT)
+			is_file = true;
 		else if (head_token->value == WORD)
-			counter++;
+		{
+			if (is_file)
+				is_file = false;
+			else
+				word_counter++;
+		}
 		head_token = head_token->next;
 	}
-	if (counter)
-		cmd_lst_add_front(head_cmd, save_word(counter, &cmd));
+	// ft_printf("word_counter: [%d]\n", word_counter);
+	if (word_counter)
+		cmd_lst_add_front(head_cmd, save_word(word_counter, &cmd));
+	// cmdlst_printf(*head_cmd);
 }

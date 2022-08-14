@@ -6,36 +6,39 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 18:05:54 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 19:05:43 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	CHECK_CMD_CHAR
+/*	GET_TOKEN
 **	------------
 **	DESCRIPTION
 **	Check the cmd character is pipe, heredoc, input, append, trunc or word.
-**	Then add the node at the end of circular linked list.
 **	PARAMETERS
-**	#1. The pointer to list (head_token);
-**	#2. The array (cmd);
+**	#1. The array (cmd);
 **	RETURN VALUES
-**	Return 0 if successful and 1 if there is memory allocation error
+**	Return token
 */
-int	check_cmd_char(t_token **head_token, char *cmd)
+int	get_token(char *cmd)
 {
-	if (ft_strncmp_eq(cmd, "|", 1))
-		return (token_lst_add_back(head_token, PIPE));
-	if (ft_strncmp_eq(cmd, "<<", 2))
-		return (token_lst_add_back(head_token, HEREDOC));
-	if (ft_strncmp_eq(cmd, "<", 1))
-		return (token_lst_add_back(head_token, INPUT));
-	if (ft_strncmp_eq(cmd, ">>", 2))
-		return (token_lst_add_back(head_token, APPEND));
-	if (ft_strncmp_eq(cmd, ">", 1))
-		return (token_lst_add_back(head_token, TRUNC));
-	return (token_lst_add_back(head_token, WORD));
+	int	cmd_len;
+
+	cmd_len = ft_strlen(cmd);
+	if (cmd_len > 2)
+		return (WORD);
+	if (cmd_len == 1 && ft_strncmp_eq(cmd, "|", 1))
+		return (PIPE);
+	if (cmd_len == 2 && ft_strncmp_eq(cmd, "<<", 2))
+		return (HEREDOC);
+	if (cmd_len == 1 && ft_strncmp_eq(cmd, "<", 1))
+		return (INPUT);
+	if (cmd_len == 2 && ft_strncmp_eq(cmd, ">>", 2))
+		return (APPEND);
+	if (cmd_len == 1 && ft_strncmp_eq(cmd, ">", 1))
+		return (TRUNC);
+	return (WORD);
 }
 
 /*	LEXER
@@ -51,16 +54,13 @@ int	check_cmd_char(t_token **head_token, char *cmd)
 void	lexer(t_token **head_token, char **cmd)
 {
 	int	i;
-	int	cmd_len;
+	int	token;
 
 	i = 0;
 	while (cmd[i])
 	{
-		cmd_len = ft_strlen(cmd[i]);
-		if (cmd_len < 3)
-			check_cmd_char(head_token, cmd[i]);
-		else
-			token_lst_add_back(head_token, WORD);
+		token = get_token(cmd[i]);
+		token_lst_add_back(head_token, token);
 		i++;
 	}
 	return ;
