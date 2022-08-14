@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/11 07:55:40 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 18:20:46 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,32 +139,28 @@ char	**save_word(int word_counter, char ***cmd)
 **	in the linked list
 **	PARAMETERS
 **	#1. Pointer to struct command table (head_cmd);
-**	#2. Pointer to struct token (last_token);
+**	#2. Pointer to struct token (head_token);
 **	#3. Pointer to string (cmd);
 **	RETURN VALUES
 **	-
 */
-void	create_cmd_table(t_cmdtable **head_cmd, t_token *last_token, char **cmd)
+void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
 {
-	t_token	*current;
-	int		counter;
+	int	counter;
 
 	counter = 0;
-	current = last_token->next;
-	while (current != last_token)
+	while (head_token != NULL)
 	{
-		if (current->value == PIPE)
+		if (head_token->value == PIPE)
 		{
 			cmd_lst_add_front(head_cmd, save_word(counter, &cmd));
 			counter = 0;
 			cmd++;
 		}
-		else if (last_token->value == WORD)
+		else if (head_token->value == WORD)
 			counter++;
-		current = current->next;
+		head_token = head_token->next;
 	}
-	if (current->value == WORD)
-		counter++;
 	if (counter)
 		cmd_lst_add_front(head_cmd, save_word(counter, &cmd));
 }

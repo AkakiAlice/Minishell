@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 17:50:11 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 18:05:54 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_cmdtable
 
 typedef struct s_data
 {
-	t_token		*last_token;
+	t_token		*head_token;
 	t_env		*head_env;
 	t_cmdtable	*head_cmd;
 	char		*cmd_line;
@@ -90,7 +90,7 @@ typedef struct s_data
 void	builtin(t_data *data);
 void	exit_cmd(t_data *data);
 
-void	create_cmd_table(t_cmdtable **head_cmd, t_token *last_token,
+void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
 			char **cmd);
 void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word);
 void	free_cmd_lst(t_cmdtable **head_cmd);
@@ -106,9 +106,9 @@ char	*get_env_value(char *envp, char *env_key);
 void	get_prompt(t_data *data, t_env **head_env);
 void	free_env_lst(t_env **head_env);
 
-void	lexer(t_token **last_token, char **cmd);
-int		token_lst_add_back(t_token **last_token, int value);
-void	free_token_lst(t_token **last_token);
+void	lexer(t_token **head_token, char **cmd);
+int		token_lst_add_back(t_token **head_token, int value);
+void	free_token_lst(t_token **head_token);
 void	tokenizer(t_data *data);
 int		parser(t_data *data);
 int		syntax_error(t_data *data, char *msg);
