@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/11 07:40:01 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:50:11 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	run_cmd(t_data *data, char	*path_value)
 		return ;
 	create_cmd_table(&data->head_cmd, data->last_token, data->splited_cmdl);
 	check_cmd(path_value, data);
-	fork_it(data, &data->last_env);
+	fork_it(data, &data->head_env);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -53,11 +53,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc > 1)
 		error_msg_exit("minishell", TOO_MANY_ARG, 2);
 	minishell_init(&data);
-	save_env(&data.last_env, envp);
-	path_value = get_path(data.last_env);
+	save_env(&data.head_env, envp);
+	path_value = get_path(data.head_env);
 	while (1)
 	{
-		get_prompt(&data, &data.last_env);
+		get_prompt(&data, &data.head_env);
 		if (validate_quote_closed(data.cmd_line))
 			run_cmd(&data, path_value);
 		else

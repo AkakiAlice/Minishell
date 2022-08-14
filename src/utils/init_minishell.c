@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/27 14:50:00 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:50:11 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 void	minishell_init(t_data *data)
 {
 	data->head_cmd = NULL;
-	data->last_env = NULL;
+	data->head_env = NULL;
 	data->cmd_path = NULL;
 	data->cmd_line = NULL;
 	data->last_token = NULL;

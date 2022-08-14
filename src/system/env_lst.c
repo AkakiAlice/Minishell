@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 07:00:12 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/27 07:04:11 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:57:24 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 /*	ENV_LST_ADD_BACK
 **	------------
 **	DESCRIPTION
-**	Add the node at the end of the circular linked list and change the last_env
+**	Add the node at the end of the circular linked list and change the head_env
 **	pointer to the last node added.
 **	PARAMETERS
-**	#1. The pointer to list (last_env);
+**	#1. The pointer to list (head_env);
 **	#2. The pointer to environment name (name);
 **	#3. The pointer to environment value (value);
 **	RETURN VALUES
 **	Return 0 if successful and 1 if there is memory allocation error or if there
 **	is no content in name and value
 */
-int	env_lst_add_back(t_env **last_env, char *name, char *value)
+int	env_lst_add_back(t_env **head_env, char *name, char *value)
 {
 	t_env	*new_node;
+	t_env	*temp;
 
 	if (!name || !value)
 		return (EXIT_FAILURE);
@@ -36,14 +37,16 @@ int	env_lst_add_back(t_env **last_env, char *name, char *value)
 		return (EXIT_FAILURE);
 	new_node->name = name;
 	new_node->value = value;
-	if ((*last_env) == NULL)
-		new_node->next = new_node;
+	new_node->next = NULL;
+	if ((*head_env) == NULL)
+		*head_env = new_node;
 	else
 	{
-		new_node->next = (*last_env)->next;
-		(*last_env)->next = new_node;
+		temp = *head_env;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new_node;
 	}
-	*last_env = new_node;
 	return (EXIT_SUCCESS);
 }
 
@@ -52,28 +55,23 @@ int	env_lst_add_back(t_env **last_env, char *name, char *value)
 **	DESCRIPTION
 **	Free all memory allocated within environment circular linked list.
 **	PARAMETERS
-**	#1. The pointer to list (last_env);
+**	#1. The pointer to list (head_env);
 **	RETURN VALUES
 **	-
 */
-void	free_env_lst(t_env **last_env)
+void	free_env_lst(t_env **head_env)
 {
 	t_env	*temp;
-	t_env	*current;
 
-	if (*last_env == NULL)
+	if (*head_env == NULL)
 		return ;
-	current = (*last_env)->next;
-	while (current != (*last_env))
+	while (*head_env != NULL)
 	{
-		free(current->name);
-		free(current->value);
-		temp = current->next;
-		free(current);
-		current = temp;
+		free((*head_env)->name);
+		free((*head_env)->value);
+		temp = (*head_env)->next;
+		free(*head_env);
+		*head_env = temp;
 	}
-	free((*last_env)->name);
-	free((*last_env)->value);
-	free((*last_env));
-	*last_env = NULL;
+	*head_env = NULL;
 }

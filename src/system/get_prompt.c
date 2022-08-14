@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/23 21:56:24 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:50:11 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_login(void)
 **	RETURN VALUES
 **	-
 */
-void	get_prompt(t_data *data, t_env **last_env)
+void	get_prompt(t_data *data, t_env **head_env)
 {
 	char	*cwd;
 	char	aux[1024];
@@ -88,7 +88,7 @@ void	get_prompt(t_data *data, t_env **last_env)
 	else
 	{
 		free_prompt_line(cwd, login, data->prompt_line);
-		free_env_lst(last_env);
+		free_env_lst(head_env);
 		free(data->cmd_line);
 		if (data->cmd_path != NULL)
 			free(data->cmd_path);

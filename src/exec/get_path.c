@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:51:39 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 19:11:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:58:55 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_path(t_env *env_list)
 	t_env	*ptr;
 
 	ptr = env_list;
-	while (ptr->next != env_list)
+	while (ptr != NULL)
 	{
 		if (ft_strncmp("PATH", ptr->name, 4) == 0)
 			return (ptr->value);
