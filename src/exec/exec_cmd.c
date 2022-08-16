@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/16 15:32:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/16 17:19:11 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	check_is_dir(t_data *data, t_env **last_env)
 */
 void	exec_cmd(t_data *data, t_env **last_env, char **word)
 {
-	check_cmd(data);
+	check_cmd(data, word);
 	if (data->cmd_path == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -116,24 +116,27 @@ void	exec_cmd(t_data *data, t_env **last_env, char **word)
 */
 void	fork_it(t_data *data, t_env **last_env)
 {
-	int	pid[1024];
-	int	id;
+	int			pid[1024];
+	int			id;
+	t_cmdtable	*head;
 
+	head = data->head_cmd;
 	id = -1;
 	open_pipe(data);
-	while (data->head_cmd != NULL)
+	while (head != NULL)
 	{
 		pid[++id] = fork();
 		if (pid[id] == 0)
 		{
-			if (ft_strchr(data->head_cmd->word[0], '/') != NULL)
+			if (ft_strchr(head->word[0], '/') != NULL)
 				check_is_dir(data, last_env);
-			dup_fds(data->head_cmd);
-			close_list_fds(data);
-			exec_cmd(data, last_env, data->head_cmd->word);
+			dup_fds(head);
+			close_list_fds(head);
+			exec_cmd(data, last_env, head->word);
 		}
-		close_node_fds(data->head_cmd);
-		data->head_cmd = data->head_cmd->next;
+		close_node_fds(head);
+		head = head->next;
 	}
 	wait_all_pids(pid, id, data);
+	free_cmd_lst(&data->head_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/16 15:32:06 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/16 17:09:21 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,12 @@ void	close_node_fds(t_cmdtable *head)
 		close(head->fdin);
 }
 
-void	close_list_fds(t_data *data)
+void	close_list_fds(t_cmdtable *head)
 {
-	t_cmdtable	*temp;
-
-	temp = data->head_cmd;
-	while (temp)
+	while (head)
 	{
-		close_node_fds(temp);
-		temp = temp->next;
+		close_node_fds(head);
+		head = head->next;
 	}
 }
 

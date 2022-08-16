@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/13 14:23:52 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/16 17:14:28 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 **	RETURN VALUES
 **	-
 */
-void	check_cmd(t_data *data)
+void	check_cmd(t_data *data, char **word)
 {
 	char	**path_list;
 	char	*aux;
 	int		i;
 
 	path_list = ft_split(data->path_value, ':');
-	aux = ft_strcat("/", data->head_cmd->word[0]);
+	aux = ft_strcat("/", word[0]);
 	i = 0;
 	while (path_list[i])
 	{
