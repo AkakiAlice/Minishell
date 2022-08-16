@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/13 18:57:08 by alida-si         ###   ########.fr        #
+#    Updated: 2022/08/16 15:33:36 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,7 @@ FILES = main.c\
 		reserved_word.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
+		exec_cmd_utils.c
 
 # COMPILED_SOURCES #
 

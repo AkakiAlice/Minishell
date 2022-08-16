@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/13 17:04:31 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/16 15:35:59 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,11 @@ void	check_cmd(t_data *data);
 void	fork_it(t_data *data, t_env **last_env);
 void	exec_cmd(t_data *data, t_env **last_env, char **word);
 char	*get_path(t_env *env_list);
+void	open_pipe(t_data *data);
+void	wait_all_pids(int pid[1024], int id, t_data *data);
+void	close_node_fds(t_cmdtable *head);
+void	close_list_fds(t_data *data);
+void	dup_fds(t_cmdtable *head);
 
 void	save_env(t_env **env, char **envp);
 int		env_lst_add_back(t_env **last_env, char *name, char *value);
