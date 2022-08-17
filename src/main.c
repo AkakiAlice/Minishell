@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/17 16:38:57 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/17 17:33:54 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ void	put_exit_code(char *word, t_data *data)
 		free(word);
 		word = ft_strdup(ft_itoa(data->status));
 	}
+}
+
+void	expand_env(char *word, t_data *data)
+{
+	char	**temp;
+
+	temp = ft_split2(word, '$');
+	ft_printf(temp[0]);
+	(void)data;
 }
 
 void	expand(t_data *data)
@@ -35,6 +44,7 @@ void	expand(t_data *data)
 			if (ft_strncmp_eq(temp->word[i], "$", 1))
 			{
 				put_exit_code(temp->word[i], data);
+				expand_env(temp->word[i], data);
 			}
 			i++;
 		}
