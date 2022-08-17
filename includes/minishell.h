@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/17 05:47:29 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/17 08:09:11 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,20 @@ typedef struct s_split
 	int		num_word;
 }	t_split;
 
+typedef struct s_counter
+{
+	int	word;
+	int	less;
+	int	great;
+}	t_counter;
+
+typedef struct s_cmd_value
+{
+	char	**word;
+	char	**less;
+	char	**great;
+}	t_cmd_value;
+
 typedef struct s_cmdtable
 {
 	char				**word;
@@ -94,8 +108,12 @@ void	exit_cmd(t_data *data);
 
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
 			char **cmd);
-void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word, char **less, char **great);
+void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v);
 void	free_cmd_lst(t_cmdtable **head_cmd);
+bool	is_less(char *cmd);
+bool	is_great(char *cmd);
+void	init_count(t_counter *count);
+int		init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
 
 void	check_cmd(char *env_value, t_data *data);
 void	fork_it(t_data *data, t_env **head_env);
