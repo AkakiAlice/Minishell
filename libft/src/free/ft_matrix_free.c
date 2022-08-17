@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrix_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 07:50:44 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/23 13:44:03 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/17 05:58:56 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_matrix_free(char **matrix)
 	int	i;
 
 	i = 0;
-	if (matrix == NULL)
+	if (!matrix)
 		return ;
 	while (*(matrix + i))
 	{

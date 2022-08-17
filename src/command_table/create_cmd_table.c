@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/14 19:14:31 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/17 07:03:41 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	cmdlst_printf(t_cmdtable *cmd)
 	while (cmd != NULL)
 	{
 		ft_printf("List: [%d]\n", i++);
-		matrix_printf(cmd->word);
+		// matrix_printf(cmd->word);
+		// matrix_printf(cmd->less);
+		// matrix_printf(cmd->great);
 		cmd = cmd->next;
 	}
 	return ;
@@ -61,6 +63,8 @@ void	free_cmd_lst(t_cmdtable **head_cmd)
 	while (*head_cmd != NULL)
 	{
 		ft_matrix_free((*head_cmd)->word);
+		ft_matrix_free((*head_cmd)->less);
+		ft_matrix_free((*head_cmd)->great);
 		temp = (*head_cmd)->next;
 		free(*head_cmd);
 		*head_cmd = temp;
@@ -77,7 +81,7 @@ void	free_cmd_lst(t_cmdtable **head_cmd)
 **	RETURN VALUES
 **	-
 */
-void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word)
+void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word, char **less, char **great)
 {
 	t_cmdtable	*ptr;
 	t_cmdtable	*temp;
@@ -86,6 +90,8 @@ void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word)
 	if (!ptr)
 		return ;
 	ptr->word = word;
+	ptr->less = less;
+	ptr->great = great;
 	if ((*head_cmd) == NULL)
 	{
 		ptr->next = NULL;
@@ -113,6 +119,26 @@ bool	is_redirect(char *cmd)
 	return (false);
 }
 
+bool	is_less(char *cmd)
+{
+	int	token;
+
+	token = get_token(cmd);
+	if (token == INPUT || token == HEREDOC)
+		return (true);
+	return (false);
+}
+
+bool	is_great(char *cmd)
+{
+	int	token;
+
+	token = get_token(cmd);
+	if (token == TRUNC || token == APPEND)
+		return (true);
+	return (false);
+}
+
 /*	SAVE_WORD
 **	------------
 **	DESCRIPTION
@@ -123,28 +149,74 @@ bool	is_redirect(char *cmd)
 **	RETURN VALUES
 **	Return allocated memory from new array of string.
 */
-char	**save_word(int word_counter, char ***cmd)
+void	save_word(t_cmdtable **head_cmd, char ***cmd, int word_counter, int less_counter, int great_counter)
 {
 	char	**words;
+	char	**less;
+	char	**great;
 	int		i;
+	int		j;
+	int		k;
 
-	words = (char **)malloc(((sizeof(char *)) * (word_counter + 1)));
-	if (!words)
-		return (NULL);
-	i = 0;
-	while (**cmd && word_counter > 0)
+	if (word_counter)
 	{
-		if (is_redirect(**cmd))
-			(*cmd) += 2;
-		else
+		words = (char **)malloc(((sizeof(char *)) * (word_counter + 1)));
+		if (!words)
+			return ;
+	}
+	else
+		words = NULL;
+	if (less_counter) // * Feito essa tratativa porque nem sempre será passado o word e less
+	{
+		less = (char **)malloc(((sizeof(char *)) * (less_counter + 1)));
+		if (!less)
+			return ;
+	}
+	else
+		less = NULL;
+	if (great_counter)
+	{
+		great = (char **)malloc(((sizeof(char *)) * (great_counter + 1)));
+		if (!great)
+			return ;
+	}
+	else
+		great = NULL;
+	i = 0;
+	j = 0;
+	k = 0;
+	while (**cmd && (word_counter > 0 || less_counter > 0 || great_counter > 0))
+	{
+		if (less_counter > 0 && is_less(**cmd))
+		{
+			less[j++] = ft_strdup(**cmd); // Redirect
+			(*cmd)++;
+			less[j++] = ft_strdup(**cmd); // File
+			(*cmd)++;
+			less_counter -= 2;
+		}
+		else if (great_counter > 0 && is_great(**cmd))
+		{
+			great[k++] = ft_strdup(**cmd); // Redirect
+			(*cmd)++;
+			great[k++] = ft_strdup(**cmd); // File
+			(*cmd)++;
+			great_counter -= 2;
+		}
+		else if (word_counter > 0)
 		{
 			words[i++] = str_without_quotes(**cmd);
 			(*cmd)++;
 			word_counter--;
 		}
 	}
-	words[i] = NULL;
-	return (words);
+	if (i > 0)
+		words[i] = NULL;
+	if (j > 0)
+		less[j] = NULL;
+	if (k > 0)
+		great[k] = NULL;
+	cmd_lst_add_front(head_cmd, words, less, great);
 }
 
 /*	CREATE_CMD_TABLE
@@ -162,31 +234,43 @@ char	**save_word(int word_counter, char ***cmd)
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
 {
 	int		word_counter;
-	bool	is_file;
+	int		less_counter;
+	int		great_counter;
+	bool	is_redirect;
 
 	word_counter = 0;
-	is_file = false;
+	less_counter = 0;
+	great_counter = 0;
+	is_redirect = false;
 	while (head_token != NULL)
 	{
 		if (head_token->value == PIPE)
 		{
-			cmd_lst_add_front(head_cmd, save_word(word_counter, &cmd));
+			save_word(head_cmd, &cmd, word_counter, less_counter, great_counter);
 			word_counter = 0;
+			less_counter = 0;
+			great_counter = 0;
 			cmd++;
 		}
-		else if (head_token->value == INPUT)
-			is_file = true;
+		else if (head_token->value == INPUT || head_token->value == HEREDOC)
+		{
+			is_redirect = true;
+			less_counter += 2;
+		}
+		else if (head_token->value == TRUNC || head_token->value == APPEND)
+		{
+			is_redirect = true;
+			great_counter += 2;
+		}
 		else if (head_token->value == WORD)
 		{
-			if (is_file)
-				is_file = false;
+			if (is_redirect)
+				is_redirect = false;
 			else
 				word_counter++;
 		}
 		head_token = head_token->next;
 	}
-	// ft_printf("word_counter: [%d]\n", word_counter);
-	if (word_counter)
-		cmd_lst_add_front(head_cmd, save_word(word_counter, &cmd));
-	// cmdlst_printf(*head_cmd);
+	if (word_counter || less_counter || great_counter)
+		save_word(head_cmd, &cmd, word_counter, less_counter, great_counter);
 }

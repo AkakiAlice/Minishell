@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 19:05:51 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/17 05:47:29 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_split
 typedef struct s_cmdtable
 {
 	char				**word;
+	char				**less;
+	char				**great;
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 
@@ -92,7 +94,7 @@ void	exit_cmd(t_data *data);
 
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
 			char **cmd);
-void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word);
+void	cmd_lst_add_front(t_cmdtable **head_cmd, char **word, char **less, char **great);
 void	free_cmd_lst(t_cmdtable **head_cmd);
 
 void	check_cmd(char *env_value, t_data *data);
