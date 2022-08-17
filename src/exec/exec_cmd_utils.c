@@ -6,12 +6,21 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/16 17:09:21 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/17 13:49:33 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	OPEN_PIPE
+**	------------
+**	DESCRIPTION
+**	Loops through the linked list of commands and opens a pipe to each node.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 void	open_pipe(t_data *data)
 {
 	int			pipe_fd[2];
@@ -30,6 +39,17 @@ void	open_pipe(t_data *data)
 	}
 }
 
+/*	WAIT_ALL_PIDS
+**	------------
+**	DESCRIPTION
+**	Waits for all child processes looping through process array.
+**	PARAMETERS
+**	#1. The process array;
+**	#2. The number of processes;
+**	#3. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 void	wait_all_pids(int pid[1024], int id, t_data *data)
 {
 	int	p_status;
@@ -47,6 +67,15 @@ void	wait_all_pids(int pid[1024], int id, t_data *data)
 	data->status = p_status;
 }
 
+/*	CLOSE_NODE_FDS
+**	------------
+**	DESCRIPTION
+**	Closes file descriptors from one node.
+**	PARAMETERS
+**	#1. The command table linked list;
+**	RETURN VALUES
+**	-
+*/
 void	close_node_fds(t_cmdtable *head)
 {
 	if (head->fdout > 2)
@@ -55,6 +84,15 @@ void	close_node_fds(t_cmdtable *head)
 		close(head->fdin);
 }
 
+/*	CLOSE_LIST_FDS
+**	------------
+**	DESCRIPTION
+**	Closes file descriptors of all list nodes.
+**	PARAMETERS
+**	#1. The command table linked list;
+**	RETURN VALUES
+**	-
+*/
 void	close_list_fds(t_cmdtable *head)
 {
 	while (head)
@@ -64,6 +102,15 @@ void	close_list_fds(t_cmdtable *head)
 	}
 }
 
+/*	DUP_FDS
+**	------------
+**	DESCRIPTION
+**	Redirects the descriptors of the respective node.
+**	PARAMETERS
+**	#1. The command table linked list;
+**	RETURN VALUES
+**	-
+*/
 void	dup_fds(t_cmdtable *head)
 {
 	if (head->fdout > 2)
