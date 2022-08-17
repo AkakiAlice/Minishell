@@ -6,18 +6,39 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/13 14:26:22 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/17 16:38:57 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_exit_code(t_data *data)
+void	put_exit_code(char *word, t_data *data)
 {
-	if (ft_strchr(data->cmd_line, '$') != NULL)
+	if (ft_strncmp_eq(word, "$?", 2))
 	{
-		free(data->splited_cmdl[1]);
-		data->splited_cmdl[1] = ft_strdup(ft_itoa(data->status));
+		free(word);
+		word = ft_strdup(ft_itoa(data->status));
+	}
+}
+
+void	expand(t_data *data)
+{
+	t_cmdtable	*temp;
+	int			i;
+
+	temp = data->head_cmd;
+	while (temp)
+	{
+		i = 0;
+		while (temp->word[i])
+		{
+			if (ft_strncmp_eq(temp->word[i], "$", 1))
+			{
+				put_exit_code(temp->word[i], data);
+			}
+			i++;
+		}
+		temp = temp->next;
 	}
 }
 
@@ -34,12 +55,12 @@ void	put_exit_code(t_data *data)
 void	run_cmd(t_data *data)
 {
 	tokenizer(data);
-	put_exit_code(data);
 	builtin(data);
 	lexer(&data->last_token, data->splited_cmdl);
 	if (parser(data) == FAILURE)
 		return ;
 	create_cmd_table(data);
+	expand(data);
 	fork_it(data, &data->last_env);
 }
 
