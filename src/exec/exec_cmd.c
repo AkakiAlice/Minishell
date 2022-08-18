@@ -92,7 +92,6 @@ void	check_is_dir(char *word, t_env **last_env, t_data *data)
 */
 void	exec_cmd(t_data *data, t_env **last_env, char **word)
 {
-	check_cmd(data, word);
 	if (data->cmd_path == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -128,6 +127,7 @@ void	fork_it(t_data *data, t_env **last_env)
 		pid[++id] = fork();
 		if (pid[id] == 0)
 		{
+			check_cmd(data, head->word);
 			if (ft_strchr(head->word[0], '/') != NULL)
 				check_is_dir(head->word[0], last_env, data);
 			dup_fds(head);
