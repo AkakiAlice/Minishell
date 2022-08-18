@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 05:57:46 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:30:51 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 **	RETURN VALUES
 **	-
 */
-void	check_cmd(char *env_value, t_data *data)
+void	check_cmd(t_data *data, char **word)
 {
 	char	**path_list;
 	char	*aux;
 	int		i;
 
-	path_list = ft_split(env_value, ':');
-	aux = ft_strcat("/", data->head_cmd->word[0]);
+	path_list = ft_split(data->path_value, ':');
+	aux = ft_strcat("/", word[0]);
 	i = 0;
 	while (path_list[i])
 	{

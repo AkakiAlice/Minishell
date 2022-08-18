@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/17 08:08:36 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/18 17:59:21 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ FILES = main.c\
 		reserved_word.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
+		exec_cmd_utils.c
 
 # COMPILED_SOURCES #
 
