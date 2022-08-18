@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/28 07:09:31 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:57:46 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	check_cmd(char *env_value, t_data *data)
 		i++;
 	}
 	free(aux);
-	ft_matrix_free(path_list);
+	ft_matrix_free(&path_list);
 }

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:05:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/17 08:06:03 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:57:37 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ void	free_cmd_lst(t_cmdtable **head_cmd)
 		return ;
 	while (*head_cmd != NULL)
 	{
-		ft_matrix_free((*head_cmd)->word);
-		ft_matrix_free((*head_cmd)->less);
-		ft_matrix_free((*head_cmd)->great);
+		ft_matrix_free(&(*head_cmd)->word);
+		ft_matrix_free(&(*head_cmd)->less);
+		ft_matrix_free(&(*head_cmd)->great);
 		temp = (*head_cmd)->next;
 		free(*head_cmd);
 		*head_cmd = temp;
 	}
+	*head_cmd = NULL;
 }
 
 /*	CMD_LST_ADD_FRONT
