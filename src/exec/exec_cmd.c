@@ -22,10 +22,10 @@
 **	RETURN VALUES
 **	-
 */
-void	is_dir_exit(t_data *data, t_env **last_env)
+void	is_dir_exit(t_data *data, t_env **last_env, char *word)
 {
 	ft_putstr_fd("minishell: ", 2);
-	put_msg(data->head_cmd->word[0], IS_DIR, 2);
+	put_msg(word, IS_DIR, 2);
 	free_minishell(data);
 	free_env_lst(last_env);
 	exit(126);
@@ -42,10 +42,10 @@ void	is_dir_exit(t_data *data, t_env **last_env)
 **	RETURN VALUES
 **	-
 */
-void	no_such_file_exit(t_data *data, t_env **last_env)
+void	no_such_file_exit(t_data *data, t_env **last_env, char *word)
 {
 	ft_putstr_fd("minishell: ", 2);
-	put_msg(data->head_cmd->word[0], NO_FILE_DIR, 2);
+	put_msg(word, NO_FILE_DIR, 2);
 	free_minishell(data);
 	free_env_lst(last_env);
 	exit(127);
@@ -61,23 +61,23 @@ void	no_such_file_exit(t_data *data, t_env **last_env)
 **	RETURN VALUES
 **	-
 */
-void	check_is_dir(t_data *data, t_env **last_env)
+void	check_is_dir(char *word, t_env **last_env, t_data *data)
 {
 	DIR	*dir;
 
-	dir = opendir(data->head_cmd->word[0]);
+	dir = opendir(word);
 	if (dir)
 	{
 		closedir(dir);
-		is_dir_exit(data, last_env);
+		is_dir_exit(data, last_env, word);
 	}
 	else if ((ENOENT == errno && data->cmd_path == NULL)
-		|| (access(data->head_cmd->word[0], X_OK) == -1))
+		|| (access(word, X_OK) == -1))
 	{
-		no_such_file_exit(data, last_env);
+		no_such_file_exit(data, last_env, word);
 	}
-	else if ((access(data->head_cmd->word[0], X_OK) == 0))
-		data->cmd_path = data->head_cmd->word[0];
+	else if ((access(word, X_OK) == 0))
+		data->cmd_path = word;
 }
 
 /*	EXEC_CMD
@@ -129,7 +129,7 @@ void	fork_it(t_data *data, t_env **last_env)
 		if (pid[id] == 0)
 		{
 			if (ft_strchr(head->word[0], '/') != NULL)
-				check_is_dir(data, last_env);
+				check_is_dir(head->word[0], last_env, data);
 			dup_fds(head);
 			close_list_fds(head);
 			exec_cmd(data, last_env, head->word);
