@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/17 08:24:16 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:44:25 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static void	safe_cmd_v(t_cmd_value *cmd_value, t_counter index)
 */
 static void	save_table_value(char ***table_v, char ***cmd, int *i, int *count)
 {
-	(*table_v)[(*i)++] = str_without_quotes(**cmd);
+	if (is_var_expansion(**cmd))
+		(*table_v)[(*i)++] = ft_strdup(**cmd);
+	else
+		(*table_v)[(*i)++] = str_without_quotes(**cmd);
 	(*cmd)++;
 	(*count)--;
 }

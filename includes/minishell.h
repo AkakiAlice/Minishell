@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/17 08:09:11 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:36:24 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ bool	is_less(char *cmd);
 bool	is_great(char *cmd);
 void	init_count(t_counter *count);
 int		init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
+bool	is_var_expansion(char *str);
 
 void	check_cmd(char *env_value, t_data *data);
 void	fork_it(t_data *data, t_env **head_env);

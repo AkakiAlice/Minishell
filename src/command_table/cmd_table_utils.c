@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:07:51 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/17 08:15:17 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:36:26 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,24 @@ int	init_cmd_value(t_cmd_value *cmd_value, t_counter *count)
 	if (!cmd_value->great)
 		return (FAILURE);
 	return (SUCCESS);
+}
+
+/*	IS_VAR_EXPANSION
+**	------------
+**	DESCRIPTION
+**	Check exists variable expansion in string.
+**	PARAMETERS
+**	#1. The string (str);
+**	RETURN VALUES
+**	Return true if contains variable expansion and false if its not.
+*/
+bool	is_var_expansion(char *str)
+{
+	while (*str)
+	{
+		if (*str == '$')
+			return (true);
+		str++;
+	}
+	return (false);
 }
