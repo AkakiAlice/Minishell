@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/16 17:14:28 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:30:51 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	check_cmd(t_data *data, char **word)
 		i++;
 	}
 	free(aux);
-	ft_matrix_free(path_list);
+	ft_matrix_free(&path_list);
 }

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 16:22:44 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:44:01 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*expand_env(char *word, t_data *data)
 	if (!ft_strncmp_eq(word, "$?", 2))
 	{
 		temp = ft_split2(word, '$');
-		value = get_var_value_expand(data->last_env, temp[0]);
-		ft_matrix_free(temp);
+		value = get_var_value_expand(data->head_env, temp[0]);
+		ft_matrix_free(&temp);
 	}
 	return (value);
 }
@@ -93,12 +93,12 @@ void	run_cmd(t_data *data)
 {
 	tokenizer(data);
 	builtin(data);
-	lexer(&data->last_token, data->splited_cmdl);
+	lexer(&data->head_token, data->splited_cmdl);
 	if (parser(data) == FAILURE)
 		return ;
-	create_cmd_table(data);
+	create_cmd_table(&data->head_cmd, data->head_token, data->splited_cmdl);
 	expand(data);
-	fork_it(data, &data->last_env);
+	fork_it(data, &data->head_env);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -109,11 +109,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc > 1)
 		error_msg_exit("minishell", TOO_MANY_ARG, 2);
 	minishell_init(&data);
-	save_env(&data.last_env, envp);
-	data.path_value = get_path(data.last_env);
+	save_env(&data.head_env, envp);
+	data.path_value = get_path(data.head_env);
 	while (1)
 	{
-		get_prompt(&data, &data.last_env);
+		get_prompt(&data, &data.head_env);
 		if (validate_quote_closed(data.cmd_line))
 			run_cmd(&data);
 		else

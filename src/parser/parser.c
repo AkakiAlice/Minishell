@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/28 08:07:48 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/14 18:16:12 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,24 @@ static bool	is_word(int value)
 */
 int	parser(t_data *data)
 {
-	t_token	*current;
+	t_token	*temp;
 
-	if (data->last_token == NULL)
+	if (data->head_token == NULL)
 		return (0);
-	current = data->last_token->next;
-	if (is_pipe(current->value))
+	temp = data->head_token;
+	if (is_pipe(temp->value))
 		return (syntax_error(data, SYNTAX_ERR_PIPE));
-	while (current != data->last_token)
+	while (temp->next != NULL)
 	{
-		if (is_pipe_pipe(current->value, current->next->value))
+		if (is_pipe_pipe(temp->value, temp->next->value))
 			return (syntax_error(data, SYNTAX_ERR_PIPE));
-		else if (is_redirect_pipe(current->value, current->next->value))
+		else if (is_redirect_pipe(temp->value, temp->next->value))
 			return (syntax_error(data, SYNTAX_ERR_PIPE));
-		current = current->next;
+		temp = temp->next;
 	}
-	if (is_pipe(data->last_token->value))
+	if (is_pipe(temp->value))
 		return (syntax_error(data, SYNTAX_ERR_PIPE));
-	else if (!is_word(data->last_token->value))
+	else if (!is_word(temp->value))
 		return (syntax_error(data, SYNTAX_ERR_NEWLINE));
 	return (0);
 }

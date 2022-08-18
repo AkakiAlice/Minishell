@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/16 17:00:41 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:23:44 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 **	RETURN VALUES
 **	-
 */
-void	free_prompt_line(char *cwd, char *login, char *prompt_line)
+void	free_prompt_line(char *cwd, char *login, char **prompt_line)
 {
 	free(cwd);
 	free(login);
-	free(prompt_line);
+	free(*prompt_line);
+	*prompt_line = NULL;
 }
 
 /*	GET_LOGIN
@@ -67,7 +68,7 @@ char	*get_login(void)
 **	RETURN VALUES
 **	-
 */
-void	get_prompt(t_data *data, t_env **last_env)
+void	get_prompt(t_data *data, t_env **head_env)
 {
 	char	*cwd;
 	char	aux[1024];
@@ -81,17 +82,24 @@ void	get_prompt(t_data *data, t_env **last_env)
 	if (*data->cmd_line)
 	{
 		add_history(data->cmd_line);
-		free_prompt_line(cwd, login, data->prompt_line);
+		free_prompt_line(cwd, login, &data->prompt_line);
 		if (data->cmd_path != NULL)
+		{
 			free(data->cmd_path);
+			data->cmd_path = NULL;
+		}
 	}
 	else
 	{
-		free_prompt_line(cwd, login, data->prompt_line);
-		free_env_lst(last_env);
+		free_prompt_line(cwd, login, &data->prompt_line);
+		free_env_lst(head_env);
 		free(data->cmd_line);
+		data->cmd_line = NULL;
 		if (data->cmd_path != NULL)
+		{
 			free(data->cmd_path);
+			data->cmd_path = NULL;
+		}
 		exit(0);
 	}
 }

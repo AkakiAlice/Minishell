@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/16 15:33:36 by alida-si         ###   ########.fr        #
+#    Updated: 2022/08/18 17:59:21 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,8 @@ FILES = main.c\
 		get_path.c\
 		free_minishell.c\
 		init_minishell.c\
+		cmd_table_lst.c\
+		cmd_table_utils.c\
 		create_cmd_table.c\
 		check_cmd.c\
 		syntax_error.c\

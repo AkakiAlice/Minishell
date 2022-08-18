@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 18:45:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/06/27 07:00:20 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:57:50 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	save_env(t_env **env, char **envp)
 			env_lst_add_back(env, ft_strdup(split_env[0]),
 				get_env_value(envp[i], split_env[0]));
 		}
-		ft_matrix_free(split_env);
+		ft_matrix_free(&split_env);
 		i++;
 	}
 	return ;

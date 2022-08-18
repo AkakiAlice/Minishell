@@ -6,96 +6,146 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/16 16:11:34 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:12:09 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	FREE_TOKEN_LST
+/*	SAFE_CMD_V
 **	------------
 **	DESCRIPTION
-**	Free all memory allocated within command singly linked list.
+**	Save NULL in last array in cmd table values.
 **	PARAMETERS
-**	#1. The pointer to the first element of the list (head_cmd);
+**	#1. Pointer to cmd value struct (cmd_value);
+**	#2. Pointer to counter struct (index);
 **	RETURN VALUES
 **	-
 */
-void	free_cmd_lst(t_cmdtable **head_cmd)
+static void	safe_cmd_v(t_cmd_value *cmd_value, t_counter index)
 {
-	t_cmdtable	*temp;
-
-	if (*head_cmd == NULL)
-		return ;
-	while (*head_cmd != NULL)
-	{
-		ft_matrix_free((*head_cmd)->word);
-		temp = (*head_cmd)->next;
-		free(*head_cmd);
-		*head_cmd = temp;
-	}
+	cmd_value->word[index.word] = NULL;
+	cmd_value->less[index.less] = NULL;
+	cmd_value->great[index.great] = NULL;
 }
 
-/*	CMD_LST_ADD_FRONT
+/*	SAVE_TABLE_VALUE
 **	------------
 **	DESCRIPTION
-**	Add the new node at the end of the singly linked list.
+**	Save the table value without quotes
 **	PARAMETERS
-**	#1. The pointer to list (head_cmd);
-**	#2. The content that will be inserted into the new node (pipe_line);
+**	#1. Pointer to string array (table_v);
+**	#2. Pointer to string array (cmd);
+**	#3. Pointer to integer (i);
+**	#4. Pointer to integer (count);
 **	RETURN VALUES
 **	-
 */
-void	cmd_lst_add_front(t_cmdtable **head_cmd, char *pipe_line)
+static void	save_table_value(char ***table_v, char ***cmd, int *i, int *count)
 {
-	t_cmdtable	*ptr;
-	t_cmdtable	*temp;
+	if (is_var_expansion(**cmd))
+		(*table_v)[(*i)++] = ft_strdup(**cmd);
+	else
+		(*table_v)[(*i)++] = str_without_quotes(**cmd);
+	(*cmd)++;
+	(*count)--;
+}
 
-	ptr = (t_cmdtable *)malloc(sizeof(t_cmdtable));
-	if (ptr != NULL)
+/*	SAVE_CMD_LINE
+**	------------
+**	DESCRIPTION
+**	Save the number of table values equal to the counter.
+**	PARAMETERS
+**	#1. Pointer to struct command table (head_cmd);
+**	#2. Pointer to string array (cmd);
+**	#2. Pointer to struct count (count);
+**	RETURN VALUES
+**	-
+*/
+static void	save_cmd_line(t_cmdtable **head_cmd, char ***cmd, t_counter *count)
+{
+	t_cmd_value	cmd_v;
+	t_counter	index;
+
+	if (init_cmd_value(&cmd_v, count) == FAILURE)
+		return ;
+	init_count(&index);
+	while (**cmd && (count->word > 0 || count->less > 0 || count->great > 0))
 	{
-		ptr->word = ft_split2(pipe_line, ' ');
-		ptr->fdin = 0;
-		ptr->fdout = 1;
-		if ((*head_cmd) == NULL)
+		if (count->less > 0 && is_less(**cmd))
 		{
-			ptr -> next = NULL;
-			*head_cmd = ptr;
+			save_table_value(&cmd_v.less, cmd, &index.less, &count->less);
+			save_table_value(&cmd_v.less, cmd, &index.less, &count->less);
 		}
-		else
+		else if (count->great > 0 && is_great(**cmd))
 		{
-			temp = *head_cmd;
-			while (temp -> next != NULL)
-			{
-				temp = temp -> next;
-			}
-			temp->next = ptr;
-			ptr->next = NULL;
+			save_table_value(&cmd_v.great, cmd, &index.great, &count->great);
+			save_table_value(&cmd_v.great, cmd, &index.great, &count->great);
 		}
+		else if (count->word > 0)
+			save_table_value(&cmd_v.word, cmd, &index.word, &count->word);
 	}
+	safe_cmd_v(&cmd_v, index);
+	cmd_lst_add_front(head_cmd, cmd_v);
+}
+
+/*	COUNT_WORD_AND_REDIRECT
+**	------------
+**	DESCRIPTION
+**	Check token to do count word and redirection.
+**	PARAMETERS
+**	#1. Integer (token)
+**	#2. Pointer to struct count (count);
+**	RETURN VALUES
+**	Return true if token is redirect and false if word.
+*/
+static bool	count_word_and_redirect(int token, t_counter *count)
+{
+	if (token == INPUT || token == HEREDOC)
+	{
+		count->less += 2;
+		return (true);
+	}
+	else if (token == TRUNC || token == APPEND)
+	{
+		count->great += 2;
+		return (true);
+	}
+	else if (token == WORD)
+		count->word++;
+	return (false);
 }
 
 /*	CREATE_CMD_TABLE
 **	------------
 **	DESCRIPTION
-**	Splits the command line by pipe lines
-**	and adds them to the linked list of the command table.
+**	Create the command table. Whenever there is a pipe, a new node is inserted
+**	in the linked list.
 **	PARAMETERS
-**	#1. Pointer to struct data (data);
+**	#1. Pointer to struct command table (head_cmd);
+**	#2. Pointer to struct token (head_token);
+**	#3. String array (cmd);
 **	RETURN VALUES
 **	-
 */
-void	create_cmd_table(t_data *data)
+void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
 {
-	char	**pipe_line;
-	int		i;
+	t_counter	count;
 
-	i = 0;
-	pipe_line = ft_split2(data->cmd_line, '|');
-	while (pipe_line[i] != NULL)
+	init_count(&count);
+	while (head_token != NULL)
 	{
-		cmd_lst_add_front(&data->head_cmd, pipe_line[i]);
-		i++;
+		if (head_token->value == PIPE)
+		{
+			save_cmd_line(head_cmd, &cmd, &count);
+			init_count(&count);
+			cmd++;
+		}
+		else
+			if (count_word_and_redirect(head_token->value, &count))
+				head_token = head_token->next;
+		head_token = head_token->next;
 	}
-	ft_matrix_free(pipe_line);
+	if (count.word || count.less || count.great)
+		save_cmd_line(head_cmd, &cmd, &count);
 }

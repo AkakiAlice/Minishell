@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:51:39 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/17 17:24:59 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:41:24 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_path(t_env *env_list)
 	t_env	*ptr;
 
 	ptr = env_list;
-	while (ptr->next != env_list)
+	while (ptr != NULL)
 	{
 		if (ft_strncmp("PATH", ptr->name, 4) == 0)
 			return (ptr->value);

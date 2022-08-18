@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 23:26:26 by alida-si          #+#    #+#             */
-/*   Updated: 2022/07/21 21:50:17 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:57:17 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	is_not_quote(const char *s, char c, int i, char **matrix)
 		len_ptr++;
 	matrix[i] = ft_substr(s, 0, len_ptr);
 	if (matrix[i] == NULL)
-		ft_matrix_free(matrix);
+		ft_matrix_free(&matrix);
 	return (len_ptr);
 }
 

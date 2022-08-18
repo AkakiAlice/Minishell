@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 17:42:51 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:37:57 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,34 @@ typedef struct s_split
 	int		num_word;
 }	t_split;
 
+typedef struct s_counter
+{
+	int	word;
+	int	less;
+	int	great;
+}	t_counter;
+
+typedef struct s_cmd_value
+{
+	char	**word;
+	char	**less;
+	char	**great;
+}	t_cmd_value;
+
 typedef struct s_cmdtable
 {
 	char				**word;
 	int					fdin;
 	int					fdout;
+	char				**less;
+	char				**great;
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 
 typedef struct s_data
 {
-	t_token		*last_token;
-	t_env		*last_env;
+	t_token		*head_token;
+	t_env		*head_env;
 	t_cmdtable	*head_cmd;
 	char		*cmd_line;
 	char		*env_value;
@@ -93,13 +109,19 @@ typedef struct s_data
 void	builtin(t_data *data);
 void	exit_cmd(t_data *data);
 
-void	create_cmd_table(t_data *data);
-void	cmd_lst_add_front(t_cmdtable **head_cmd, char *pipe_line);
+void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
+			char **cmd);
+void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v);
 void	free_cmd_lst(t_cmdtable **head_cmd);
+bool	is_less(char *cmd);
+bool	is_great(char *cmd);
+void	init_count(t_counter *count);
+int		init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
+bool	is_var_expansion(char *str);
 
 void	check_cmd(t_data *data, char **word);
-void	fork_it(t_data *data, t_env **last_env);
-void	exec_cmd(t_data *data, t_env **last_env, char **word);
+void	fork_it(t_data *data, t_env **head_env);
+void	exec_cmd(t_data *data, t_env **head_env, char **word);
 char	*get_path(t_env *env_list);
 void	open_pipe(t_data *data);
 void	wait_all_pids(int pid[1024], int id, t_data *data);
@@ -108,14 +130,15 @@ void	close_list_fds(t_cmdtable *head);
 void	dup_fds(t_cmdtable *head);
 
 void	save_env(t_env **env, char **envp);
-int		env_lst_add_back(t_env **last_env, char *name, char *value);
+int		env_lst_add_back(t_env **head_env, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
-void	get_prompt(t_data *data, t_env **last_env);
-void	free_env_lst(t_env **last_env);
+void	get_prompt(t_data *data, t_env **head_env);
+void	free_env_lst(t_env **head_env);
 
-void	lexer(t_token **last_token, char **cmd);
-int		token_lst_add_back(t_token **last_token, int value);
-void	free_token_lst(t_token **last_token);
+void	lexer(t_token **head_token, char **cmd);
+int		get_token(char *cmd);
+int		token_lst_add_back(t_token **head_token, int value);
+void	free_token_lst(t_token **head_token);
 void	tokenizer(t_data *data);
 int		parser(t_data *data);
 int		syntax_error(t_data *data, char *msg);

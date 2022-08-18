@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:00:04 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 12:11:42 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 05:58:10 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	free_variable(char **var_value, char **cmd, char ***split, int status)
 	if (*cmd != NULL)
 		free(*cmd);
 	if (*split != NULL)
-		ft_matrix_free(*split);
+		ft_matrix_free(&(*split));
 	return (status);
 }

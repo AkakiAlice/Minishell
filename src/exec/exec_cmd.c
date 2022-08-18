@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 23:52:12 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 17:42:00 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:41:02 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 **	Displays the error message "Is a directory" and terminates the process.
 **	PARAMETERS
 **	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (last_env);
+**	#2. The pointer to list (head_env);
 **	RETURN VALUES
 **	-
 */
-void	is_dir_exit(t_data *data, t_env **last_env, char *word)
+void	is_dir_exit(t_data *data, t_env **head_env, char *word)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, IS_DIR, 2);
 	free_minishell(data);
-	free_env_lst(last_env);
+	free_env_lst(head_env);
 	exit(126);
 }
 
@@ -38,16 +38,16 @@ void	is_dir_exit(t_data *data, t_env **last_env, char *word)
 **	and terminates the process.
 **	PARAMETERS
 **	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (last_env);
+**	#2. The pointer to list (head_env);
 **	RETURN VALUES
 **	-
 */
-void	no_such_file_exit(t_data *data, t_env **last_env, char *word)
+void	no_such_file_exit(t_data *data, t_env **head_env, char *word)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, NO_FILE_DIR, 2);
 	free_minishell(data);
-	free_env_lst(last_env);
+	free_env_lst(head_env);
 	exit(127);
 }
 
@@ -57,11 +57,11 @@ void	no_such_file_exit(t_data *data, t_env **last_env, char *word)
 **	Checks if the argument received from the terminal is a dir or an executable.
 **	PARAMETERS
 **	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (last_env);
+**	#2. The pointer to list (head_env);
 **	RETURN VALUES
 **	-
 */
-void	check_is_dir(char *word, t_env **last_env, t_data *data)
+void	check_is_dir(char *word, t_env **head_env, t_data *data)
 {
 	DIR	*dir;
 
@@ -69,12 +69,12 @@ void	check_is_dir(char *word, t_env **last_env, t_data *data)
 	if (dir)
 	{
 		closedir(dir);
-		is_dir_exit(data, last_env, word);
+		is_dir_exit(data, head_env, word);
 	}
 	else if ((ENOENT == errno && data->cmd_path == NULL)
 		|| (access(word, X_OK) == -1))
 	{
-		no_such_file_exit(data, last_env, word);
+		no_such_file_exit(data, head_env, word);
 	}
 	else if ((access(word, X_OK) == 0))
 		data->cmd_path = word;
@@ -86,18 +86,18 @@ void	check_is_dir(char *word, t_env **last_env, t_data *data)
 **	Executes the command received from the terminal with execve function.
 **	PARAMETERS
 **	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (last_env);
+**	#2. The pointer to list (head_env);
 **	RETURN VALUES
 **	-
 */
-void	exec_cmd(t_data *data, t_env **last_env, char **word)
+void	exec_cmd(t_data *data, t_env **head_env, char **word)
 {
 	if (data->cmd_path == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		put_msg(word[0], CMD_NOT_FOUND, 2);
 		free_minishell(data);
-		free_env_lst(last_env);
+		free_env_lst(head_env);
 		exit(127);
 	}
 	execve(data->cmd_path, word, NULL);
@@ -109,11 +109,11 @@ void	exec_cmd(t_data *data, t_env **last_env, char **word)
 **	Creates a child process.
 **	PARAMETERS
 **	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (last_env);
+**	#2. The pointer to list (head_env);
 **	RETURN VALUES
 **	-
 */
-void	fork_it(t_data *data, t_env **last_env)
+void	fork_it(t_data *data, t_env **head_env)
 {
 	int			pid[1024];
 	int			id;
@@ -129,10 +129,10 @@ void	fork_it(t_data *data, t_env **last_env)
 		{
 			check_cmd(data, head->word);
 			if (ft_strchr(head->word[0], '/') != NULL)
-				check_is_dir(head->word[0], last_env, data);
+				check_is_dir(head->word[0], head_env, data);
 			dup_fds(head);
 			close_list_fds(head);
-			exec_cmd(data, last_env, head->word);
+			exec_cmd(data, head_env, head->word);
 		}
 		close_node_fds(head);
 		head = head->next;
