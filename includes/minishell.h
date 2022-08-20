@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 05:36:24 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 07:38:21 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,11 @@ typedef struct s_data
 	int			status;
 }	t_data;
 
+// BUILTINS
 void	builtin(t_data *data);
 void	exit_cmd(t_data *data);
 
+// COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
 			char **cmd);
 void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v);
@@ -113,20 +115,17 @@ void	free_cmd_lst(t_cmdtable **head_cmd);
 bool	is_less(char *cmd);
 bool	is_great(char *cmd);
 void	init_count(t_counter *count);
-int		init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
+void	init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
 bool	is_var_expansion(char *str);
+void	open_redirection(t_data *data);
 
+// EXEC
 void	check_cmd(char *env_value, t_data *data);
 void	fork_it(t_data *data, t_env **head_env);
 void	exec_cmd(t_data *data, t_env **head_env);
 char	*get_path(t_env *env_list);
 
-void	save_env(t_env **env, char **envp);
-int		env_lst_add_back(t_env **head_env, char *name, char *value);
-char	*get_env_value(char *envp, char *env_key);
-void	get_prompt(t_data *data, t_env **head_env);
-void	free_env_lst(t_env **head_env);
-
+// PARSER
 void	lexer(t_token **head_token, char **cmd);
 int		get_token(char *cmd);
 int		token_lst_add_back(t_token **head_token, int value);
@@ -136,24 +135,13 @@ int		parser(t_data *data);
 int		syntax_error(t_data *data, char *msg);
 int		count_cmd_words(char *cmd);
 int		is_reserved_word(char c);
-void	skip_char(char **str, char ch);
 bool	check_reserved_word(char **cmd, int *word_count, bool is_word);
 int		find_first_reserved_char(char *cmd);
 void	save_word_with_quotes(t_split *split, char **cmd, int *i);
 void	save_reserved_word(t_split *split, char **cmd, int *i);
-
-void	put_msg(char *title, char *msg, int fd);
-char	*remove_spaces_around_str(char *str);
-char	*remove_spaces_outside_quote(char *str);
-void	free_minishell(t_data *data);
-void	minishell_init(t_data *data);
 char	**split_cmd(char *cmd);
 
-int		save_var(t_env **last_var, char *cmd);
-bool	validate_var(char *var_name, char *var_value);
-bool	is_variable(char *cmd);
-int		free_variable(char **var_value, char **cmd, char ***split, int status);
-
+// QUOTES
 int		is_quote_type(char ch);
 bool	validate_quote_closed(char *var_value);
 bool	validate_quote_space(char *var_value);
@@ -161,6 +149,26 @@ char	*str_without_quotes(char *str);
 bool	check_var_expansion(char *var_value);
 void	skip_quotes(char **cmd);
 
+// SYSTEM
+void	save_env(t_env **env, char **envp);
+int		env_lst_add_back(t_env **head_env, char *name, char *value);
+char	*get_env_value(char *envp, char *env_key);
+void	get_prompt(t_data *data, t_env **head_env);
+void	free_env_lst(t_env **head_env);
 void	error_msg_exit(char *title, char *msg, int fd);
+
+// UTILS
+void	put_msg(char *title, char *msg, int fd);
+char	*remove_spaces_around_str(char *str);
+char	*remove_spaces_outside_quote(char *str);
+void	free_minishell(t_data *data);
+void	minishell_init(t_data *data);
+
+// VARIABLE
+int		save_var(t_env **last_var, char *cmd);
+bool	validate_var(char *var_name, char *var_value);
+bool	is_variable(char *cmd);
+int		free_variable(char **var_value, char **cmd, char ***split, int status);
+
 
 #endif

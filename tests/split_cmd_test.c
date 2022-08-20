@@ -1,21 +1,6 @@
 #include <criterion/criterion.h>
 #include "minishell.h"
 
-void	matrix_printf(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (*(matrix + i))
-	{
-		ft_printf("[%s]\n", *(matrix + i));
-		i++;
-	}
-	return ;
-}
-
 Test(split_cmd, str_null) {
 	char	*str = NULL;
 	char	**result = NULL;
@@ -37,7 +22,7 @@ Test(split_cmd, split_less) {
 	cr_expect_str_eq(result[4], "cd", "Ensure split string, index:4");
 	cr_expect_str_eq(result[5], "<", "Ensure split string, index:5");
 	cr_expect_str_eq(result[6], "def", "Ensure split string, index:6");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_less_start) {
@@ -51,7 +36,7 @@ Test(split_cmd, split_less_start) {
 	cr_expect_str_eq(result[2], "<", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "bc", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], "<", "Ensure split string, index:4");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_great) {
@@ -67,7 +52,7 @@ Test(split_cmd, split_great) {
 	cr_expect_str_eq(result[4], "cd", "Ensure split string, index:4");
 	cr_expect_str_eq(result[5], ">", "Ensure split string, index:5");
 	cr_expect_str_eq(result[6], "def", "Ensure split string, index:6");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_great_start) {
@@ -81,7 +66,7 @@ Test(split_cmd, split_great_start) {
 	cr_expect_str_eq(result[2], ">", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "bc", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], ">", "Ensure split string, index:4");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_pipe) {
@@ -97,7 +82,7 @@ Test(split_cmd, split_pipe) {
 	cr_expect_str_eq(result[4], "cd", "Ensure split string, index:4");
 	cr_expect_str_eq(result[5], "|", "Ensure split string, index:5");
 	cr_expect_str_eq(result[6], "def", "Ensure split string, index:6");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_pipe_start) {
@@ -111,7 +96,7 @@ Test(split_cmd, split_pipe_start) {
 	cr_expect_str_eq(result[2], "|", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "bc", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], "|", "Ensure split string, index:4");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_dless) {
@@ -127,7 +112,7 @@ Test(split_cmd, split_dless) {
 	cr_expect_str_eq(result[4], "cd", "Ensure split string, index:4");
 	cr_expect_str_eq(result[5], "<<", "Ensure split string, index:5");
 	cr_expect_str_eq(result[6], "def", "Ensure split string, index:6");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_dless_start) {
@@ -141,7 +126,7 @@ Test(split_cmd, split_dless_start) {
 	cr_expect_str_eq(result[2], "<<", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "bc", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], "<<", "Ensure split string, index:4");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_dgreat) {
@@ -157,7 +142,7 @@ Test(split_cmd, split_dgreat) {
 	cr_expect_str_eq(result[4], "cd", "Ensure split string, index:4");
 	cr_expect_str_eq(result[5], ">>", "Ensure split string, index:5");
 	cr_expect_str_eq(result[6], "def", "Ensure split string, index:6");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_dgreat_start) {
@@ -171,7 +156,7 @@ Test(split_cmd, split_dgreat_start) {
 	cr_expect_str_eq(result[2], ">>", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "bc", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], ">>", "Ensure split string, index:4");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_redirection_seq) {
@@ -189,7 +174,7 @@ Test(split_cmd, split_redirection_seq) {
 	cr_expect_str_eq(result[6], "ok", "Ensure split string, index:6");
 	cr_expect_str_eq(result[7], "<<", "Ensure split string, index:7");
 	cr_expect_str_eq(result[8], "<<", "Ensure split string, index:8");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, split_pipe_redirection_seq) {
@@ -209,7 +194,7 @@ Test(split_cmd, split_pipe_redirection_seq) {
 	cr_expect_str_eq(result[8], "<<", "Ensure split string, index:8");
 	cr_expect_str_eq(result[9], "|", "Ensure split string, index:9");
 	cr_expect_str_eq(result[10], "<<", "Ensure split string, index:10");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, space) {
@@ -220,7 +205,7 @@ Test(split_cmd, space) {
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "ls", "Ensure split string, index:0");
 	cr_expect_str_eq(result[1], "-la", "Ensure split string, index:1");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, space_pipe) {
@@ -234,7 +219,7 @@ Test(split_cmd, space_pipe) {
 	cr_expect_str_eq(result[2], "cat", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "|", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], "ls", "Ensure split string, index:4");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, space_pipe_redirect) {
@@ -255,7 +240,7 @@ Test(split_cmd, space_pipe_redirect) {
 	cr_expect_str_eq(result[9], "<<", "Ensure split string, index:9");
 	cr_expect_str_eq(result[10], "|", "Ensure split string, index:10");
 	cr_expect_str_eq(result[11], "<<", "Ensure split string, index:11");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, quote) {
@@ -265,7 +250,7 @@ Test(split_cmd, quote) {
 	result = split_cmd(str);
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "'ls    -la'", "Ensure split string, index:0");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, quote_in_quote) {
@@ -275,7 +260,7 @@ Test(split_cmd, quote_in_quote) {
 	result = split_cmd(str);
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "'\"ls    -la\"'", "Ensure split string, index:0");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, quote_input_redirect) {
@@ -286,7 +271,7 @@ Test(split_cmd, quote_input_redirect) {
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "'ls    -la| >file'",
 		"Ensure split string, index:0");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote) {
@@ -297,7 +282,7 @@ Test(split_cmd, string_quote) {
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "echo", "Ensure split string, index:0");
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote_space) {
@@ -310,7 +295,7 @@ Test(split_cmd, string_quote_space) {
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
 	cr_expect_str_eq(result[2], "\"ls -la \"", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "pwd", "Ensure split string, index:3");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote_trunc) {
@@ -322,7 +307,7 @@ Test(split_cmd, string_quote_trunc) {
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
 	cr_expect_str_eq(result[2], ">", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "outfile", "Ensure split string, index:3");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote_input) {
@@ -335,7 +320,7 @@ Test(split_cmd, string_quote_input) {
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
 	cr_expect_str_eq(result[2], "<", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "file", "Ensure split string, index:3");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote_append) {
@@ -348,7 +333,7 @@ Test(split_cmd, string_quote_append) {
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
 	cr_expect_str_eq(result[2], ">>", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "file", "Ensure split string, index:3");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote_heredoc) {
@@ -361,7 +346,7 @@ Test(split_cmd, string_quote_heredoc) {
 	cr_expect_str_eq(result[1], "mini's'hell", "Ensure split string, index:1");
 	cr_expect_str_eq(result[2], "<<", "Ensure split string, index:2");
 	cr_expect_str_eq(result[3], "file", "Ensure split string, index:3");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, string_quote_pipe) {
@@ -376,7 +361,7 @@ Test(split_cmd, string_quote_pipe) {
 	cr_expect_str_eq(result[3], "ls", "Ensure split string, index:3");
 	cr_expect_str_eq(result[4], "|", "Ensure split string, index:4");
 	cr_expect_str_eq(result[5], "cat", "Ensure split string, index:5");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, quote_pipe) {
@@ -388,7 +373,7 @@ Test(split_cmd, quote_pipe) {
 	cr_expect_str_eq(result[0], "ls", "Ensure split string, index:0");
 	cr_expect_str_eq(result[1], "'|'", "Ensure split string, index:1");
 	cr_expect_str_eq(result[2], "cat", "Ensure split string, index:2");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }
 
 Test(split_cmd, skip_space_1) {
@@ -406,5 +391,5 @@ Test(split_cmd, skip_space_2) {
 	result = split_cmd(str);
 	cr_assert(result, "Ensure split string");
 	cr_expect_str_eq(result[0], "ls", "Ensure split string, index:0");
-	ft_matrix_free(result);
+	ft_matrix_free(&result);
 }

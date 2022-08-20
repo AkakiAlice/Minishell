@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/14 18:05:54 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 07:42:02 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	run_cmd(t_data *data, char	*path_value)
 		return ;
 	create_cmd_table(&data->head_cmd, data->head_token, data->splited_cmdl);
 	check_cmd(path_value, data);
+	open_redirection(data);
 	fork_it(data, &data->head_env);
 }
 

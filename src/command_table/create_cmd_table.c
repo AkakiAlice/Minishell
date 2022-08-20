@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 05:44:25 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 07:39:22 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@
 */
 static void	safe_cmd_v(t_cmd_value *cmd_value, t_counter index)
 {
-	cmd_value->word[index.word] = NULL;
-	cmd_value->less[index.less] = NULL;
-	cmd_value->great[index.great] = NULL;
+	if (index.word > 0)
+		cmd_value->word[index.word] = NULL;
+	if (index.less > 0)
+		cmd_value->less[index.less] = NULL;
+	if (index.great > 0)
+		cmd_value->great[index.great] = NULL;
 }
 
 /*	SAVE_TABLE_VALUE
@@ -67,8 +70,7 @@ static void	save_cmd_line(t_cmdtable **head_cmd, char ***cmd, t_counter *count)
 	t_cmd_value	cmd_v;
 	t_counter	index;
 
-	if (init_cmd_value(&cmd_v, count) == FAILURE)
-		return ;
+	init_cmd_value(&cmd_v, count);
 	init_count(&index);
 	while (**cmd && (count->word > 0 || count->less > 0 || count->great > 0))
 	{

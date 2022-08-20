@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/17 08:08:36 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/18 06:39:20 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ FILES = main.c\
 		reserved_word.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
+		open_redirection.c\
 
 # COMPILED_SOURCES #
 
@@ -141,7 +142,7 @@ debug: fclean
 debug: $(NAME)
 
 valgrind: re
-	@valgrind --suppressions=./readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+	@valgrind --suppressions=./readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
 
 # NORMINETTE #
 norm:

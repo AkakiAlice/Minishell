@@ -6,27 +6,11 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:05:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 05:57:37 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 06:36:33 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ! Função temporária
-void	matrix_printf(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (*(matrix + i))
-	{
-		ft_printf("[%s]\n", *(matrix + i));
-		i++;
-	}
-	return ;
-}
 
 // ! Função temporária
 void	cmdlst_printf(t_cmdtable *cmd)

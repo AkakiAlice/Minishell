@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:07:51 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 05:36:26 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/18 07:41:02 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ void	init_count(t_counter *count)
 	count->great = 0;
 }
 
+char	**malloc_array_str(int count)
+{
+	char	**str;
+
+	str = (char **)malloc(((sizeof(char *)) * (count + 1)));
+	if (!str)
+		return (NULL);
+	return (str);
+}
+
 /*	INIT_CMD_VALUE
 **	------------
 **	DESCRIPTION
@@ -74,20 +84,22 @@ void	init_count(t_counter *count)
 **	#1. Pointer to struct cmd_value (cmd_value);
 **	#2. Pointer to struct count (count);
 **	RETURN VALUES
-**	Return 0 if success and 1 if error.
+**	-
 */
-int	init_cmd_value(t_cmd_value *cmd_value, t_counter *count)
+void	init_cmd_value(t_cmd_value *cmd_value, t_counter *count)
 {
-	cmd_value->word = (char **)malloc(((sizeof(char *)) * (count->word + 1)));
-	if (!cmd_value->word)
-		return (FAILURE);
-	cmd_value->less = (char **)malloc(((sizeof(char *)) * (count->less + 1)));
-	if (!cmd_value->less)
-		return (FAILURE);
-	cmd_value->great = (char **)malloc(((sizeof(char *)) * (count->great + 1)));
-	if (!cmd_value->great)
-		return (FAILURE);
-	return (SUCCESS);
+	if (count->word > 0)
+		cmd_value->word = malloc_array_str(count->word);
+	else
+		cmd_value->word = NULL;
+	if (count->less > 0)
+		cmd_value->less = malloc_array_str(count->less);
+	else
+		cmd_value->less = NULL;
+	if (count->great > 0)
+		cmd_value->great = malloc_array_str(count->great);
+	else
+		cmd_value->great = NULL;
 }
 
 /*	IS_VAR_EXPANSION
