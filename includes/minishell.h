@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/20 14:14:20 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:48:53 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define SYNTAX_ERR_NEWLINE "syntax error near unexpected token `newline'"
 # define IS_DIR "Is a directory"
 # define NO_FILE_DIR "No such file or directory"
+# define INVALID_PERMISSION "Permission denied"
 # define CMD_NOT_FOUND "command not found"
 
 typedef struct s_env
@@ -88,6 +89,8 @@ typedef struct s_cmdtable
 	int					fdin;
 	int					fdout;
 	char				**less;
+	char				*err_less_file;
+	char				*err_great_file;
 	char				**great;
 	struct s_cmdtable	*next;
 }	t_cmdtable;

@@ -6,25 +6,11 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:05:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 06:36:33 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:56:48 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ! Função temporária
-void	cmdlst_printf(t_cmdtable *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd != NULL)
-	{
-		ft_printf("List: [%d]\n", i++);
-		cmd = cmd->next;
-	}
-	return ;
-}
 
 /*	FREE_TOKEN_LST
 **	------------
@@ -46,6 +32,10 @@ void	free_cmd_lst(t_cmdtable **head_cmd)
 		ft_matrix_free(&(*head_cmd)->word);
 		ft_matrix_free(&(*head_cmd)->less);
 		ft_matrix_free(&(*head_cmd)->great);
+		if ((*head_cmd)->err_less_file)
+			free((*head_cmd)->err_less_file);
+		if ((*head_cmd)->err_great_file)
+			free((*head_cmd)->err_great_file);
 		temp = (*head_cmd)->next;
 		free(*head_cmd);
 		*head_cmd = temp;
@@ -74,6 +64,10 @@ void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v)
 	ptr->word = cmd_v.word;
 	ptr->less = cmd_v.less;
 	ptr->great = cmd_v.great;
+	ptr->fdin = 0;
+	ptr->fdout = 1;
+	ptr->err_less_file = NULL;
+	ptr->err_great_file = NULL;
 	if ((*head_cmd) == NULL)
 	{
 		ptr->next = NULL;

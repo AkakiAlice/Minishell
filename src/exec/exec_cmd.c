@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*	NO_SUCH_FILE_EXIT
+/*	IS_DIR_EXIT
 **	------------
 **	DESCRIPTION
 **	Displays the error message "Is a directory" and terminates the process.
@@ -42,13 +42,33 @@ void	is_dir_exit(t_data *data, t_env **head_env, char *word)
 **	RETURN VALUES
 **	-
 */
-void	no_such_file_exit(t_data *data, t_env **head_env, char *word)
+void	no_such_file_exit(t_data *data, char *word, int status)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, NO_FILE_DIR, 2);
 	free_minishell(data);
-	free_env_lst(head_env);
-	exit(127);
+	free_env_lst(&data->head_env);
+	exit(status);
+}
+
+/*	NO_SUCH_FILE_EXIT
+**	------------
+**	DESCRIPTION
+**	Displays the error message "No such file or directory"
+**	and terminates the process.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (head_env);
+**	RETURN VALUES
+**	-
+*/
+void	invalid_permission_exit(t_data *data, char *word, int status)
+{
+	ft_putstr_fd("minishell: ", 2);
+	put_msg(word, INVALID_PERMISSION, 2);
+	free_minishell(data);
+	free_env_lst(&data->head_env);
+	exit(status);
 }
 
 /*	CHECK_IS_DIR
@@ -74,7 +94,7 @@ void	check_is_dir(char *word, t_env **head_env, t_data *data)
 	else if ((ENOENT == errno && data->cmd_path == NULL)
 		|| (access(word, X_OK) == -1))
 	{
-		no_such_file_exit(data, head_env, word);
+		no_such_file_exit(data, word, 127);
 	}
 	else if ((access(word, X_OK) == 0))
 		data->cmd_path = word;
@@ -121,12 +141,15 @@ void	fork_it(t_data *data, t_env **head_env)
 
 	head = data->head_cmd;
 	id = -1;
-	open_pipe(data);
 	while (head != NULL)
 	{
 		pid[++id] = fork();
 		if (pid[id] == 0)
 		{
+			if (head->fdin == -1 && head->err_less_file)
+				no_such_file_exit(data, head->err_less_file, 1);
+			if (head->fdout == -1 && head->err_great_file)
+				invalid_permission_exit(data, head->err_great_file, 1);
 			check_cmd(data, head->word);
 			if (ft_strchr(head->word[0], '/') != NULL)
 				check_is_dir(head->word[0], head_env, data);
