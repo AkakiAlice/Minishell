@@ -6,17 +6,55 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 06:26:03 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/20 15:56:58 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:25:39 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_strcmp_eq(char *s1, char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (0);
+	while (*(s1 + i) || *(s2 + i))
+	{
+		if (*(s1 + i) != *(s2 + i))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
+void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
+{
+	char	*line;
+	int		fd[2];
+
+	line = readline("> ");
+	pipe(fd);
+	while (1)
+	{
+		if (ft_strcmp_eq(eof, line))
+		{
+			free(line);
+			head_cmd->fdin = fd[0];
+			close(fd[1]);
+			break;
+		}
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
+		free(line);
+		line = readline("> ");
+	}
+}
 
 void	open_less(t_cmdtable *head_cmd)
 {
 	int		i;
-	// char	*line;
 
 	i = 0;
 	while (head_cmd->less[i])
@@ -32,18 +70,10 @@ void	open_less(t_cmdtable *head_cmd)
 				break ;
 			}
 		}
-		// else if (get_token(data->head_cmd->less[i]) == HEREDOC)
-		// {
-		// 	line = readline("> ");
-		// 	while (1)
-		// 	{
-		// 		if (!line)
-		// 			break;
-		// 		ft_putendl_fd(line, 0); // Preciso alterar o fd
-		// 		free(line);
-		// 		line = readline("> ");
-		// 	}
-		// }
+		else if (get_token(head_cmd->less[i]) == HEREDOC)
+		{
+			exec_heredoc(head_cmd, head_cmd->less[++i]);
+		}
 		i++;
 	}
 }
