@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 07:38:21 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/20 14:14:20 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct s_cmd_value
 typedef struct s_cmdtable
 {
 	char				**word;
+	int					fdin;
+	int					fdout;
 	char				**less;
 	char				**great;
 	struct s_cmdtable	*next;
@@ -100,6 +102,7 @@ typedef struct s_data
 	char		*cmd_path;
 	char		**splited_cmdl;
 	char		*prompt_line;
+	char		*path_value;
 	int			status;
 }	t_data;
 
@@ -120,10 +123,15 @@ bool	is_var_expansion(char *str);
 void	open_redirection(t_data *data);
 
 // EXEC
-void	check_cmd(char *env_value, t_data *data);
+void	check_cmd(t_data *data, char **word);
 void	fork_it(t_data *data, t_env **head_env);
-void	exec_cmd(t_data *data, t_env **head_env);
+void	exec_cmd(t_data *data, t_env **head_env, char **word);
 char	*get_path(t_env *env_list);
+void	open_pipe(t_data *data);
+void	wait_all_pids(int pid[1024], int id, t_data *data);
+void	close_node_fds(t_cmdtable *head);
+void	close_list_fds(t_cmdtable *head);
+void	dup_fds(t_cmdtable *head);
 
 // PARSER
 void	lexer(t_token **head_token, char **cmd);

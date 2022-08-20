@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 07:42:02 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/20 14:15:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	put_exit_code(t_data *data)
 **	RETURN VALUES
 **	-
 */
-void	run_cmd(t_data *data, char	*path_value)
+void	run_cmd(t_data *data)
 {
 	tokenizer(data);
 	put_exit_code(data);
@@ -40,7 +40,6 @@ void	run_cmd(t_data *data, char	*path_value)
 	if (parser(data) == FAILURE)
 		return ;
 	create_cmd_table(&data->head_cmd, data->head_token, data->splited_cmdl);
-	check_cmd(path_value, data);
 	open_redirection(data);
 	fork_it(data, &data->head_env);
 }
@@ -48,19 +47,18 @@ void	run_cmd(t_data *data, char	*path_value)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
-	char	*path_value;
 
 	(void)argv;
 	if (argc > 1)
 		error_msg_exit("minishell", TOO_MANY_ARG, 2);
 	minishell_init(&data);
 	save_env(&data.head_env, envp);
-	path_value = get_path(data.head_env);
+	data.path_value = get_path(data.head_env);
 	while (1)
 	{
 		get_prompt(&data, &data.head_env);
 		if (validate_quote_closed(data.cmd_line))
-			run_cmd(&data, path_value);
+			run_cmd(&data);
 		else
 			put_msg("minishell", UNCLOSED_QUOTES, 2);
 		free_minishell(&data);

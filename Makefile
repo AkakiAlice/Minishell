@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/18 06:39:20 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/20 14:12:24 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,7 @@ FILES = main.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
 		open_redirection.c\
+		exec_cmd_utils.c
 
 # COMPILED_SOURCES #
 
