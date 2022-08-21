@@ -12,65 +12,6 @@
 
 #include "minishell.h"
 
-/*	IS_DIR_EXIT
-**	------------
-**	DESCRIPTION
-**	Displays the error message "Is a directory" and terminates the process.
-**	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
-**	RETURN VALUES
-**	-
-*/
-void	is_dir_exit(t_data *data, t_env **head_env, char *word)
-{
-	ft_putstr_fd("minishell: ", 2);
-	put_msg(word, IS_DIR, 2);
-	free_minishell(data);
-	free_env_lst(head_env);
-	exit(126);
-}
-
-/*	NO_SUCH_FILE_EXIT
-**	------------
-**	DESCRIPTION
-**	Displays the error message "No such file or directory"
-**	and terminates the process.
-**	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
-**	RETURN VALUES
-**	-
-*/
-void	no_such_file_exit(t_data *data, char *word, int status)
-{
-	ft_putstr_fd("minishell: ", 2);
-	put_msg(word, NO_FILE_DIR, 2);
-	free_minishell(data);
-	free_env_lst(&data->head_env);
-	exit(status);
-}
-
-/*	NO_SUCH_FILE_EXIT
-**	------------
-**	DESCRIPTION
-**	Displays the error message "No such file or directory"
-**	and terminates the process.
-**	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
-**	RETURN VALUES
-**	-
-*/
-void	invalid_permission_exit(t_data *data, char *word, int status)
-{
-	ft_putstr_fd("minishell: ", 2);
-	put_msg(word, INVALID_PERMISSION, 2);
-	free_minishell(data);
-	free_env_lst(&data->head_env);
-	exit(status);
-}
-
 /*	CHECK_IS_DIR
 **	------------
 **	DESCRIPTION
@@ -123,6 +64,16 @@ void	exec_cmd(t_data *data, t_env **head_env, char **word)
 	execve(data->cmd_path, word, NULL);
 }
 
+void	check_redirect(t_data *data, t_cmdtable *head)
+{
+	if (!head->err_file)
+		return ;
+	if (head->err_nb == ENOENT)
+		no_such_file_exit(data, head->err_file, 1);
+	if (head->err_nb == EACCES)
+		invalid_permission_exit(data, head->err_file, 1);
+}
+
 /*	FORK_IT
 **	------------
 **	DESCRIPTION
@@ -146,13 +97,7 @@ void	fork_it(t_data *data, t_env **head_env)
 		pid[++id] = fork();
 		if (pid[id] == 0)
 		{
-			if (head->err_file)
-			{
-				if (head->err_nb == ENOENT)
-					no_such_file_exit(data, head->err_file, 1);
-				if (head->err_nb == EACCES)
-					invalid_permission_exit(data, head->err_file, 1);
-			}
+			check_redirect(data, head);
 			check_cmd(data, head->word);
 			if (ft_strchr(head->word[0], '/') != NULL)
 				check_is_dir(head->word[0], head_env, data);

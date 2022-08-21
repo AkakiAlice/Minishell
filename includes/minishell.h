@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 18:54:19 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:03:52 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
 			char **cmd);
 void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v);
 void	free_cmd_lst(t_cmdtable **head_cmd);
-bool	is_less(char *cmd);
-bool	is_great(char *cmd);
+bool	is_redirect(char *cmd);
 void	init_count(t_counter *count);
 void	init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
 bool	is_var_expansion(char *str);
+void	exec_heredoc(t_cmdtable *head_cmd, char *eof);
 void	open_redirection(t_data *data);
 
 // EXEC
@@ -136,6 +136,9 @@ void	wait_all_pids(int pid[1024], int id, t_data *data);
 void	close_node_fds(t_cmdtable *head);
 void	close_list_fds(t_cmdtable *head);
 void	dup_fds(t_cmdtable *head);
+void	is_dir_exit(t_data *data, t_env **head_env, char *word);
+void	no_such_file_exit(t_data *data, char *word, int status);
+void	invalid_permission_exit(t_data *data, char *word, int status);
 
 // PARSER
 void	lexer(t_token **head_token, char **cmd);
@@ -181,6 +184,5 @@ int		save_var(t_env **last_var, char *cmd);
 bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
-
 
 #endif

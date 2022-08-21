@@ -6,114 +6,23 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 06:26:03 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 19:13:14 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:06:03 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp_eq(char *s1, char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
-	while (*(s1 + i) || *(s2 + i))
-	{
-		if (*(s1 + i) != *(s2 + i))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-
-void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
-{
-	char	*line;
-	int		fd[2];
-
-	line = readline("> ");
-	pipe(fd);
-	while (1)
-	{
-		if (ft_strcmp_eq(eof, line))
-		{
-			free(line);
-			head_cmd->fdin = fd[0];
-			close(fd[1]);
-			break;
-		}
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
-		free(line);
-		line = readline("> ");
-	}
-}
-
-// void	open_less(t_cmdtable *head_cmd)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (head_cmd->less[i])
-// 	{
-// 		if (get_token(head_cmd->less[i]) == INPUT)
-// 		{
-// 			if (head_cmd->fdin > 2)
-// 				close(head_cmd->fdin);
-// 			head_cmd->fdin = open(head_cmd->less[++i], O_RDONLY);
-// 			if (head_cmd->fdin == -1)
-// 			{
-// 				head_cmd->err_less_file = ft_strdup(head_cmd->less[i]);
-// 				break ;
-// 			}
-// 		}
-// 		else if (get_token(head_cmd->less[i]) == HEREDOC)
-// 		{
-// 			exec_heredoc(head_cmd, head_cmd->less[++i]);
-// 		}
-// 		i++;
-// 	}
-// }
-
-// void	open_great(t_cmdtable *cmd_table)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (cmd_table->great[i])
-// 	{
-// 		if (get_token(cmd_table->great[i]) == TRUNC)
-// 		{
-// 			if (cmd_table->fdout > 2)
-// 				close(cmd_table->fdout);
-// 			cmd_table->fdout = open(cmd_table->great[++i], O_CREAT | O_RDWR | O_TRUNC, 0777);
-// 			if (cmd_table->fdout == -1)
-// 			{
-// 				cmd_table->err_great_file = ft_strdup(cmd_table->great[i]);
-// 				break ;
-// 			}
-// 		}
-// 		else if (get_token(cmd_table->great[i]) == APPEND)
-// 		{
-// 			if (cmd_table->fdout > 2)
-// 				close(cmd_table->fdout);
-// 			cmd_table->fdout = open(cmd_table->great[++i], O_CREAT | O_RDWR | O_APPEND, 0777);
-// 			if (cmd_table->fdout == -1)
-// 			{
-// 				cmd_table->err_great_file = ft_strdup(cmd_table->great[i]);
-// 				break ;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }
-
-void	open_less(t_cmdtable *head_cmd, char *filename)
+/*	OPEN_LESS
+**	------------
+**	DESCRIPTION
+**	Open less redirects. In case of error, save the filename and errno.
+**	PARAMETERS
+**	#1. The pointer to struct "head_cmd" (head_cmd);
+**	#2. The string filename (filename);
+**	RETURN VALUES
+**	-
+*/
+static void	open_less(t_cmdtable *head_cmd, char *filename)
 {
 	if (head_cmd->fdin > 2)
 		close(head_cmd->fdin);
@@ -125,7 +34,18 @@ void	open_less(t_cmdtable *head_cmd, char *filename)
 	}
 }
 
-void	open_great(t_cmdtable *head_cmd, char *filename, int oflag)
+/*	OPEN_GREAT
+**	------------
+**	DESCRIPTION
+**	Open great redirects. In case of error, save the filename and errno.
+**	PARAMETERS
+**	#1. The pointer to struct "head_cmd" (head_cmd);
+**	#2. The string filename (filename);
+**	#3. The integer (oflag);
+**	RETURN VALUES
+**	-
+*/
+static void	open_great(t_cmdtable *head_cmd, char *filename, int oflag)
 {
 	if (head_cmd->fdout > 2)
 		close(head_cmd->fdout);
@@ -137,26 +57,45 @@ void	open_great(t_cmdtable *head_cmd, char *filename, int oflag)
 	}
 }
 
-void exec_open_redirect(t_cmdtable *head_cmd)
+/*	OPEN_REDIRECTION_TABLE
+**	------------
+**	DESCRIPTION
+**	Loops through the array of redirect and opens a redirect.
+**	PARAMETERS
+**	#1. The pointer to struct "head_cmd" (head_cmd);
+**	RETURN VALUES
+**	-
+*/
+static void	open_redirect_table(t_cmdtable *head_cmd)
 {
 	int	i;
+	int	token;
 
 	i = 0;
 	while (head_cmd->redirect[i] && head_cmd->err_nb == -1)
 	{
-		if (get_token(head_cmd->redirect[i]) == TRUNC)
+		token = get_token(head_cmd->redirect[i]);
+		if (token == TRUNC)
 			open_great(head_cmd, head_cmd->redirect[++i], O_TRUNC);
-		else if (get_token(head_cmd->redirect[i]) == APPEND)
+		else if (token == APPEND)
 			open_great(head_cmd, head_cmd->redirect[++i], O_APPEND);
-		else if (get_token(head_cmd->redirect[i]) == INPUT)
+		else if (token == INPUT)
 			open_less(head_cmd, head_cmd->redirect[++i]);
-		else if (get_token(head_cmd->redirect[i]) == HEREDOC)
+		else if (token == HEREDOC)
 			exec_heredoc(head_cmd, head_cmd->redirect[++i]);
 		i++;
 	}
 }
 
-
+/*	OPEN_REDIRECTION
+**	------------
+**	DESCRIPTION
+**	Loops through the linked list of commands and opens a redirect to each node.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 void	open_redirection(t_data *data)
 {
 	t_cmdtable	*head_cmd;
@@ -165,7 +104,7 @@ void	open_redirection(t_data *data)
 	while (head_cmd != NULL)
 	{
 		if (head_cmd->redirect)
-			exec_open_redirect(head_cmd);
+			open_redirect_table(head_cmd);
 		head_cmd = head_cmd->next;
 	}
 }

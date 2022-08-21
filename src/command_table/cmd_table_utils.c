@@ -6,46 +6,27 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:07:51 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 18:34:00 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:47:45 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	IS_LESS
+/*	IS_REDIRECT
 **	------------
 **	DESCRIPTION
-**	Check if the string is less.
+**	Check if the string is redirect.
 **	PARAMETERS
 **	#1. String (cmd);
 **	RETURN VALUES
-**	Return true if the string is less and false if not
+**	Return true if the string is redirect and false if not
 */
-bool	is_less(char *cmd)
+bool	is_redirect(char *cmd)
 {
 	int	token;
 
 	token = get_token(cmd);
-	if (token == INPUT || token == HEREDOC)
-		return (true);
-	return (false);
-}
-
-/*	IS_GREAT
-**	------------
-**	DESCRIPTION
-**	Check if the string is great.
-**	PARAMETERS
-**	#1. String (cmd);
-**	RETURN VALUES
-**	Return true if the string is great and false if not
-*/
-bool	is_great(char *cmd)
-{
-	int	token;
-
-	token = get_token(cmd);
-	if (token == TRUNC || token == APPEND)
+	if (token == INPUT || token == HEREDOC || token == TRUNC || token == APPEND)
 		return (true);
 	return (false);
 }
@@ -65,7 +46,16 @@ void	init_count(t_counter *count)
 	count->redirect = 0;
 }
 
-char	**malloc_array_str(int count)
+/*	MALLOC_ARRAY_STR
+**	------------
+**	DESCRIPTION
+**	Alloc memory from new array of string.
+**	PARAMETERS
+**	#1. Integer (count);
+**	RETURN VALUES
+**	Return allocated memory from new array of string.
+*/
+static char	**malloc_array_str(int count)
 {
 	char	**str;
 

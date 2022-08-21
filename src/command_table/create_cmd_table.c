@@ -6,41 +6,11 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/21 19:22:17 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:48:16 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	matrix_printf(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (*(matrix + i))
-	{
-		ft_printf("[%s]\n", *(matrix + i));
-		i++;
-	}
-	return ;
-}
-
-// ! Função temporária
-void	cmdlst_printf(t_cmdtable *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd != NULL)
-	{
-		ft_printf("List: [%d]\n", i++);
-		matrix_printf(cmd->redirect);
-		cmd = cmd->next;
-	}
-	return ;
-}
 
 /*	SAFE_CMD_V
 **	------------
@@ -82,16 +52,6 @@ static void	save_table_value(char ***table_v, char ***cmd, int *i, int *count)
 	(*count)--;
 }
 
-bool	is_redirect(char *cmd)
-{
-	int	token;
-
-	token = get_token(cmd);
-	if (token == INPUT || token == HEREDOC || token == TRUNC || token == APPEND)
-		return (true);
-	return (false);
-}
-
 /*	SAVE_CMD_LINE
 **	------------
 **	DESCRIPTION
@@ -114,8 +74,10 @@ static void	save_cmd_line(t_cmdtable **head_cmd, char ***cmd, t_counter *count)
 	{
 		if (count->redirect > 0 && is_redirect(**cmd))
 		{
-			save_table_value(&cmd_v.redirect, cmd, &index.redirect, &count->redirect);
-			save_table_value(&cmd_v.redirect, cmd, &index.redirect, &count->redirect);
+			save_table_value(&cmd_v.redirect, cmd, &index.redirect,
+				&count->redirect);
+			save_table_value(&cmd_v.redirect, cmd, &index.redirect,
+				&count->redirect);
 		}
 		else if (count->word > 0)
 			save_table_value(&cmd_v.word, cmd, &index.word, &count->word);
@@ -177,5 +139,4 @@ void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
 	}
 	if (count.word || count.redirect)
 		save_cmd_line(head_cmd, &cmd, &count);
-	// cmdlst_printf(*head_cmd);
 }

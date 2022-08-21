@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:05:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 18:57:13 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:07:13 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,13 @@ void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v)
 	ptr->err_file = NULL;
 	ptr->err_nb = -1;
 	if ((*head_cmd) == NULL)
-	{
-		ptr->next = NULL;
 		*head_cmd = ptr;
-	}
 	else
 	{
 		temp = *head_cmd;
 		while (temp->next != NULL)
-		{
 			temp = temp->next;
-		}
 		temp->next = ptr;
-		ptr->next = NULL;
 	}
+	ptr->next = NULL;
 }
