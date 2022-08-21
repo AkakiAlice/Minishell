@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 16:44:15 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 18:54:19 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,13 @@ typedef struct s_split
 typedef struct s_counter
 {
 	int	word;
-	int	less;
-	int	great;
+	int	redirect;
 }	t_counter;
 
 typedef struct s_cmd_value
 {
 	char	**word;
-	char	**less;
-	char	**great;
+	char	**redirect;
 }	t_cmd_value;
 
 typedef struct s_cmdtable
@@ -92,10 +90,9 @@ typedef struct s_cmdtable
 	char				**word;
 	int					fdin;
 	int					fdout;
-	char				**less;
-	char				*err_less_file;
-	char				*err_great_file;
-	char				**great;
+	char				**redirect;
+	char				*err_file;
+	int					err_nb;
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 

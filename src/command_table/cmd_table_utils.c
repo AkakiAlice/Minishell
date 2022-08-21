@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:07:51 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 07:41:02 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 18:34:00 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ bool	is_great(char *cmd)
 void	init_count(t_counter *count)
 {
 	count->word = 0;
-	count->less = 0;
-	count->great = 0;
+	count->redirect = 0;
 }
 
 char	**malloc_array_str(int count)
@@ -92,14 +91,10 @@ void	init_cmd_value(t_cmd_value *cmd_value, t_counter *count)
 		cmd_value->word = malloc_array_str(count->word);
 	else
 		cmd_value->word = NULL;
-	if (count->less > 0)
-		cmd_value->less = malloc_array_str(count->less);
+	if (count->redirect > 0)
+		cmd_value->redirect = malloc_array_str(count->redirect);
 	else
-		cmd_value->less = NULL;
-	if (count->great > 0)
-		cmd_value->great = malloc_array_str(count->great);
-	else
-		cmd_value->great = NULL;
+		cmd_value->redirect = NULL;
 }
 
 /*	IS_VAR_EXPANSION

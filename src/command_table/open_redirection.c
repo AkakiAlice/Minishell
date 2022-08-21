@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 06:26:03 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/20 17:25:39 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:13:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strcmp_eq(char *s1, char *s2)
 	size_t	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	if (ft_strlen(s1) != ft_strlen(s2))
 		return (0);
 	while (*(s1 + i) || *(s2 + i))
@@ -52,61 +54,104 @@ void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
 	}
 }
 
-void	open_less(t_cmdtable *head_cmd)
-{
-	int		i;
+// void	open_less(t_cmdtable *head_cmd)
+// {
+// 	int		i;
 
-	i = 0;
-	while (head_cmd->less[i])
+// 	i = 0;
+// 	while (head_cmd->less[i])
+// 	{
+// 		if (get_token(head_cmd->less[i]) == INPUT)
+// 		{
+// 			if (head_cmd->fdin > 2)
+// 				close(head_cmd->fdin);
+// 			head_cmd->fdin = open(head_cmd->less[++i], O_RDONLY);
+// 			if (head_cmd->fdin == -1)
+// 			{
+// 				head_cmd->err_less_file = ft_strdup(head_cmd->less[i]);
+// 				break ;
+// 			}
+// 		}
+// 		else if (get_token(head_cmd->less[i]) == HEREDOC)
+// 		{
+// 			exec_heredoc(head_cmd, head_cmd->less[++i]);
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void	open_great(t_cmdtable *cmd_table)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (cmd_table->great[i])
+// 	{
+// 		if (get_token(cmd_table->great[i]) == TRUNC)
+// 		{
+// 			if (cmd_table->fdout > 2)
+// 				close(cmd_table->fdout);
+// 			cmd_table->fdout = open(cmd_table->great[++i], O_CREAT | O_RDWR | O_TRUNC, 0777);
+// 			if (cmd_table->fdout == -1)
+// 			{
+// 				cmd_table->err_great_file = ft_strdup(cmd_table->great[i]);
+// 				break ;
+// 			}
+// 		}
+// 		else if (get_token(cmd_table->great[i]) == APPEND)
+// 		{
+// 			if (cmd_table->fdout > 2)
+// 				close(cmd_table->fdout);
+// 			cmd_table->fdout = open(cmd_table->great[++i], O_CREAT | O_RDWR | O_APPEND, 0777);
+// 			if (cmd_table->fdout == -1)
+// 			{
+// 				cmd_table->err_great_file = ft_strdup(cmd_table->great[i]);
+// 				break ;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// }
+
+void	open_less(t_cmdtable *head_cmd, char *filename)
+{
+	if (head_cmd->fdin > 2)
+		close(head_cmd->fdin);
+	head_cmd->fdin = open(filename, O_RDONLY);
+	if (head_cmd->fdin == -1)
 	{
-		if (get_token(head_cmd->less[i]) == INPUT)
-		{
-			if (head_cmd->fdin > 2)
-				close(head_cmd->fdin);
-			head_cmd->fdin = open(head_cmd->less[++i], O_RDONLY);
-			if (head_cmd->fdin == -1)
-			{
-				head_cmd->err_less_file = ft_strdup(head_cmd->less[i]);
-				break ;
-			}
-		}
-		else if (get_token(head_cmd->less[i]) == HEREDOC)
-		{
-			exec_heredoc(head_cmd, head_cmd->less[++i]);
-		}
-		i++;
+		head_cmd->err_file = ft_strdup(filename);
+		head_cmd->err_nb = errno;
 	}
 }
 
-void	open_great(t_cmdtable *cmd_table)
+void	open_great(t_cmdtable *head_cmd, char *filename, int oflag)
+{
+	if (head_cmd->fdout > 2)
+		close(head_cmd->fdout);
+	head_cmd->fdout = open(filename, O_CREAT | O_RDWR | oflag, 0777);
+	if (head_cmd->fdout == -1)
+	{
+		head_cmd->err_file = ft_strdup(filename);
+		head_cmd->err_nb = errno;
+	}
+}
+
+void exec_open_redirect(t_cmdtable *head_cmd)
 {
 	int	i;
 
 	i = 0;
-	while (cmd_table->great[i])
+	while (head_cmd->redirect[i] && head_cmd->err_nb == -1)
 	{
-		if (get_token(cmd_table->great[i]) == TRUNC)
-		{
-			if (cmd_table->fdout > 2)
-				close(cmd_table->fdout);
-			cmd_table->fdout = open(cmd_table->great[++i], O_CREAT | O_RDWR | O_TRUNC, 0777);
-			if (cmd_table->fdout == -1)
-			{
-				cmd_table->err_great_file = ft_strdup(cmd_table->great[i]);
-				break ;
-			}
-		}
-		else if (get_token(cmd_table->great[i]) == APPEND)
-		{
-			if (cmd_table->fdout > 2)
-				close(cmd_table->fdout);
-			cmd_table->fdout = open(cmd_table->great[++i], O_CREAT | O_RDWR | O_APPEND, 0777);
-			if (cmd_table->fdout == -1)
-			{
-				cmd_table->err_great_file = ft_strdup(cmd_table->great[i]);
-				break ;
-			}
-		}
+		if (get_token(head_cmd->redirect[i]) == TRUNC)
+			open_great(head_cmd, head_cmd->redirect[++i], O_TRUNC);
+		else if (get_token(head_cmd->redirect[i]) == APPEND)
+			open_great(head_cmd, head_cmd->redirect[++i], O_APPEND);
+		else if (get_token(head_cmd->redirect[i]) == INPUT)
+			open_less(head_cmd, head_cmd->redirect[++i]);
+		else if (get_token(head_cmd->redirect[i]) == HEREDOC)
+			exec_heredoc(head_cmd, head_cmd->redirect[++i]);
 		i++;
 	}
 }
@@ -119,10 +164,8 @@ void	open_redirection(t_data *data)
 	head_cmd = data->head_cmd;
 	while (head_cmd != NULL)
 	{
-		if (head_cmd->less)
-			open_less(head_cmd);
-		if (head_cmd->great)
-			open_great(head_cmd);
+		if (head_cmd->redirect)
+			exec_open_redirect(head_cmd);
 		head_cmd = head_cmd->next;
 	}
 }

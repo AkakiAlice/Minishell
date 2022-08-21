@@ -146,10 +146,13 @@ void	fork_it(t_data *data, t_env **head_env)
 		pid[++id] = fork();
 		if (pid[id] == 0)
 		{
-			if (head->fdin == -1 && head->err_less_file)
-				no_such_file_exit(data, head->err_less_file, 1);
-			if (head->fdout == -1 && head->err_great_file)
-				invalid_permission_exit(data, head->err_great_file, 1);
+			if (head->err_file)
+			{
+				if (head->err_nb == ENOENT)
+					no_such_file_exit(data, head->err_file, 1);
+				if (head->err_nb == EACCES)
+					invalid_permission_exit(data, head->err_file, 1);
+			}
 			check_cmd(data, head->word);
 			if (ft_strchr(head->word[0], '/') != NULL)
 				check_is_dir(head->word[0], head_env, data);

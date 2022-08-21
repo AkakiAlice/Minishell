@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:05:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/20 15:56:48 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 18:57:13 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ void	free_cmd_lst(t_cmdtable **head_cmd)
 	while (*head_cmd != NULL)
 	{
 		ft_matrix_free(&(*head_cmd)->word);
-		ft_matrix_free(&(*head_cmd)->less);
-		ft_matrix_free(&(*head_cmd)->great);
-		if ((*head_cmd)->err_less_file)
-			free((*head_cmd)->err_less_file);
-		if ((*head_cmd)->err_great_file)
-			free((*head_cmd)->err_great_file);
+		ft_matrix_free(&(*head_cmd)->redirect);
+		if ((*head_cmd)->err_file)
+			free((*head_cmd)->err_file);
 		temp = (*head_cmd)->next;
 		free(*head_cmd);
 		*head_cmd = temp;
@@ -62,12 +59,11 @@ void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v)
 	if (!ptr)
 		return ;
 	ptr->word = cmd_v.word;
-	ptr->less = cmd_v.less;
-	ptr->great = cmd_v.great;
+	ptr->redirect = cmd_v.redirect;
 	ptr->fdin = 0;
 	ptr->fdout = 1;
-	ptr->err_less_file = NULL;
-	ptr->err_great_file = NULL;
+	ptr->err_file = NULL;
+	ptr->err_nb = -1;
 	if ((*head_cmd) == NULL)
 	{
 		ptr->next = NULL;

@@ -1,8 +1,8 @@
 test_lists=(
-	# "simple_cmd"
+	"simple_cmd"
 	"sintax"
-	# "pipes"
-	# "redirects"
+	"pipes"
+	"redirects"
 )
 
 BOLD="\e[1m"
@@ -37,14 +37,14 @@ for testfile in ${test_lists[*]}; do
 		MINI_OUTPUT=$(echo -e "$teste" | ./minishell 2> /dev/null | sed -r "s:\x1B\[[0-9;]*[mK]::g" | grep -v "$PROMPT" | grep -v ^exit$ )
 		MINI_OUTFILES=$(cp ./outfiles/* ./mini_outfiles &>/dev/null)
 		MINI_EXIT_CODE=$(echo -e "./minishell\n$teste\necho \$?\nexit\n" | ./minishell 2> /dev/null | sed -r "s:\x1B\[[0-9;]*[mK]::g" | grep -v "$PROMPT" | grep -v ^exit$ | tail -n 1)
-		MINI_ERROR_MSG=$(echo "$teste" | ./minishell 2>&1 > /dev/null | grep -o '[^:]*$' | head -n1)
+		MINI_ERROR_MSG=$(echo "$teste" | ./minishell 2>&1 > /dev/null | grep -o '[^:]*$')
 
 		rm -rf ./outfiles/*
 		rm -rf ./bash_outfiles/*
-		BASH_OUTPUT=$(LC_COLLATE=C bash -c "$teste" 2> /dev/null)
+		BASH_OUTPUT=$(echo -e "$teste" | LC_COLLATE=C bash 2> /dev/null)
 		BASH_EXIT_CODE=$(echo $?)
 		BASH_OUTFILES=$(cp ./outfiles/* ./bash_outfiles &>/dev/null)
-		BASH_ERROR_MSG=$(LC_COLLATE=C bash -c "$teste" 2>&1 > /dev/null | grep -o '[^:]*$'  | head -n1)
+		BASH_ERROR_MSG=$(echo "$teste" | LC_COLLATE=C bash 2>&1 > /dev/null | grep -o '[^:]*$' | head -n1)
 
 		OUTFILES_DIFF=$(diff --brief ./mini_outfiles ./bash_outfiles)
 
@@ -79,16 +79,11 @@ for testfile in ${test_lists[*]}; do
 			echo mini error = \($MINI_ERROR_MSG\)
 			echo bash error = \($BASH_ERROR_MSG\)
 		fi
-
-		# Exit after specific test on single-test mode
-		if [[ $1 && $1 -eq $i ]]; then
-			exit 0
-		fi
 	done < ./unit_test/$testfile
 done
 
 chmod 666 ./unit_test/test_files/invalid_permission
-rm -rf ./outfiles/*
+rm -rf ./outfiles
 rm -rf ./mini_outfiles
 rm -rf ./bash_outfiles
 
