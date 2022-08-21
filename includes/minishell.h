@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/20 17:46:05 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:44:15 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@
 # define TOO_MANY_ARG "too many arguments"
 # define UNCLOSED_QUOTES "unclosed quotes"
 # define SYNTAX_ERR_PIPE "syntax error near unexpected token `|'"
+# define SYNTAX_ERR_INPUT "syntax error near unexpected token `<'"
+# define SYNTAX_ERR_HEREDOC "syntax error near unexpected token `<<'"
+# define SYNTAX_ERR_TRUNC "syntax error near unexpected token `>'"
+# define SYNTAX_ERR_APPEND "syntax error near unexpected token `>>'"
 # define SYNTAX_ERR_NEWLINE "syntax error near unexpected token `newline'"
 # define IS_DIR "Is a directory"
 # define NO_FILE_DIR "No such file or directory"

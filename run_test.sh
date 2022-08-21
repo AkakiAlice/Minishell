@@ -1,8 +1,8 @@
 test_lists=(
 	# "simple_cmd"
-	# "sintax"
+	"sintax"
 	# "pipes"
-	"redirects"
+	# "redirects"
 )
 
 BOLD="\e[1m"
@@ -37,14 +37,14 @@ for testfile in ${test_lists[*]}; do
 		MINI_OUTPUT=$(echo -e "$teste" | ./minishell 2> /dev/null | sed -r "s:\x1B\[[0-9;]*[mK]::g" | grep -v "$PROMPT" | grep -v ^exit$ )
 		MINI_OUTFILES=$(cp ./outfiles/* ./mini_outfiles &>/dev/null)
 		MINI_EXIT_CODE=$(echo -e "./minishell\n$teste\necho \$?\nexit\n" | ./minishell 2> /dev/null | sed -r "s:\x1B\[[0-9;]*[mK]::g" | grep -v "$PROMPT" | grep -v ^exit$ | tail -n 1)
-		MINI_ERROR_MSG=$(echo "$teste" | ./minishell 2>&1 > /dev/null | grep -o '[^:]*$')
+		MINI_ERROR_MSG=$(echo "$teste" | ./minishell 2>&1 > /dev/null | grep -o '[^:]*$' | head -n1)
 
 		rm -rf ./outfiles/*
 		rm -rf ./bash_outfiles/*
 		BASH_OUTPUT=$(LC_COLLATE=C bash -c "$teste" 2> /dev/null)
 		BASH_EXIT_CODE=$(echo $?)
 		BASH_OUTFILES=$(cp ./outfiles/* ./bash_outfiles &>/dev/null)
-		BASH_ERROR_MSG=$(LC_COLLATE=C bash -c "$teste" 2>&1 > /dev/null | grep -o '[^:]*$')
+		BASH_ERROR_MSG=$(LC_COLLATE=C bash -c "$teste" 2>&1 > /dev/null | grep -o '[^:]*$'  | head -n1)
 
 		OUTFILES_DIFF=$(diff --brief ./mini_outfiles ./bash_outfiles)
 

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 18:16:12 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:45:06 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ static bool	is_redirect_pipe(int value, int next_value)
 	return (false);
 }
 
+static bool	is_redirect_redirect(int value, int next_value)
+{
+	if (value != PIPE && value != WORD && next_value != PIPE && next_value != WORD)
+		return (true);
+	return (false);
+}
+
 /*	IS_WORD
 **	------------
 **	DESCRIPTION
@@ -76,6 +83,19 @@ static bool	is_word(int value)
 	if (value == WORD)
 		return (true);
 	return (false);
+}
+
+int	syntax_redirect_error(t_data *data, int next_value)
+{
+	if (next_value == INPUT)
+		return (syntax_error(data, SYNTAX_ERR_INPUT));
+	if (next_value == HEREDOC)
+		return (syntax_error(data, SYNTAX_ERR_HEREDOC));
+	if (next_value == TRUNC)
+		return (syntax_error(data, SYNTAX_ERR_TRUNC));
+	if (next_value == APPEND)
+		return (syntax_error(data, SYNTAX_ERR_APPEND));
+	return (0);
 }
 
 /*	PARSER
@@ -102,6 +122,8 @@ int	parser(t_data *data)
 			return (syntax_error(data, SYNTAX_ERR_PIPE));
 		else if (is_redirect_pipe(temp->value, temp->next->value))
 			return (syntax_error(data, SYNTAX_ERR_PIPE));
+		else if (is_redirect_redirect(temp->value, temp->next->value))
+			return (syntax_redirect_error(data, temp->next->value));
 		temp = temp->next;
 	}
 	if (is_pipe(temp->value))
