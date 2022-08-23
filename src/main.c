@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 18:44:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:15:54 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ void	put_exit_code(char *word, t_data *data)
 		free(word);
 		word = ft_strdup(ft_itoa(data->status));
 	}
+}
+
+int	is_double_single_quotes(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*str++ == '\'')
+		i++;
+	if (i % 2 == 0)
+		return (1);
+	return (0);
 }
 
 char	*get_var_value_expand(t_env *env_list, char *var)
@@ -63,6 +75,12 @@ void	expand(t_data *data)
 		i = 0;
 		while (temp->word[i])
 		{
+			if (ft_strncmp_eq(temp->word[i], "\"", 1))
+			{
+				temp->word[i] = str_without_quotes(temp->word[i]);
+			}
+			else if (is_double_single_quotes(temp->word[i]) == 1)
+				temp->word[i] = str_without_quotes(temp->word[i]);
 			if (ft_strncmp_eq(temp->word[i], "$", 1))
 			{
 				if (!ft_strncmp_eq(temp->word[i], "$?", 2))
@@ -73,6 +91,8 @@ void	expand(t_data *data)
 				}
 				put_exit_code(temp->word[i], data);
 			}
+			if (is_double_single_quotes(temp->word[i]) == 0)
+				temp->word[i] = str_without_quotes(temp->word[i]);
 			i++;
 		}
 		temp = temp->next;
