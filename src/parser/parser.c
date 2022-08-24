@@ -6,27 +6,11 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 18:16:12 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:14:05 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*	IS_PIPE
-**	------------
-**	DESCRIPTION
-**	Compare if check value is PIPE.
-**	PARAMETERS
-**	#1. The integer (value);
-**	RETURN VALUES
-**	Return true if PIPE and false if not
-*/
-static bool	is_pipe(int value)
-{
-	if (value == PIPE)
-		return (true);
-	return (false);
-}
 
 /*	IS_PIPE_PIPE
 **	------------
@@ -62,20 +46,45 @@ static bool	is_redirect_pipe(int value, int next_value)
 	return (false);
 }
 
-/*	IS_WORD
+/*	IS_REDIRECT_REDIRECT
 **	------------
 **	DESCRIPTION
-**	Compare if check value is WORD.
+**	Compare if check value is REDIRECT followed by REDIRECT.
 **	PARAMETERS
 **	#1. The integer (value);
+**	#1. The integer (next_value);
 **	RETURN VALUES
-**	Return true if WORD and false if not
+**	Return true if it is and false if not
 */
-static bool	is_word(int value)
+static bool	is_redirect_redirect(int value, int next_value)
 {
-	if (value == WORD)
+	if (value != PIPE && value != WORD && next_value != PIPE
+		&& next_value != WORD)
 		return (true);
 	return (false);
+}
+
+/*	SYNTAX_REDIRECT_ERROR
+**	------------
+**	DESCRIPTION
+**	Checks the next token value and put the syntax error message.
+**	PARAMETERS
+**	#1. The pointer to data struct (data);
+**	#2. The token value (next_value);
+**	RETURN VALUES
+**	Return 0 if successful and 1 if not
+*/
+static int	syntax_redirect_error(t_data *data, int next_value)
+{
+	if (next_value == INPUT)
+		return (syntax_error(data, SYNTAX_ERR_INPUT));
+	if (next_value == HEREDOC)
+		return (syntax_error(data, SYNTAX_ERR_HEREDOC));
+	if (next_value == TRUNC)
+		return (syntax_error(data, SYNTAX_ERR_TRUNC));
+	if (next_value == APPEND)
+		return (syntax_error(data, SYNTAX_ERR_APPEND));
+	return (0);
 }
 
 /*	PARSER
@@ -94,7 +103,7 @@ int	parser(t_data *data)
 	if (data->head_token == NULL)
 		return (0);
 	temp = data->head_token;
-	if (is_pipe(temp->value))
+	if (temp->value == PIPE)
 		return (syntax_error(data, SYNTAX_ERR_PIPE));
 	while (temp->next != NULL)
 	{
@@ -102,11 +111,13 @@ int	parser(t_data *data)
 			return (syntax_error(data, SYNTAX_ERR_PIPE));
 		else if (is_redirect_pipe(temp->value, temp->next->value))
 			return (syntax_error(data, SYNTAX_ERR_PIPE));
+		else if (is_redirect_redirect(temp->value, temp->next->value))
+			return (syntax_redirect_error(data, temp->next->value));
 		temp = temp->next;
 	}
-	if (is_pipe(temp->value))
+	if (temp->value == PIPE)
 		return (syntax_error(data, SYNTAX_ERR_PIPE));
-	else if (!is_word(temp->value))
+	else if (temp->value != WORD)
 		return (syntax_error(data, SYNTAX_ERR_NEWLINE));
 	return (0);
 }

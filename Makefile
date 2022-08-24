@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/24 13:52:00 by alida-si         ###   ########.fr        #
+#    Updated: 2022/08/24 17:45:43 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,8 +89,11 @@ FILES = main.c\
 		reserved_word.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
+		open_redirection.c\
 		expand.c\
-		exec_cmd_utils.c
+		exec_cmd_utils.c\
+		error_exit.c\
+		heredoc.c\
 
 # COMPILED_SOURCES #
 
@@ -144,7 +147,7 @@ debug: fclean
 debug: $(NAME)
 
 valgrind: re
-	@valgrind --suppressions=./readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+	@valgrind --suppressions=./readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
 
 # NORMINETTE #
 norm:

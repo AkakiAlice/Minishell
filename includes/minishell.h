@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/24 13:54:06 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:49:45 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@
 # define TOO_MANY_ARG "too many arguments"
 # define UNCLOSED_QUOTES "unclosed quotes"
 # define SYNTAX_ERR_PIPE "syntax error near unexpected token `|'"
+# define SYNTAX_ERR_INPUT "syntax error near unexpected token `<'"
+# define SYNTAX_ERR_HEREDOC "syntax error near unexpected token `<<'"
+# define SYNTAX_ERR_TRUNC "syntax error near unexpected token `>'"
+# define SYNTAX_ERR_APPEND "syntax error near unexpected token `>>'"
 # define SYNTAX_ERR_NEWLINE "syntax error near unexpected token `newline'"
 # define IS_DIR "Is a directory"
 # define NO_FILE_DIR "No such file or directory"
+# define INVALID_PERMISSION "Permission denied"
 # define CMD_NOT_FOUND "command not found"
 
 typedef struct s_env
@@ -71,15 +76,13 @@ typedef struct s_split
 typedef struct s_counter
 {
 	int	word;
-	int	less;
-	int	great;
+	int	redirect;
 }	t_counter;
 
 typedef struct s_cmd_value
 {
 	char	**word;
-	char	**less;
-	char	**great;
+	char	**redirect;
 }	t_cmd_value;
 
 typedef struct s_cmdtable
@@ -87,8 +90,9 @@ typedef struct s_cmdtable
 	char				**word;
 	int					fdin;
 	int					fdout;
-	char				**less;
-	char				**great;
+	char				**redirect;
+	char				*err_file;
+	int					err_nb;
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 
@@ -106,19 +110,23 @@ typedef struct s_data
 	int			status;
 }	t_data;
 
+// BUILTINS
 void	builtin(t_data *data);
 void	exit_cmd(t_data *data);
 
+// COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
 			char **cmd);
 void	cmd_lst_add_front(t_cmdtable **head_cmd, t_cmd_value cmd_v);
 void	free_cmd_lst(t_cmdtable **head_cmd);
-bool	is_less(char *cmd);
-bool	is_great(char *cmd);
+bool	is_redirect(char *cmd);
 void	init_count(t_counter *count);
-int		init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
+void	init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
 bool	is_var_expansion(char *str);
+void	exec_heredoc(t_cmdtable *head_cmd, char *eof);
+void	open_redirection(t_data *data);
 
+// EXEC
 void	check_cmd(t_data *data, char **word);
 void	fork_it(t_data *data, t_env **head_env);
 void	exec_cmd(t_data *data, t_env **head_env, char **word);
@@ -128,15 +136,13 @@ void	wait_all_pids(int pid[1024], int id, t_data *data);
 void	close_node_fds(t_cmdtable *head);
 void	close_list_fds(t_cmdtable *head);
 void	dup_fds(t_cmdtable *head);
+void	is_dir_exit(t_data *data, t_env **head_env, char *word);
+void	no_such_file_exit(t_data *data, char *word, int status);
+void	invalid_permission_exit(t_data *data, char *word, int status);
 
 void	expand(t_data *data);
 
-void	save_env(t_env **env, char **envp);
-int		env_lst_add_back(t_env **head_env, char *name, char *value);
-char	*get_env_value(char *envp, char *env_key);
-void	get_prompt(t_data *data, t_env **head_env);
-void	free_env_lst(t_env **head_env);
-
+// PARSER
 void	lexer(t_token **head_token, char **cmd);
 int		get_token(char *cmd);
 int		token_lst_add_back(t_token **head_token, int value);
@@ -146,24 +152,13 @@ int		parser(t_data *data);
 int		syntax_error(t_data *data, char *msg);
 int		count_cmd_words(char *cmd);
 int		is_reserved_word(char c);
-void	skip_char(char **str, char ch);
 bool	check_reserved_word(char **cmd, int *word_count, bool is_word);
 int		find_first_reserved_char(char *cmd);
 void	save_word_with_quotes(t_split *split, char **cmd, int *i);
 void	save_reserved_word(t_split *split, char **cmd, int *i);
-
-void	put_msg(char *title, char *msg, int fd);
-char	*remove_spaces_around_str(char *str);
-char	*remove_spaces_outside_quote(char *str);
-void	free_minishell(t_data *data);
-void	minishell_init(t_data *data);
 char	**split_cmd(char *cmd);
 
-int		save_var(t_env **last_var, char *cmd);
-bool	validate_var(char *var_name, char *var_value);
-bool	is_variable(char *cmd);
-int		free_variable(char **var_value, char **cmd, char ***split, int status);
-
+// QUOTES
 int		is_quote_type(char ch);
 bool	validate_quote_closed(char *var_value);
 bool	validate_quote_space(char *var_value);
@@ -171,7 +166,26 @@ char	*str_without_quotes(char *str);
 bool	check_var_expansion(char *var_value);
 void	skip_quotes(char **cmd);
 
+// SYSTEM
+void	save_env(t_env **env, char **envp);
+int		env_lst_add_back(t_env **head_env, char *name, char *value);
+char	*get_env_value(char *envp, char *env_key);
+void	get_prompt(t_data *data, t_env **head_env);
+void	free_env_lst(t_env **head_env);
 void	error_msg_exit(char *title, char *msg, int fd);
+
+// UTILS
+void	put_msg(char *title, char *msg, int fd);
+char	*remove_spaces_around_str(char *str);
+char	*remove_spaces_outside_quote(char *str);
+void	free_minishell(t_data *data);
+void	minishell_init(t_data *data);
+
+// VARIABLE
+int		save_var(t_env **last_var, char *cmd);
+bool	validate_var(char *var_name, char *var_value);
+bool	is_variable(char *cmd);
+int		free_variable(char **var_value, char **cmd, char ***split, int status);
 
 void	put_exit_code(char *word, t_data *data);
 
