@@ -1,0 +1,12 @@
+echo $USER
+echo "$USER"
+echo ""$USER""
+echo "'$USER'"
+echo "''$USER''"
+echo "'$USER'''"
+echo '$USER'
+echo ''$USER''
+echo '"$USER"'
+echo '""$USER""'
+echo "'"$USER"'"
+echo ""'$USER'""

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 18:37:57 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:54:06 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ void	close_node_fds(t_cmdtable *head);
 void	close_list_fds(t_cmdtable *head);
 void	dup_fds(t_cmdtable *head);
 
+void	expand(t_data *data);
+
 void	save_env(t_env **env, char **envp);
 int		env_lst_add_back(t_env **head_env, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
@@ -170,5 +172,7 @@ bool	check_var_expansion(char *var_value);
 void	skip_quotes(char **cmd);
 
 void	error_msg_exit(char *title, char *msg, int fd);
+
+void	put_exit_code(char *word, t_data *data);
 
 #endif
