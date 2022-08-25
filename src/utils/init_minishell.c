@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/14 18:05:54 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/25 06:25:56 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ void	minishell_init(t_data *data)
 	data->head_token = NULL;
 	data->splited_cmdl = NULL;
 	data->status = 0;
+	data->is_pipe = false;
 }

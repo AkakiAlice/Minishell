@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 20:03:52 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/25 06:30:39 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,12 @@ typedef struct s_data
 	char		*prompt_line;
 	char		*path_value;
 	int			status;
+	bool		is_pipe;
 }	t_data;
 
 // BUILTINS
-void	builtin(t_data *data);
-void	exit_cmd(t_data *data);
+int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
+void	exit_cmd(t_data *data, t_cmdtable *head_table);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
@@ -178,6 +179,7 @@ char	*remove_spaces_around_str(char *str);
 char	*remove_spaces_outside_quote(char *str);
 void	free_minishell(t_data *data);
 void	minishell_init(t_data *data);
+int		strcmp_eq(char *s1, char *s2);
 
 // VARIABLE
 int		save_var(t_env **last_var, char *cmd);

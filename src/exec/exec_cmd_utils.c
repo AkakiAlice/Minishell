@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 17:40:34 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/25 06:32:02 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	open_pipe(t_data *data)
 			pipe(pipe_fd);
 			temp->fdout = pipe_fd[1];
 			temp->next->fdin = pipe_fd[0];
+			data->is_pipe = true;
 		}
 		temp = temp->next;
 	}

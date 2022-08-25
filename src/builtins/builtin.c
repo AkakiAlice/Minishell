@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/23 15:14:17 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/25 06:33:42 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin(t_data *data)
+int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 {
-	if (ft_strlen(data->splited_cmdl[0]) == 4
-		&& ft_strncmp_eq(data->splited_cmdl[0], "exit", 4))
-		exit_cmd(data);
+	if (strcmp_eq(*head_table->word, "exit"))
+	{
+		if (!data->is_pipe)
+			exit_cmd(data, head_table);
+		return (1);
+	}
+	return (0);
 }

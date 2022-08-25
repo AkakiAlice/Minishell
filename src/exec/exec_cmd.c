@@ -94,16 +94,19 @@ void	fork_it(t_data *data, t_env **head_env)
 	id = -1;
 	while (head != NULL)
 	{
-		pid[++id] = fork();
-		if (pid[id] == 0)
+		if (!exec_builtin_parent(data, head))
 		{
-			check_redirect(data, head);
-			check_cmd(data, head->word);
-			if (ft_strchr(head->word[0], '/') != NULL)
-				check_is_dir(head->word[0], head_env, data);
-			dup_fds(head);
-			close_list_fds(head);
-			exec_cmd(data, head_env, head->word);
+			pid[++id] = fork();
+			if (pid[id] == 0)
+			{
+				check_redirect(data, head);
+				check_cmd(data, head->word);
+				if (ft_strchr(head->word[0], '/') != NULL)
+					check_is_dir(head->word[0], head_env, data);
+				dup_fds(head);
+				close_list_fds(head);
+				exec_cmd(data, head_env, head->word);
+			}
 		}
 		close_node_fds(head);
 		head = head->next;

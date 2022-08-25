@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_minishell.c                                   :+:      :+:    :+:   */
+/*   strcmp_eq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/25 06:26:19 by pmitsuko         ###   ########.fr       */
+/*   Created: 2022/08/24 08:41:58 by pmitsuko          #+#    #+#             */
+/*   Updated: 2022/08/24 08:42:17 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	FREE_MINISHELL
+/*	STRCMP_EQ
 **	------------
 **	DESCRIPTION
-**	Free allocation memory in data struct.
+**	Checks if the strings are the same character and length.
 **	PARAMETERS
-**	#1. Pointer to struct data (data);
+**	#1. The string (s1);
+**	#2. The string (s2);
 **	RETURN VALUES
-**	-
+**	Return 1 if strings are equal and 0 if it's different.
 */
-void	free_minishell(t_data *data)
+int	strcmp_eq(char *s1, char *s2)
 {
-	free_token_lst(&data->head_token);
-	if (data->cmd_line != NULL)
+	size_t	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (0);
+	while (*(s1 + i) || *(s2 + i))
 	{
-		free(data->cmd_line);
-		data->cmd_line = NULL;
+		if (*(s1 + i) != *(s2 + i))
+			return (0);
+		i++;
 	}
-	free_cmd_lst(&data->head_cmd);
-	ft_matrix_free(&data->splited_cmdl);
-	data->splited_cmdl = NULL;
-	data->is_pipe = false;
+	return (1);
 }
