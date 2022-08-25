@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/25 06:30:39 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/25 07:13:08 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	error_msg_exit(char *title, char *msg, int fd);
 
 // UTILS
 void	put_msg(char *title, char *msg, int fd);
+void	put_msg_cmd(char *title, char *cmd, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
 char	*remove_spaces_outside_quote(char *str);
 void	free_minishell(t_data *data);

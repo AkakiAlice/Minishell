@@ -64,6 +64,16 @@ void	exec_cmd(t_data *data, t_env **head_env, char **word)
 	execve(data->cmd_path, word, NULL);
 }
 
+/*	CHECK_REDIRECT
+**	------------
+**	DESCRIPTION
+**	Checks the redirect.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (head_env);
+**	RETURN VALUES
+**	-
+*/
 void	check_redirect(t_data *data, t_cmdtable *head)
 {
 	if (!head->err_file)
@@ -72,6 +82,28 @@ void	check_redirect(t_data *data, t_cmdtable *head)
 		no_such_file_exit(data, head->err_file, 1);
 	if (head->err_nb == EACCES)
 		invalid_permission_exit(data, head->err_file, 1);
+}
+
+/*	CHILD_PROCESS
+**	------------
+**	DESCRIPTION
+**	Checks the redirect and command, then executes the commands.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (head_env);
+**	#3. The pointer to list (head);
+**	RETURN VALUES
+**	-
+*/
+void	child_process(t_data *data, t_env **head_env, t_cmdtable *head)
+{
+	check_redirect(data, head);
+	check_cmd(data, head->word);
+	if (ft_strchr(head->word[0], '/') != NULL)
+		check_is_dir(head->word[0], head_env, data);
+	dup_fds(head);
+	close_list_fds(head);
+	exec_cmd(data, head_env, head->word);
 }
 
 /*	FORK_IT
@@ -98,15 +130,7 @@ void	fork_it(t_data *data, t_env **head_env)
 		{
 			pid[++id] = fork();
 			if (pid[id] == 0)
-			{
-				check_redirect(data, head);
-				check_cmd(data, head->word);
-				if (ft_strchr(head->word[0], '/') != NULL)
-					check_is_dir(head->word[0], head_env, data);
-				dup_fds(head);
-				close_list_fds(head);
-				exec_cmd(data, head_env, head->word);
-			}
+				child_process(data, head_env, head);
 		}
 		close_node_fds(head);
 		head = head->next;

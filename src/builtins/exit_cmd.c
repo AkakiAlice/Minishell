@@ -6,23 +6,22 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 05:57:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/25 06:17:38 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/25 07:11:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	matrix_len(char **matrix)
-{
-	size_t	i;
-
-	i = 0;
-	while (*(matrix + i))
-		i++;
-	return (i);
-}
-
-bool	str_is_numeric(char *str)
+/*	STR_IS_NUMERIC
+**	------------
+**	DESCRIPTION
+**	Checks if the string is a numeric value.
+**	PARAMETERS
+**	#1. The string (str);
+**	RETURN VALUES
+**	Return true if it is and false if not
+*/
+static bool	str_is_numeric(char *str)
 {
 	while (*str)
 	{
@@ -33,16 +32,35 @@ bool	str_is_numeric(char *str)
 	return (true);
 }
 
-void	put_msg_cmd(char *title, char *cmd, char *msg, int fd)
+/*	GET_STATUS
+**	------------
+**	DESCRIPTION
+**	Get the status. If the status is outside the range 0 to 255, 128 is returned
+**	PARAMETERS
+**	#1. The string (str);
+**	RETURN VALUES
+**	Return status.
+*/
+static int	get_status(char *str)
 {
-	ft_putstr_fd(title, fd);
-	ft_putstr_fd(": ", fd);
-	ft_putstr_fd(cmd, fd);
-	ft_putstr_fd(": ", fd);
-	ft_putendl_fd(msg, fd);
-	return ;
+	int	status;
+
+	status = ft_atoi(str);
+	if (status < 0 || status > 255)
+		status = 128;
+	return (status);
 }
 
+/*	EXIT_CMD
+**	------------
+**	DESCRIPTION
+**	Builtin exit.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The pointer to list (head_table);
+**	RETURN VALUES
+**	-
+*/
 void	exit_cmd(t_data *data, t_cmdtable *head_table)
 {
 	int	i;
@@ -60,11 +78,7 @@ void	exit_cmd(t_data *data, t_cmdtable *head_table)
 			return ;
 		}
 		if (str_is_numeric(head_table->word[i]))
-		{
-			status = ft_atoi(head_table->word[i]);
-			if (status < 0 || status > 255)
-				status = 128;
-		}
+			status = get_status(head_table->word[i]);
 		i++;
 	}
 	if (status != -1)
