@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/25 06:32:02 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/25 07:15:40 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	wait_all_pids(int pid[1024], int id, t_data *data)
 
 	p_status = 0;
 	j = 0;
+	if (id == -1)
+		return ;
 	while (j <= id)
 	{
 		waitpid(pid[j], &data->status, 0);
