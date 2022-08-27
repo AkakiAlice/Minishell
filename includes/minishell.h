@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/27 14:22:27 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/27 15:45:30 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <dirent.h>
 # include <errno.h>
+# include <signal.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -110,6 +111,8 @@ typedef struct s_data
 	int			status;
 	bool		is_pipe;
 }	t_data;
+
+t_data	g_data;
 
 // BUILTINS
 int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
