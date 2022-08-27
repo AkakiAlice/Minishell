@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/24 17:45:43 by alida-si         ###   ########.fr        #
+#    Updated: 2022/08/26 21:48:22 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,6 +94,7 @@ FILES = main.c\
 		exec_cmd_utils.c\
 		error_exit.c\
 		heredoc.c\
+		expand_utils.c
 
 # COMPILED_SOURCES #
 

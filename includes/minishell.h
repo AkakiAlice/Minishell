@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/24 17:49:45 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/26 21:51:50 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,11 @@ void	is_dir_exit(t_data *data, t_env **head_env, char *word);
 void	no_such_file_exit(t_data *data, char *word, int status);
 void	invalid_permission_exit(t_data *data, char *word, int status);
 
+// EXPAND
 void	expand(t_data *data);
+int		is_double_single_quotes(char *str);
+int		dont_expand(char *str);
+void	clean_quotes(char **str, char quote);
 
 // PARSER
 void	lexer(t_token **head_token, char **cmd);
@@ -186,7 +190,5 @@ int		save_var(t_env **last_var, char *cmd);
 bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
-
-void	put_exit_code(char *word, t_data *data);
 
 #endif

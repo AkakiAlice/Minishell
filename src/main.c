@@ -6,20 +6,11 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/24 17:50:06 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/26 02:09:23 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	put_exit_code(char *word, t_data *data)
-{
-	if (ft_strncmp_eq(word, "$?", 2))
-	{
-		free(word);
-		word = ft_strdup(ft_itoa(data->status));
-	}
-}
 
 /*	RUN_CMD
 **	------------
