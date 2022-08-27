@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/24 18:57:19 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/08/27 14:22:02 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ VPATH = $(SRC_DIR)\
 		$(SRC_DIR)utils\
 		$(SRC_DIR)variable\
 		$(SRC_DIR)command_table\
+		$(SRC_DIR)expand\
 		$(SRC_DIR)exec
 
 # FILES #
@@ -89,10 +90,12 @@ FILES = main.c\
 		save_reserved_word.c\
 		save_word_with_quotes.c\
 		open_redirection.c\
+		expand.c\
 		exec_cmd_utils.c\
 		error_exit.c\
 		heredoc.c\
 		strcmp_eq.c\
+		expand_utils.c
 
 # COMPILED_SOURCES #
 

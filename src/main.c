@@ -3,81 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/24 08:45:21 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/27 14:23:51 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	put_exit_code(char *word, t_data *data)
-{
-	if (ft_strncmp_eq(word, "$?", 2))
-	{
-		free(word);
-		word = ft_strdup(ft_itoa(data->status));
-	}
-}
-
-char	*get_var_value_expand(t_env *env_list, char *var)
-{
-	t_env	*ptr;
-
-	ptr = env_list;
-	while (ptr->next != env_list)
-	{
-		if (ft_strncmp(var, ptr->name, 4) == 0)
-			return (ptr->value);
-		ptr = ptr->next;
-	}
-	if (ft_strncmp(var, ptr->name, 4) == 0)
-			return (ptr->value);
-	return (ft_strdup(""));
-}
-
-char	*expand_env(char *word, t_data *data)
-{
-	char	**temp;
-	char	*value;
-
-	if (!ft_strncmp_eq(word, "$?", 2))
-	{
-		temp = ft_split2(word, '$');
-		value = get_var_value_expand(data->head_env, temp[0]);
-		ft_matrix_free(&temp);
-	}
-	return (value);
-}
-
-void	expand(t_data *data)
-{
-	t_cmdtable	*temp;
-	int			i;
-	char		*aux;
-
-	temp = data->head_cmd;
-	while (temp)
-	{
-		i = 0;
-		while (temp->word[i])
-		{
-			if (ft_strncmp_eq(temp->word[i], "$", 1))
-			{
-				if (!ft_strncmp_eq(temp->word[i], "$?", 2))
-				{
-					aux = expand_env(temp->word[i], data);
-					free(temp->word[i]);
-					temp->word[i] = ft_strdup(aux);
-				}
-				put_exit_code(temp->word[i], data);
-			}
-			i++;
-		}
-		temp = temp->next;
-	}
-}
 
 /*	RUN_CMD
 **	------------
