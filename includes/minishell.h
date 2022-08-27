@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/27 19:07:36 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/27 19:11:08 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ typedef struct s_data
 	int			status;
 	bool		is_pipe;
 	int			signal;
-	//int		fd_pipe[2];
-	//int		flag;
-	//char	*line;
+	int		fd_pipe[2];
+	int		flag;
+	char	*line;
 }	t_data;
 
 t_data	g_data;

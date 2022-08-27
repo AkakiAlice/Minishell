@@ -3,14 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:58:48 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/24 08:41:46 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/28 05:50:51 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	sig_heredoc2(int signum)
+{
+	if (signum == 2)
+	{
+		ft_printf("\n");
+		//rl_replace_line("", 0);
+		//rl_on_new_line();
+		//rl_redisplay();
+		//exit(130);
+	}
+	/*close(0);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	g_data.signal = 130;*/
+	(void)signum;
+}
+
+void	sig_heredoc(int signum)
+{
+	if (signum == 2)
+	{
+		//ft_printf("\n");
+		//rl_replace_line(NULL, 0);
+		//rl_on_new_line();
+		//rl_redisplay();
+		//close(g_data.fd_pipe[1]);
+		g_data.flag = 1;
+		//exit(130);
+	}
+	/*close(0);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	g_data.signal = 130;*/
+	(void)signum;
+}
 
 /*	EXEC_HEREDOC
 **	------------
@@ -22,15 +60,48 @@
 **	RETURN VALUES
 **	-
 */
-void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
+/*void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
+{
+	g_data.flag = 0;
+	signal(SIGINT, sig_heredoc);
+	g_data.line = readline("> ");
+	pipe(g_data.fd_pipe);
+	while (1)
+	{
+		//signal(SIGINT, sighandler);
+		if (strcmp_eq(eof, g_data.line))
+		{
+			free(g_data.line);
+			head_cmd->fdin = g_data.fd_pipe[0];
+			close(g_data.fd_pipe[1]);
+			break ;
+		}
+		if (g_data.flag == 1)
+		{
+			head_cmd->fdin = g_data.fd_pipe[0];
+			break ;
+		}
+		if (g_data.line && g_data.flag == 0)
+		{
+			write(g_data.fd_pipe[1], g_data.line, ft_strlen(g_data.line));
+			write(g_data.fd_pipe[1], "\n", 1);
+			free(g_data.line);
+		}
+		g_data.line = readline("-> ");
+	}
+}*/
+
+/*void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
 {
 	char	*line;
 	int		fd[2];
 
+	signal(SIGINT, sig_heredoc);
 	line = readline("> ");
 	pipe(fd);
 	while (1)
 	{
+		//signal(SIGINT, sighandler);
 		if (strcmp_eq(eof, line))
 		{
 			free(line);
@@ -38,9 +109,43 @@ void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
 			close(fd[1]);
 			break ;
 		}
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
-		free(line);
+		if (line)
+		{
+			write(fd[1], line, ft_strlen(line));
+			write(fd[1], "\n", 1);
+			free(line);
+		}
 		line = readline("> ");
 	}
+}*/
+
+void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
+{
+	char	*line;
+	int		fd[2];
+
+	signal(SIGINT, sig_heredoc2);
+	int	pid = fork();
+	if (pid == 0)
+	{
+		signal(SIGINT, sig_heredoc);
+		line = readline("> ");
+		pipe(fd);
+		while (1)
+		{
+			if (strcmp_eq(eof, line) || g_data.flag == 1)
+			{
+				free(line);
+				head_cmd->fdin = fd[0];
+				close(fd[1]);
+				exit(0);
+			}
+			write(fd[1], line, ft_strlen(line));
+			write(fd[1], "\n", 1);
+			free(line);
+			line = readline("> ");
+		}
+	}
+	waitpid(pid, &g_data.status, 0);
+	//signal(SIGINT, sig_heredoc2);
 }
