@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/27 14:26:18 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/27 15:52:20 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	minishell_init(t_data *data)
 	data->splited_cmdl = NULL;
 	data->status = 0;
 	data->is_pipe = false;
+	data->signal = 0;
 }

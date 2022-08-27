@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/27 15:45:30 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/27 19:07:36 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,19 @@ typedef struct s_cmdtable
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 
+/*typedef struct s_heredoc
+{
+	int		fd_pipe[2];
+	int		flag;
+	char	*line;
+}	t_heredoc;*/
+
 typedef struct s_data
 {
 	t_token		*head_token;
 	t_env		*head_env;
 	t_cmdtable	*head_cmd;
+	//t_heredoc	heredoc;
 	char		*cmd_line;
 	char		*env_value;
 	char		*cmd_path;
@@ -110,6 +118,10 @@ typedef struct s_data
 	char		*path_value;
 	int			status;
 	bool		is_pipe;
+	int			signal;
+	//int		fd_pipe[2];
+	//int		flag;
+	//char	*line;
 }	t_data;
 
 t_data	g_data;
@@ -143,6 +155,7 @@ void	dup_fds(t_cmdtable *head);
 void	is_dir_exit(t_data *data, t_env **head_env, char *word);
 void	no_such_file_exit(t_data *data, char *word, int status);
 void	invalid_permission_exit(t_data *data, char *word, int status);
+void	sighandle_parent(int signum);
 
 // EXPAND
 void	expand(t_data *data);
@@ -196,5 +209,7 @@ int		save_var(t_env **last_var, char *cmd);
 bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
+
+void	sighandler(int signum);
 
 #endif

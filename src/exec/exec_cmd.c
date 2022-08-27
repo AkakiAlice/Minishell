@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+void	sighandle_parent(int signum)
+{
+	if (signum == 2)
+	{
+		g_data.signal = 2;
+		ft_printf("\n");
+	}
+}
+
+void	sighandle_child(int signum)
+{
+	if (signum == 2)
+	{
+		exit(130);
+	}
+}
+
 /*	CHECK_IS_DIR
 **	------------
 **	DESCRIPTION
@@ -61,6 +78,7 @@ void	exec_cmd(t_data *data, t_env **head_env, char **word)
 		free_env_lst(head_env);
 		exit(127);
 	}
+	signal(SIGINT, sighandle_child);
 	execve(data->cmd_path, word, NULL);
 }
 
@@ -126,12 +144,16 @@ void	fork_it(t_data *data, t_env **head_env)
 	id = -1;
 	while (head != NULL)
 	{
-		if (!exec_builtin_parent(data, head))
-		{
+		signal(SIGINT, sighandle_parent);
+		//if (!exec_builtin_parent(data, head))
+		//{
 			pid[++id] = fork();
 			if (pid[id] == 0)
+			{
 				child_process(data, head_env, head);
-		}
+				//signal(SIGINT, sighandle_fork);
+			}
+		//}
 		close_node_fds(head);
 		head = head->next;
 	}
