@@ -6,12 +6,23 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/26 21:47:10 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/26 22:10:18 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	GET_VAR_VALUE_EXPAND
+**	------------
+**	DESCRIPTION
+**	Loops through the linked list of environment variables
+**	until it finds the value corresponding to the received argument.
+**	PARAMETERS
+**	#1. The linked list of environment variables (env_list);
+**	#2. The name of the variable to look for (var);
+**	RETURN VALUES
+**	The value of the environment variable
+*/
 char	*get_var_value_expand(t_env *env_list, char *var)
 {
 	t_env	*ptr;
@@ -26,6 +37,16 @@ char	*get_var_value_expand(t_env *env_list, char *var)
 	return (NULL);
 }
 
+/*	EXPAND_ENV
+**	------------
+**	DESCRIPTION
+**	Parses the variable name and finds its value.
+**	PARAMETERS
+**	#1. The name of the variable to expand (word);
+**	#2. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 char	*expand_env(char *word, t_data *data)
 {
 	char	**temp;
@@ -40,6 +61,16 @@ char	*expand_env(char *word, t_data *data)
 	return (value);
 }
 
+/*	IS_DOLLAR
+**	------------
+**	DESCRIPTION
+**	Replace the variable name with its value.
+**	PARAMETERS
+**	#1. The name of the variable to expand (str);
+**	#2. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 void	is_dollar(char **str, t_data *data)
 {
 	char	*aux;
@@ -62,6 +93,16 @@ void	is_dollar(char **str, t_data *data)
 	}
 }
 
+/*	EXPAND
+**	------------
+**	DESCRIPTION
+**	Loops through the linked list of commands and checks
+**	if there are any variables to expand.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
 void	expand(t_data *data)
 {
 	t_cmdtable	*temp;
