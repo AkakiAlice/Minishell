@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 15:20:06 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/28 16:57:22 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,14 @@ int	main(int argc, char *argv[], char *envp[])
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 		get_prompt(&g_data, &g_data.head_env);
-		if (validate_quote_closed(g_data.cmd_line))
-			run_cmd(&g_data);
-		else
-			put_msg("minishell", UNCLOSED_QUOTES, 2);
-		free_minishell(&g_data);
+		if (*g_data.cmd_line)
+		{
+			if (validate_quote_closed(g_data.cmd_line))
+				run_cmd(&g_data);
+			else
+				put_msg("minishell", UNCLOSED_QUOTES, 2);
+			free_minishell(&g_data);
+		}
 	}
 	return (0);
 }

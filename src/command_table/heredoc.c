@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:58:48 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/28 15:01:48 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/28 17:18:57 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ void	write_heredoc(char *eof, int *fd)
 	while (1)
 	{
 		if (!line)
-			break;
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd("warning: ", 2);
+			ft_putstr_fd("here-document delimited by end-of-file ", 2);
+			ft_printf("(wanted `%s')\n", eof);
+			exit(1);
+		}
 		if (strcmp_eq(eof, line))
 			break;
 		write(*fd, line, ft_strlen(line));
@@ -38,6 +44,7 @@ void	write_heredoc(char *eof, int *fd)
 	}
 	free(line);
 	close(*fd);
+	// free_minishell(&g_data);
 	exit(0);
 }
 
@@ -69,6 +76,8 @@ void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
 	signal(SIGINT, SIG_IGN);
 	close(fd[1]);
 	waitpid(pid, &wstatus, 0);
+	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == 1)
+		g_data.interrupt_heredoc = true;
 	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == 130)
 	{
 		close(fd[0]);

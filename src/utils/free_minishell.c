@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 14:16:05 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/28 17:19:10 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 */
 void	free_minishell(t_data *data)
 {
+	// free_env_lst(&data->head_env);
 	free_token_lst(&data->head_token);
 	if (data->cmd_line != NULL)
 	{
