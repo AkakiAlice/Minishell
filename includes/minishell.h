@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/27 19:07:36 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:52:59 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,11 @@ typedef struct s_cmdtable
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 
-/*typedef struct s_heredoc
-{
-	int		fd_pipe[2];
-	int		flag;
-	char	*line;
-}	t_heredoc;*/
-
 typedef struct s_data
 {
 	t_token		*head_token;
 	t_env		*head_env;
 	t_cmdtable	*head_cmd;
-	//t_heredoc	heredoc;
 	char		*cmd_line;
 	char		*env_value;
 	char		*cmd_path;
@@ -119,9 +111,7 @@ typedef struct s_data
 	int			status;
 	bool		is_pipe;
 	int			signal;
-	//int		fd_pipe[2];
-	//int		flag;
-	//char	*line;
+	bool		interrupt_heredoc;
 }	t_data;
 
 t_data	g_data;
@@ -210,6 +200,6 @@ bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
 
-void	sighandler(int signum);
+void	sig_handler(int signum);
 
 #endif

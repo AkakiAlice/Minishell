@@ -17,16 +17,14 @@ void	sighandle_parent(int signum)
 	if (signum == 2)
 	{
 		g_data.signal = 2;
-		ft_printf("\n");
+		write(1, "\n", 1);
 	}
 }
 
 void	sighandle_child(int signum)
 {
 	if (signum == 2)
-	{
 		exit(130);
-	}
 }
 
 /*	CHECK_IS_DIR
@@ -145,15 +143,12 @@ void	fork_it(t_data *data, t_env **head_env)
 	while (head != NULL)
 	{
 		signal(SIGINT, sighandle_parent);
-		//if (!exec_builtin_parent(data, head))
-		//{
+		// if (!exec_builtin_parent(data, head))
+		// {
 			pid[++id] = fork();
 			if (pid[id] == 0)
-			{
 				child_process(data, head_env, head);
-				//signal(SIGINT, sighandle_fork);
-			}
-		//}
+		// }
 		close_node_fds(head);
 		head = head->next;
 	}

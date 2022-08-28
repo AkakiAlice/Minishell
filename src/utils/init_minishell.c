@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/27 15:52:20 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:15:58 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	minishell_init(t_data *data)
 	data->status = 0;
 	data->is_pipe = false;
 	data->signal = 0;
+	data->interrupt_heredoc = false;
 }
