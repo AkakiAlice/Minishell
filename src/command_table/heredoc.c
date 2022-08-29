@@ -6,48 +6,65 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:58:48 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/28 05:50:51 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:10:17 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_heredoc2(int signum)
+void	clear_minishell()
 {
-	if (signum == 2)
+	if (g_data.cmd_line != NULL)
 	{
-		ft_printf("\n");
-		//rl_replace_line("", 0);
-		//rl_on_new_line();
-		//rl_redisplay();
-		//exit(130);
+		free(g_data.cmd_line);
+		g_data.cmd_line = NULL;
 	}
-	/*close(0);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	g_data.signal = 130;*/
-	(void)signum;
+	ft_matrix_free(&g_data.splited_cmdl);
+	g_data.splited_cmdl = NULL;
+	free_env_lst(&g_data.head_env);
+	free_token_lst(&g_data.head_token);
+	free_cmd_lst(&g_data.head_cmd);
+	g_data.is_pipe = false;
+	g_data.signal = 0;
+	g_data.interrupt_heredoc = false;
 }
 
-void	sig_heredoc(int signum)
+static void	child_sig(int signal)
 {
-	if (signum == 2)
+	g_data.signal = signal;
+	write(1, "\n", 1);
+	clear_minishell();
+	exit(130);
+}
+
+void	write_heredoc(char *eof, int *fd)
+{
+	char	*line;
+
+	signal(SIGINT, child_sig);
+	line = readline("> ");
+	while (1)
 	{
-		//ft_printf("\n");
-		//rl_replace_line(NULL, 0);
-		//rl_on_new_line();
-		//rl_redisplay();
-		//close(g_data.fd_pipe[1]);
-		g_data.flag = 1;
-		//exit(130);
+		if (!line)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd("warning: ", 2);
+			ft_putstr_fd("here-document delimited by end-of-file ", 2);
+			ft_printf("(wanted `%s')\n", eof);
+			clear_minishell();
+			exit(1);
+		}
+		if (strcmp_eq(eof, line))
+			break;
+		write(*fd, line, ft_strlen(line));
+		write(*fd, "\n", 1);
+		free(line);
+		line = readline("> ");
 	}
-	/*close(0);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	g_data.signal = 130;*/
-	(void)signum;
+	free(line);
+	close(*fd);
+	clear_minishell();
+	exit(0);
 }
 
 /*	EXEC_HEREDOC
@@ -60,92 +77,31 @@ void	sig_heredoc(int signum)
 **	RETURN VALUES
 **	-
 */
-/*void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
-{
-	g_data.flag = 0;
-	signal(SIGINT, sig_heredoc);
-	g_data.line = readline("> ");
-	pipe(g_data.fd_pipe);
-	while (1)
-	{
-		//signal(SIGINT, sighandler);
-		if (strcmp_eq(eof, g_data.line))
-		{
-			free(g_data.line);
-			head_cmd->fdin = g_data.fd_pipe[0];
-			close(g_data.fd_pipe[1]);
-			break ;
-		}
-		if (g_data.flag == 1)
-		{
-			head_cmd->fdin = g_data.fd_pipe[0];
-			break ;
-		}
-		if (g_data.line && g_data.flag == 0)
-		{
-			write(g_data.fd_pipe[1], g_data.line, ft_strlen(g_data.line));
-			write(g_data.fd_pipe[1], "\n", 1);
-			free(g_data.line);
-		}
-		g_data.line = readline("-> ");
-	}
-}*/
-
-/*void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
-{
-	char	*line;
-	int		fd[2];
-
-	signal(SIGINT, sig_heredoc);
-	line = readline("> ");
-	pipe(fd);
-	while (1)
-	{
-		//signal(SIGINT, sighandler);
-		if (strcmp_eq(eof, line))
-		{
-			free(line);
-			head_cmd->fdin = fd[0];
-			close(fd[1]);
-			break ;
-		}
-		if (line)
-		{
-			write(fd[1], line, ft_strlen(line));
-			write(fd[1], "\n", 1);
-			free(line);
-		}
-		line = readline("> ");
-	}
-}*/
-
 void	exec_heredoc(t_cmdtable *head_cmd, char *eof)
 {
-	char	*line;
 	int		fd[2];
+	int		pid;
+	int		wstatus;
 
-	signal(SIGINT, sig_heredoc2);
-	int	pid = fork();
+	if (head_cmd->fdin > 2)
+		close(head_cmd->fdin);
+	pipe(fd);
+	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, sig_heredoc);
-		line = readline("> ");
-		pipe(fd);
-		while (1)
-		{
-			if (strcmp_eq(eof, line) || g_data.flag == 1)
-			{
-				free(line);
-				head_cmd->fdin = fd[0];
-				close(fd[1]);
-				exit(0);
-			}
-			write(fd[1], line, ft_strlen(line));
-			write(fd[1], "\n", 1);
-			free(line);
-			line = readline("> ");
-		}
+		close(fd[0]);
+		write_heredoc(eof, &fd[1]);
 	}
-	waitpid(pid, &g_data.status, 0);
-	//signal(SIGINT, sig_heredoc2);
+	signal(SIGINT, SIG_IGN);
+	close(fd[1]);
+	waitpid(pid, &wstatus, 0);
+	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == 1)
+		g_data.interrupt_heredoc = true;
+	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == 130)
+	{
+		close(fd[0]);
+		g_data.status = 130;
+		g_data.interrupt_heredoc = true;
+	}
+	head_cmd->fdin = fd[0];
 }

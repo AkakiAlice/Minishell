@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/27 16:16:20 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:11:05 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,7 @@ void	get_prompt(t_data *data, t_env **head_env)
 	cwd = ft_strcat(aux, "$ ");
 	data->prompt_line = ft_strcat(login, cwd);
 	data->cmd_line = readline(data->prompt_line);
-	if (*data->cmd_line)
-	{
-		add_history(data->cmd_line);
-		free_prompt_line(cwd, login, &data->prompt_line);
-		if (data->cmd_path != NULL)
-		{
-			free(data->cmd_path);
-			data->cmd_path = NULL;
-		}
-	}
-	else
+	if (data->cmd_line == NULL)
 	{
 		free_prompt_line(cwd, login, &data->prompt_line);
 		free_env_lst(head_env);
@@ -100,6 +90,14 @@ void	get_prompt(t_data *data, t_env **head_env)
 			free(data->cmd_path);
 			data->cmd_path = NULL;
 		}
+		ft_printf("exit\n");
 		exit(0);
+	} else if (*data->cmd_line)
+		add_history(data->cmd_line);
+	free_prompt_line(cwd, login, &data->prompt_line);
+	if (data->cmd_path != NULL)
+	{
+		free(data->cmd_path);
+		data->cmd_path = NULL;
 	}
 }

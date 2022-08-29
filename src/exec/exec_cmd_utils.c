@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/27 16:04:44 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/28 16:15:55 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ void	wait_all_pids(int pid[1024], int id, t_data *data)
 		j++;
 	}
 	if (WIFEXITED(data->status))
+	{
 		p_status = WEXITSTATUS(data->status);
+	}
 	if (data->signal == 2)
 		data->status = 130;
+	else if (data->signal == 3)
+		data->status = 131;
 	else
 		data->status = p_status;
 }
