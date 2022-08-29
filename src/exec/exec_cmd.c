@@ -147,12 +147,12 @@ void	fork_it(t_data *data, t_env **head_env)
 	{
 		signal(SIGINT, sighandle_parent);
 		signal(SIGQUIT, sighandle_parent);
-		// if (!exec_builtin_parent(data, head))
-		// {
+		if (!exec_builtin_parent(data, head))
+		{
 			pid[++id] = fork();
 			if (pid[id] == 0)
 				child_process(data, head_env, head);
-		// }
+		}
 		close_node_fds(head);
 		head = head->next;
 	}
