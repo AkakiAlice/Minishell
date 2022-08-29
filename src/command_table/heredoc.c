@@ -6,16 +6,34 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:58:48 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/28 17:18:57 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/29 06:09:19 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	clear_minishell()
+{
+	if (g_data.cmd_line != NULL)
+	{
+		free(g_data.cmd_line);
+		g_data.cmd_line = NULL;
+	}
+	ft_matrix_free(&g_data.splited_cmdl);
+	g_data.splited_cmdl = NULL;
+	free_env_lst(&g_data.head_env);
+	free_token_lst(&g_data.head_token);
+	free_cmd_lst(&g_data.head_cmd);
+	g_data.is_pipe = false;
+	g_data.signal = 0;
+	g_data.interrupt_heredoc = false;
+}
+
 static void	child_sig(int signal)
 {
 	g_data.signal = signal;
 	write(1, "\n", 1);
+	clear_minishell();
 	exit(130);
 }
 
@@ -33,6 +51,7 @@ void	write_heredoc(char *eof, int *fd)
 			ft_putstr_fd("warning: ", 2);
 			ft_putstr_fd("here-document delimited by end-of-file ", 2);
 			ft_printf("(wanted `%s')\n", eof);
+			clear_minishell();
 			exit(1);
 		}
 		if (strcmp_eq(eof, line))
@@ -44,7 +63,7 @@ void	write_heredoc(char *eof, int *fd)
 	}
 	free(line);
 	close(*fd);
-	// free_minishell(&g_data);
+	clear_minishell();
 	exit(0);
 }
 
