@@ -17,6 +17,7 @@
    fun:_rl_insert_char
    fun:rl_insert
    fun:_rl_dispatch_subseq
+   fun:readline_internal_teardown
    fun:readline_internal_char
    fun:readline
    ...
