@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/30 10:45:54 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:12:54 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,11 @@ void	invalid_permission_exit(t_data *data, char *word, int status);
 void	sighandle_parent(int signum);
 
 // EXPAND
-void	expand(char **word, t_data *data);
+void	parse_expansion(char **word, t_data *data);
 int		is_double_single_quotes(char *str);
 int		dont_expand(char *str);
 void	clean_quotes(char **str, char quote);
-void	teste(t_data *data);
+void	expand(t_data *data);
 
 // PARSER
 void	lexer(t_token **head_token, char **cmd);

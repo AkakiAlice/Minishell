@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/30 10:55:23 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:38:26 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,54 +93,24 @@ void	is_dollar(char **str, t_data *data)
 	}
 }
 
-/*	EXPAND
+/*	PARSE_EXPANSION
 **	------------
 **	DESCRIPTION
-**	Loops through the linked list of commands and checks
-**	if there are any variables to expand.
+**	Loops through the array and checks if there are any variables to expand.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
+**	#1. The array of char "word" (word);
+**	#2. The pointer to struct "data" (data);
 **	RETURN VALUES
 **	-
 */
-/*void	expand(t_data *data)
-{
-	t_cmdtable	*temp;
-	int			i;
-
-	temp = data->head_cmd;
-	while (temp != NULL)
-	{
-		i = 0;
-		if (temp->redirect == NULL)
-		{
-			while (temp->word[i])
-			{
-				if (is_var_expansion(temp->word[i])) {
-					if (ft_strncmp_eq(temp->word[i], "\"", 1))
-						clean_quotes(&temp->word[i], '\"');
-					if (is_double_single_quotes(temp->word[i]) == 1)
-						clean_quotes(&temp->word[i], '\'');
-					if (ft_strncmp_eq(temp->word[i], "$", 1))
-						is_dollar(&temp->word[i], data);
-					if (is_double_single_quotes(temp->word[i]) == 0)
-						clean_quotes(&temp->word[i], '\'');
-				}
-				i++;
-			}
-		}
-		temp = temp->next;
-	}
-}*/
-
-void	expand(char **word, t_data *data)
+void	parse_expansion(char **word, t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (word[i])
 	{
-		if (is_var_expansion(word[i]))
+		if (is_var_expansion(word[i]) && (get_token(word[i - 1]) != HEREDOC))
 		{
 			if (ft_strncmp_eq(word[i], "\"", 1))
 				clean_quotes(&word[i], '\"');
@@ -155,7 +125,17 @@ void	expand(char **word, t_data *data)
 	}
 }
 
-void	teste(t_data *data)
+/*	EXPAND
+**	------------
+**	DESCRIPTION
+**	Loops through the linked list and call the "parse_expression" function
+**	in case of redirections and words.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
+void	expand(t_data *data)
 {
 	t_cmdtable	*temp;
 
@@ -163,9 +143,9 @@ void	teste(t_data *data)
 	while (temp != NULL)
 	{
 		if (temp->redirect)
-			expand(temp->redirect, data);
+			parse_expansion(temp->redirect, data);
 		if (temp->word)
-			expand(temp->word, data);
+			parse_expansion(temp->word, data);
 		temp = temp->next;
 	}
 }
