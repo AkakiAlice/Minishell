@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 16:15:55 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/30 09:02:00 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,16 @@ void	wait_all_pids(int pid[1024], int id, t_data *data)
 	int	p_status;
 	int	j;
 
-	p_status = 0;
 	j = 0;
 	if (id == -1)
 		return ;
 	while (j <= id)
 	{
-		waitpid(pid[j], &data->status, 0);
+		waitpid(pid[j], &p_status, 0);
 		j++;
 	}
-	if (WIFEXITED(data->status))
-	{
-		p_status = WEXITSTATUS(data->status);
-	}
-	if (data->signal == 2)
-		data->status = 130;
-	else if (data->signal == 3)
-		data->status = 131;
-	else
-		data->status = p_status;
+	if (WIFEXITED(p_status))
+		data->status = WEXITSTATUS(p_status);
 }
 
 /*	CLOSE_NODE_FDS
