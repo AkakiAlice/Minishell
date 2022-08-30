@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 14:23:30 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:34:09 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,22 @@ void	expand(t_data *data)
 	while (temp != NULL)
 	{
 		i = 0;
-		while (temp->word[i])
+		if (temp->redirect == NULL)
 		{
-			if (is_var_expansion(temp->word[i])) {
-				if (ft_strncmp_eq(temp->word[i], "\"", 1))
-					clean_quotes(&temp->word[i], '\"');
-				if (is_double_single_quotes(temp->word[i]) == 1)
-					clean_quotes(&temp->word[i], '\'');
-				if (ft_strncmp_eq(temp->word[i], "$", 1))
-					is_dollar(&temp->word[i], data);
-				if (is_double_single_quotes(temp->word[i]) == 0)
-					clean_quotes(&temp->word[i], '\'');
+			while (temp->word[i])
+			{
+				if (is_var_expansion(temp->word[i])) {
+					if (ft_strncmp_eq(temp->word[i], "\"", 1))
+						clean_quotes(&temp->word[i], '\"');
+					if (is_double_single_quotes(temp->word[i]) == 1)
+						clean_quotes(&temp->word[i], '\'');
+					if (ft_strncmp_eq(temp->word[i], "$", 1))
+						is_dollar(&temp->word[i], data);
+					if (is_double_single_quotes(temp->word[i]) == 0)
+						clean_quotes(&temp->word[i], '\'');
+				}
+				i++;
 			}
-			i++;
 		}
 		temp = temp->next;
 	}
