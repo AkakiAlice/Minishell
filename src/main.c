@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 16:57:22 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/30 05:45:52 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 void	run_cmd(t_data *data)
 {
 	tokenizer(data);
+	if (data->splited_cmdl == NULL)
+		return ;
 	lexer(&data->head_token, data->splited_cmdl);
 	if (parser(data) == FAILURE)
 		return ;
