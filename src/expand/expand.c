@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/29 16:34:09 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/30 10:55:23 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	is_dollar(char **str, t_data *data)
 **	RETURN VALUES
 **	-
 */
-void	expand(t_data *data)
+/*void	expand(t_data *data)
 {
 	t_cmdtable	*temp;
 	int			i;
@@ -129,6 +129,43 @@ void	expand(t_data *data)
 				i++;
 			}
 		}
+		temp = temp->next;
+	}
+}*/
+
+void	expand(char **word, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (word[i])
+	{
+		if (is_var_expansion(word[i]))
+		{
+			if (ft_strncmp_eq(word[i], "\"", 1))
+				clean_quotes(&word[i], '\"');
+			if (is_double_single_quotes(word[i]) == 1)
+				clean_quotes(&word[i], '\'');
+			if (ft_strncmp_eq(word[i], "$", 1))
+				is_dollar(&word[i], data);
+			if (is_double_single_quotes(word[i]) == 0)
+				clean_quotes(&word[i], '\'');
+		}
+		i++;
+	}
+}
+
+void	teste(t_data *data)
+{
+	t_cmdtable	*temp;
+
+	temp = data->head_cmd;
+	while (temp != NULL)
+	{
+		if (temp->redirect)
+			expand(temp->redirect, data);
+		if (temp->word)
+			expand(temp->word, data);
 		temp = temp->next;
 	}
 }

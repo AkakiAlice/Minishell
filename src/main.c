@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/29 16:37:52 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/30 09:33:16 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	run_cmd(t_data *data)
 	if (parser(data) == FAILURE)
 		return ;
 	create_cmd_table(&data->head_cmd, data->head_token, data->splited_cmdl);
-	expand(data);
+	teste(data);
 	open_pipe(data);
 	open_redirection(data);
 	if (!g_data.interrupt_heredoc)
