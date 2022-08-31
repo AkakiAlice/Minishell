@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-void	sighandle_parent(int signum)
-{
-	g_data.signal = signum;
-	if (g_data.signal == 2)
-	g_data.status = 130;
-	if (g_data.signal == 3)
-	{
-		g_data.status = 131;
-		write(1, "Quit", 4);
-	}
-	write(1, "\n", 1);
-}
-
 /*	CHECK_IS_DIR
 **	------------
 **	DESCRIPTION
@@ -74,7 +61,7 @@ void	exec_cmd(t_data *data, t_env **head_env, char **word)
 		free_env_lst(head_env);
 		exit(127);
 	}
-	execve(data->cmd_path, word, NULL); // TODO: no lugar de NULL usar o env
+	execve(data->cmd_path, word, NULL);
 }
 
 /*	CHECK_REDIRECT
@@ -139,8 +126,8 @@ void	fork_it(t_data *data, t_env **head_env)
 	id = -1;
 	while (head != NULL)
 	{
-		signal(SIGINT, sighandle_parent);
-		signal(SIGQUIT, sighandle_parent);
+		signal(SIGINT, sig_handle_exec_parent);
+		signal(SIGQUIT, sig_handle_exec_parent);
 		if (!exec_builtin_parent(data, head))
 		{
 			pid[++id] = fork();
