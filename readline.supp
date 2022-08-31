@@ -16,6 +16,9 @@
    fun:rl_insert_text
    fun:_rl_insert_char
    fun:rl_insert
+   fun:rl_copy_text
+   fun:rl_delete_text
+   fun:_rl_rubout_char
    fun:_rl_dispatch_subseq
    fun:readline_internal_teardown
    fun:readline_internal_char
