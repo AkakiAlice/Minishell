@@ -6,56 +6,61 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:58:48 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/29 06:09:19 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 07:33:05 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clear_minishell()
+/*	PUT_MSG_HEREDOC
+**	------------
+**	DESCRIPTION
+**	Put message in 'title: alert: description' format.
+**	PARAMETERS
+**	#1. The limiter word (eof);
+**	#2. The file descriptor (fd);
+**	RETURN VALUES
+**	-
+*/
+static void	put_msg_heredoc(char *eof, int fd)
 {
-	if (g_data.cmd_line != NULL)
-	{
-		free(g_data.cmd_line);
-		g_data.cmd_line = NULL;
-	}
-	ft_matrix_free(&g_data.splited_cmdl);
-	g_data.splited_cmdl = NULL;
-	free_env_lst(&g_data.head_env);
-	free_token_lst(&g_data.head_token);
-	free_cmd_lst(&g_data.head_cmd);
-	g_data.is_pipe = false;
-	g_data.signal = 0;
-	g_data.interrupt_heredoc = false;
+	ft_putstr_fd("minishell", fd);
+	ft_putstr_fd(": ", fd);
+	ft_putstr_fd("warning", fd);
+	ft_putstr_fd(": ", fd);
+	ft_putstr_fd(QUIT_HEREDOC, fd);
+	ft_putstr_fd(" (wanted `", fd);
+	ft_putstr_fd(eof, fd);
+	ft_putendl_fd("')", fd);
+	return ;
 }
 
-static void	child_sig(int signal)
-{
-	g_data.signal = signal;
-	write(1, "\n", 1);
-	clear_minishell();
-	exit(130);
-}
-
+/*	WRITE_HEREDOC
+**	------------
+**	DESCRIPTION
+**	Write heredoc in file descriptor.
+**	PARAMETERS
+**	#1. The string (eof);
+**	#2. The pointer to file descriptor (fd);
+**	RETURN VALUES
+**	-
+*/
 void	write_heredoc(char *eof, int *fd)
 {
 	char	*line;
 
-	signal(SIGINT, child_sig);
+	signal(SIGINT, sig_handle_heredoc_child);
 	line = readline("> ");
 	while (1)
 	{
 		if (!line)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd("warning: ", 2);
-			ft_putstr_fd("here-document delimited by end-of-file ", 2);
-			ft_printf("(wanted `%s')\n", eof);
+			put_msg_heredoc(eof, 2);
 			clear_minishell();
 			exit(1);
 		}
 		if (strcmp_eq(eof, line))
-			break;
+			break ;
 		write(*fd, line, ft_strlen(line));
 		write(*fd, "\n", 1);
 		free(line);

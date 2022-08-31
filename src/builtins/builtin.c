@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/28 19:10:33 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/25 07:06:29 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 */
 int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 {
-	if (!head_table->word)
-		return (1);
 	if (strcmp_eq(*head_table->word, "exit"))
 	{
 		if (!data->is_pipe)

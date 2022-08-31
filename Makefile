@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/27 14:22:02 by alida-si         ###   ########.fr        #
+#    Updated: 2022/08/31 07:18:32 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,9 @@ FILES = main.c\
 		error_exit.c\
 		heredoc.c\
 		strcmp_eq.c\
-		expand_utils.c
+		expand_utils.c\
+		signal.c\
+		clear_minishell.c\
 
 # COMPILED_SOURCES #
 

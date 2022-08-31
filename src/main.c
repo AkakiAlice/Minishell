@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/30 05:45:52 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 07:35:36 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,6 @@ void	run_cmd(t_data *data)
 		fork_it(data, &data->head_env);
 }
 
-void	sig_handler(int signum)
-{
-	write(1, "\n", 1);
-	g_data.status = 130;
-	g_data.signal = signum;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	(void)argv;
@@ -58,8 +48,7 @@ int	main(int argc, char *argv[], char *envp[])
 	g_data.path_value = get_path(g_data.head_env);
 	while (1)
 	{
-		// dprintf(2, "status: %d\n", g_data.status);
-		signal(SIGINT, sig_handler);
+		signal(SIGINT, sig_handle_minishell);
 		signal(SIGQUIT, SIG_IGN);
 		get_prompt(&g_data, &g_data.head_env);
 		if (*g_data.cmd_line)

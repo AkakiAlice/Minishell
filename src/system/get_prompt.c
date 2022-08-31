@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 16:39:47 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 07:57:48 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@
 **	RETURN VALUES
 **	-
 */
-void	free_prompt_line(char *cwd, char *login, char **prompt_line)
+void	free_prompt_line(t_data *data)
 {
-	free(cwd);
-	free(login);
-	free(*prompt_line);
-	*prompt_line = NULL;
+	free(data->prompt_line);
+	data->prompt_line = NULL;
+	if (data->cmd_path != NULL)
+	{
+		free(data->cmd_path);
+		data->cmd_path = NULL;
+	}
 }
 
 /*	GET_LOGIN
@@ -59,6 +62,31 @@ char	*get_login(void)
 	return (login);
 }
 
+/*	GET_PROMPT_LINE
+**	------------
+**	DESCRIPTION
+**	Concatenates the values ​​of the login and cwd variables.
+**	PARAMETERS
+**	-
+**	RETURN VALUES
+**	Returns the prompt line (user@hostname:cwd$ ) as a string
+*/
+char	*get_prompt_line(void)
+{
+	char	*cwd;
+	char	aux[1024];
+	char	*login;
+	char	*prompt_line;
+
+	login = get_login();
+	getcwd(aux, sizeof(aux));
+	cwd = ft_strcat(aux, "$ ");
+	prompt_line = ft_strcat(login, cwd);
+	free(cwd);
+	free(login);
+	return (prompt_line);
+}
+
 /*	GET_PROMPT
 **	------------
 **	DESCRIPTION
@@ -70,34 +98,17 @@ char	*get_login(void)
 */
 void	get_prompt(t_data *data, t_env **head_env)
 {
-	char	*cwd;
-	char	aux[1024];
-	char	*login;
-
-	login = get_login();
-	getcwd(aux, sizeof(aux));
-	cwd = ft_strcat(aux, "$ ");
-	data->prompt_line = ft_strcat(login, cwd);
+	data->prompt_line = get_prompt_line();
 	data->cmd_line = readline(data->prompt_line);
 	if (data->cmd_line == NULL)
 	{
-		free_prompt_line(cwd, login, &data->prompt_line);
+		free_prompt_line(data);
 		free_env_lst(head_env);
-		free(data->cmd_line);
-		data->cmd_line = NULL;
-		if (data->cmd_path != NULL)
-		{
-			free(data->cmd_path);
-			data->cmd_path = NULL;
-		}
-		ft_printf("exit\n");
+		clear_minishell();
+		ft_putendl_fd("exit", 1);
 		exit(0);
-	} else if (*data->cmd_line)
-		add_history(data->cmd_line);
-	free_prompt_line(cwd, login, &data->prompt_line);
-	if (data->cmd_path != NULL)
-	{
-		free(data->cmd_path);
-		data->cmd_path = NULL;
 	}
+	else if (*data->cmd_line)
+		add_history(data->cmd_line);
+	free_prompt_line(data);
 }

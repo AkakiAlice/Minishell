@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 14:23:30 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:38:26 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,43 @@ void	is_dollar(char **str, t_data *data)
 	}
 }
 
+/*	PARSE_EXPANSION
+**	------------
+**	DESCRIPTION
+**	Loops through the array and checks if there are any variables to expand.
+**	PARAMETERS
+**	#1. The array of char "word" (word);
+**	#2. The pointer to struct "data" (data);
+**	RETURN VALUES
+**	-
+*/
+void	parse_expansion(char **word, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (word[i])
+	{
+		if (is_var_expansion(word[i]) && (get_token(word[i - 1]) != HEREDOC))
+		{
+			if (ft_strncmp_eq(word[i], "\"", 1))
+				clean_quotes(&word[i], '\"');
+			if (is_double_single_quotes(word[i]) == 1)
+				clean_quotes(&word[i], '\'');
+			if (ft_strncmp_eq(word[i], "$", 1))
+				is_dollar(&word[i], data);
+			if (is_double_single_quotes(word[i]) == 0)
+				clean_quotes(&word[i], '\'');
+		}
+		i++;
+	}
+}
+
 /*	EXPAND
 **	------------
 **	DESCRIPTION
-**	Loops through the linked list of commands and checks
-**	if there are any variables to expand.
+**	Loops through the linked list and call the "parse_expression" function
+**	in case of redirections and words.
 **	PARAMETERS
 **	#1. The pointer to struct "data" (data);
 **	RETURN VALUES
@@ -106,26 +138,14 @@ void	is_dollar(char **str, t_data *data)
 void	expand(t_data *data)
 {
 	t_cmdtable	*temp;
-	int			i;
 
 	temp = data->head_cmd;
 	while (temp != NULL)
 	{
-		i = 0;
-		while (temp->word[i])
-		{
-			if (is_var_expansion(temp->word[i])) {
-				if (ft_strncmp_eq(temp->word[i], "\"", 1))
-					clean_quotes(&temp->word[i], '\"');
-				if (is_double_single_quotes(temp->word[i]) == 1)
-					clean_quotes(&temp->word[i], '\'');
-				if (ft_strncmp_eq(temp->word[i], "$", 1))
-					is_dollar(&temp->word[i], data);
-				if (is_double_single_quotes(temp->word[i]) == 0)
-					clean_quotes(&temp->word[i], '\'');
-			}
-			i++;
-		}
+		if (temp->redirect)
+			parse_expansion(temp->redirect, data);
+		if (temp->word)
+			parse_expansion(temp->word, data);
 		temp = temp->next;
 	}
 }

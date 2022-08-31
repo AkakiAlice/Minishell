@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/28 17:19:10 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 07:33:25 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 */
 void	free_minishell(t_data *data)
 {
-	// free_env_lst(&data->head_env);
 	free_token_lst(&data->head_token);
 	if (data->cmd_line != NULL)
 	{
@@ -34,6 +33,5 @@ void	free_minishell(t_data *data)
 	ft_matrix_free(&data->splited_cmdl);
 	data->splited_cmdl = NULL;
 	data->is_pipe = false;
-	data->signal = 0;
 	data->interrupt_heredoc = false;
 }

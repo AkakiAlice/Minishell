@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/28 15:01:04 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 07:36:45 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define NO_FILE_DIR "No such file or directory"
 # define INVALID_PERMISSION "Permission denied"
 # define CMD_NOT_FOUND "command not found"
+# define QUIT_HEREDOC "here-document delimited by end-of-file"
 
 typedef struct s_env
 {
@@ -110,7 +111,6 @@ typedef struct s_data
 	char		*path_value;
 	int			status;
 	bool		is_pipe;
-	int			signal;
 	bool		interrupt_heredoc;
 }	t_data;
 
@@ -145,13 +145,13 @@ void	dup_fds(t_cmdtable *head);
 void	is_dir_exit(t_data *data, t_env **head_env, char *word);
 void	no_such_file_exit(t_data *data, char *word, int status);
 void	invalid_permission_exit(t_data *data, char *word, int status);
-void	sighandle_parent(int signum);
 
 // EXPAND
-void	expand(t_data *data);
+void	parse_expansion(char **word, t_data *data);
 int		is_double_single_quotes(char *str);
 int		dont_expand(char *str);
 void	clean_quotes(char **str, char quote);
+void	expand(t_data *data);
 
 // PARSER
 void	lexer(t_token **head_token, char **cmd);
@@ -184,6 +184,9 @@ char	*get_env_value(char *envp, char *env_key);
 void	get_prompt(t_data *data, t_env **head_env);
 void	free_env_lst(t_env **head_env);
 void	error_msg_exit(char *title, char *msg, int fd);
+void	sig_handle_exec_parent(int signum);
+void	sig_handle_heredoc_child(int signal);
+void	sig_handle_minishell(int signum);
 
 // UTILS
 void	put_msg(char *title, char *msg, int fd);
@@ -193,13 +196,12 @@ char	*remove_spaces_outside_quote(char *str);
 void	free_minishell(t_data *data);
 void	minishell_init(t_data *data);
 int		strcmp_eq(char *s1, char *s2);
+void	clear_minishell(void);
 
 // VARIABLE
 int		save_var(t_env **last_var, char *cmd);
 bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
-
-void	sig_handler(int signum);
 
 #endif
