@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/25 07:06:29 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:55:23 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,14 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 		return (1);
 	}
 	return (0);
+}
+
+void	exec_builtin_child(t_data *data, char **word)
+{
+	if (strcmp_eq("echo", word[0]))
+	{
+		builtin_echo(word);
+		exit(0);
+	}
+	(void)data;
 }

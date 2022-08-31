@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/31 07:36:45 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:53:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ t_data	g_data;
 // BUILTINS
 int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
 void	exit_cmd(t_data *data, t_cmdtable *head_table);
+void	exec_builtin_child(t_data *data, char **word);
+void	builtin_echo(char **word);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
