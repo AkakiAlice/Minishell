@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/31 17:48:27 by alida-si         ###   ########.fr        #
+#    Updated: 2022/08/31 23:07:38 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,7 +98,8 @@ FILES = main.c\
 		expand_utils.c\
 		signal.c\
 		clear_minishell.c\
-		builtin_echo.c
+		builtin_echo.c\
+		builtin_pwd.c
 
 # COMPILED_SOURCES #
 
