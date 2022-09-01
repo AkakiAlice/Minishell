@@ -61,6 +61,7 @@ void	exec_cmd(t_data *data, t_env **head_env, char **word)
 		free_env_lst(head_env);
 		exit(127);
 	}
+	exec_builtin_child(data, word);
 	execve(data->cmd_path, word, NULL);
 }
 
