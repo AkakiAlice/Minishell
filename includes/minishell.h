@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/31 22:37:57 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/31 23:07:18 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
 void	exit_cmd(t_data *data, t_cmdtable *head_table);
 void	exec_builtin_child(t_data *data, char **word);
 void	builtin_echo(char **word);
+void	builtin_pwd(void);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
