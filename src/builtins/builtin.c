@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/01 17:46:18 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/02 02:24:45 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,19 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 void	exec_builtin_child(t_data *data, char **word)
 {
 	if (strcmp_eq("echo", word[0]))
+	{
 		builtin_echo(word);
+		free_minishell(data);
+		free_env_lst(&data->head_env);
+		free(data->cmd_path);
+		exit(0);
+	}
 	if (strcmp_eq("pwd", word[0]))
+	{
 		builtin_pwd();
-	free_minishell(data);
-	free_env_lst(&data->head_env);
-	free(data->cmd_path);
-	exit(0);
+		free_minishell(data);
+		free_env_lst(&data->head_env);
+		free(data->cmd_path);
+		exit(0);
+	}
 }
