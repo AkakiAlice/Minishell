@@ -6,42 +6,11 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 22:04:34 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/03 13:28:14 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/03 13:41:13 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	del_first_node(t_env **head_env)
-{
-	t_env	*temp;
-
-	free((*head_env)->name);
-	free((*head_env)->value);
-	temp = (*head_env)->next;
-	free(*head_env);
-	*head_env = temp;
-}
-
-void	del_node(t_env **env_list, char *word)
-{
-	t_env	*temp;
-	t_env	*aux;
-
-	temp = *env_list;
-	while (temp != NULL && temp->next != NULL)
-	{
-		if (strcmp_eq(temp->next->name, word))
-		{
-			aux = temp->next;
-			temp->next = aux->next;
-			free(aux->name);
-			free(aux->value);
-			free(aux);
-		}
-		temp = temp->next;
-	}
-}
 
 void	unset_env_var(t_env **env_list, char *word)
 {

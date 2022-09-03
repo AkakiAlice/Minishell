@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 07:00:12 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 17:57:24 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 13:44:13 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,42 @@ int	env_lst_add_back(t_env **head_env, char *name, char *value)
 */
 void	free_env_lst(t_env **head_env)
 {
-	t_env	*temp;
-
 	if (*head_env == NULL)
 		return ;
 	while (*head_env != NULL)
 	{
-		free((*head_env)->name);
-		free((*head_env)->value);
-		temp = (*head_env)->next;
-		free(*head_env);
-		*head_env = temp;
+		del_first_node(head_env);
 	}
 	*head_env = NULL;
+}
+
+void	del_first_node(t_env **head_env)
+{
+	t_env	*temp;
+
+	free((*head_env)->name);
+	free((*head_env)->value);
+	temp = (*head_env)->next;
+	free(*head_env);
+	*head_env = temp;
+}
+
+void	del_node(t_env **env_list, char *word)
+{
+	t_env	*temp;
+	t_env	*aux;
+
+	temp = *env_list;
+	while (temp != NULL && temp->next != NULL)
+	{
+		if (strcmp_eq(temp->next->name, word))
+		{
+			aux = temp->next;
+			temp->next = aux->next;
+			free(aux->name);
+			free(aux->value);
+			free(aux);
+		}
+		temp = temp->next;
+	}
 }
