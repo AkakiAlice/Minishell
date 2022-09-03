@@ -113,3 +113,7 @@ exit -9223372036854775809
 env
 env > outfile
 env >> outfile
+env < inputfile
+env << eof
+env A
+env A B
