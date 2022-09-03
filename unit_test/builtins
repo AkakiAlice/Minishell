@@ -117,3 +117,6 @@ env < inputfile
 env << eof
 env A
 env A B
+env A=ok B=test
+env =
+env | wc -l
