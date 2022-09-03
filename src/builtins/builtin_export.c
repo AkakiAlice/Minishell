@@ -6,26 +6,26 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 12:53:27 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:13:10 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_env(t_env *head_env)
+void	put_env(t_env *head_env, int fd)
 {
 	while (head_env != NULL)
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(head_env->name, 1);
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd(head_env->name, fd);
 		if (head_env->value)
 		{
-			ft_putstr_fd("=\"", 1);
-			ft_putstr_fd(head_env->value, 1);
-			ft_putendl_fd("\"", 1);
+			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd(head_env->value, fd);
+			ft_putendl_fd("\"", fd);
 		}
 		else
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", fd);
 		head_env = head_env->next;
 	}
 }
@@ -131,7 +131,7 @@ void	builtin_export(t_data *data, t_cmdtable *head_table)
 	i = 1;
 	if (head_table->word[i] == NULL)
 	{
-		put_env(data->head_env);
+		put_env(data->head_env, head_table->fdout);
 		data->status = 0;
 		return ;
 	}
