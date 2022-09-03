@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/02 02:24:45 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/02 05:42:28 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 	if (strcmp_eq(*head_table->word, "exit"))
 	{
 		if (!data->is_pipe)
-			exit_cmd(data, head_table);
+			builtin_exit(data, head_table);
+		return (1);
+	}
+	if (strcmp_eq(*head_table->word, "export"))
+	{
+		if (!data->is_pipe)
+			builtin_export(data, head_table);
 		return (1);
 	}
 	return (0);

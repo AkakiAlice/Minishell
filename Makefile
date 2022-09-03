@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/08/31 23:07:38 by alida-si         ###   ########.fr        #
+#    Updated: 2022/09/02 05:47:00 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ FILES = main.c\
 		var_utils.c\
 		error.c\
 		parser.c\
-		exit_cmd.c\
+		builtin_exit.c\
 		builtin.c\
 		exec_cmd.c\
 		get_path.c\
@@ -99,7 +99,8 @@ FILES = main.c\
 		signal.c\
 		clear_minishell.c\
 		builtin_echo.c\
-		builtin_pwd.c
+		builtin_pwd.c\
+		builtin_export.c\
 
 # COMPILED_SOURCES #
 

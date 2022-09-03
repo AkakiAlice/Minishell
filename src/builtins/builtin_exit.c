@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_cmd.c                                         :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 05:57:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/25 07:11:14 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/02 05:43:42 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_status(char *str)
 	return (status);
 }
 
-/*	EXIT_CMD
+/*	BUILTIN_EXIT
 **	------------
 **	DESCRIPTION
 **	Builtin exit.
@@ -61,7 +61,7 @@ static int	get_status(char *str)
 **	RETURN VALUES
 **	-
 */
-void	exit_cmd(t_data *data, t_cmdtable *head_table)
+void	builtin_exit(t_data *data, t_cmdtable *head_table)
 {
 	int	i;
 	int	status;

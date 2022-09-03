@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/31 23:07:18 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/03 07:11:06 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ t_data	g_data;
 
 // BUILTINS
 int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
-void	exit_cmd(t_data *data, t_cmdtable *head_table);
+void	builtin_exit(t_data *data, t_cmdtable *head_table);
+void	builtin_export(t_data *data, t_cmdtable *head_table);
 void	exec_builtin_child(t_data *data, char **word);
 void	builtin_echo(char **word);
 void	builtin_pwd(void);
@@ -203,6 +204,7 @@ void	clear_minishell(void);
 
 // VARIABLE
 int		save_var(t_env **last_var, char *cmd);
+char	*get_var_value(char *cmd, char *var_name);
 bool	validate_var(char *var_name, char *var_value);
 bool	is_variable(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
