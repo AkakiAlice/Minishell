@@ -6,11 +6,30 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 15:27:22 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:06:02 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_redirect_parent(t_cmdtable *head)
+{
+	if (!head->err_file)
+		return (0);
+	if (head->err_nb == ENOENT)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		put_msg(head->err_file, NO_FILE_DIR, 2);
+		return (1);
+	}
+	if (head->err_nb == EACCES)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		put_msg(head->err_file, INVALID_PERMISSION, 2);
+		return (1);
+	}
+	return (0);
+}
 
 /*	EXEC_BUILTIN_PARENT
 **	------------
@@ -28,19 +47,20 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 		return (1);
 	if (strcmp_eq(*head_table->word, "exit"))
 	{
-		if (!data->is_pipe)
+		if (!data->is_pipe && !check_redirect_parent(head_table))
 			builtin_exit(data, head_table);
 		return (1);
 	}
 	if (strcmp_eq(*head_table->word, "export"))
 	{
-		if (!data->is_pipe)
+		if (!data->is_pipe && !check_redirect_parent(head_table))
 			builtin_export(data, head_table);
 		return (1);
 	}
 	if (strcmp_eq(*head_table->word, "unset"))
 	{
-		builtin_unset(data, head_table);
+		if (!data->is_pipe && !check_redirect_parent(head_table))
+			builtin_unset(data, head_table);
 		return (1);
 	}
 	return (0);
