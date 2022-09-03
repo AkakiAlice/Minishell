@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:51:39 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 18:41:24 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/03 13:24:02 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ char	*get_path(t_env *env_list)
 			return (ptr->value);
 		ptr = ptr->next;
 	}
-	return (ptr->value);
+	return (NULL);
 }

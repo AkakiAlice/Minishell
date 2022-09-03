@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/18 18:30:51 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/03 13:19:31 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,24 @@ void	check_cmd(t_data *data, char **word)
 	char	*aux;
 	int		i;
 
-	path_list = ft_split(data->path_value, ':');
-	aux = ft_strcat("/", word[0]);
-	i = 0;
-	while (path_list[i])
+	data->path_value = get_path(data->head_env);
+	if (data->path_value != NULL)
 	{
-		data->cmd_path = ft_strcat(path_list[i], aux);
-		if ((access(data->cmd_path, F_OK) == 0))
+		path_list = ft_split(data->path_value, ':');
+		aux = ft_strcat("/", word[0]);
+		i = 0;
+		while (path_list[i])
 		{
-			break ;
+			data->cmd_path = ft_strcat(path_list[i], aux);
+			if ((access(data->cmd_path, F_OK) == 0))
+			{
+				break ;
+			}
+			free(data->cmd_path);
+			data->cmd_path = NULL;
+			i++;
 		}
-		free(data->cmd_path);
-		data->cmd_path = NULL;
-		i++;
+		free(aux);
+		ft_matrix_free(&path_list);
 	}
-	free(aux);
-	ft_matrix_free(&path_list);
 }
