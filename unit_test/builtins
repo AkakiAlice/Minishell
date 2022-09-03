@@ -46,14 +46,14 @@ export HELLO="123 A-"
 export VAR-=123
 export 1_VAR=09
 export HELLO-=123
-
+export hello world
+export HELLO=123 A
 export VAR1 = VAR2
 export VAR3= VAR4
 export VAR5 =VAR6
+
 export SIGN="> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
 export SIGN='> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<'
-export HELLO=123 A
-export hello world
 unset
 unset HELLO
 unset HELLO1 HELLO2

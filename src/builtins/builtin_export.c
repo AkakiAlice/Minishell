@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 12:47:41 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:53:27 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,18 @@ void	save_env_var(t_data *data, char *variable)
 */
 void	builtin_export(t_data *data, t_cmdtable *head_table)
 {
-	if (head_table->word[1] == NULL)
+	int	i;
+
+	i = 1;
+	if (head_table->word[i] == NULL)
 	{
 		put_env(data->head_env);
 		data->status = 0;
 		return ;
 	}
-	save_env_var(data, head_table->word[1]);
+	while (head_table->word[i])
+	{
+		save_env_var(data, head_table->word[i]);
+		i++;
+	}
 }
