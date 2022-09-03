@@ -34,16 +34,26 @@ export HELLO=456
 export EMPTY=""
 export hello
 export hello="42"
+export =
+export ==
+export ==A=B=
+export VAR-
+export 1_VAR
+export 123
+export VAR2=
+export =VAR3
+export HELLO="123 A-"
+export VAR-=123
+export 1_VAR=09
+export HELLO-=123
 
-export A-
+export VAR1 = VAR2
+export VAR3= VAR4
+export VAR5 =VAR6
 export SIGN="> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
 export SIGN='> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<'
 export HELLO=123 A
-export HELLO="123 A-"
 export hello world
-export HELLO-=123
-export =
-export 123
 unset
 unset HELLO
 unset HELLO1 HELLO2

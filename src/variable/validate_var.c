@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:07:13 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 12:49:49 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:08:33 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 **	Return true if variable name contains only allowed characters and false if
 **	it's not.
 */
-static bool	validate_var_name(char *var_name)
+bool	validate_var_name(char *var_name)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 08:04:52 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:44:48 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,53 @@ int	env_var_exists(t_env *head_env, char *var_name)
 	return (0);
 }
 
+void	put_msg_builtin(char *title, char *builtin, char *eof, char *msg, int fd)
+{
+	ft_putstr_fd(title, fd);
+	ft_putstr_fd(": ", fd);
+	ft_putstr_fd(builtin, fd);
+	ft_putstr_fd(": `", fd);
+	ft_putstr_fd(eof, fd);
+	ft_putstr_fd("': ", fd);
+	ft_putendl_fd(msg, fd);
+	return ;
+}
+
 void	save_env_var(t_data *data, char *variable)
 {
 	char	**split_var;
 	char	*env_value;
 
+	if (*variable == '=')
+	{
+		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+		return ;
+	}
 	if (!is_equal_sign(variable))
 	{
 		if (!env_var_exists(data->head_env, variable))
-			env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
+		{
+			if (validate_var_name(variable))
+				env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
+			else
+				put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+		}
 		return ;
 	}
 	split_var = ft_split(variable, '=');
 	if (split_var == NULL)
 		return;
-	env_value = get_env_value(variable, split_var[0]);
-	if (!change_env_var(data->head_env, split_var[0], env_value)) {
-		env_lst_add_back(&data->head_env, ft_strdup(split_var[0]), env_value);
+	if (!validate_var_name(split_var[0]))
+	{
+		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+		ft_matrix_free(&split_var);
+		return ;
 	}
+	env_value = get_env_value(variable, split_var[0]);
+	if (!change_env_var(data->head_env, split_var[0], env_value))
+		env_lst_add_back(&data->head_env, ft_strdup(split_var[0]), env_value);
 	ft_matrix_free(&split_var);
 }
-
 
 /*	BUILTIN_EXPORT
 **	------------
