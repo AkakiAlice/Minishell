@@ -53,6 +53,7 @@ void	check_is_dir(char *word, t_env **head_env, t_data *data)
 */
 void	exec_cmd(t_data *data, t_env **head_env, char **word)
 {
+	exec_builtin_child(data, word);
 	if (data->cmd_path == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -61,7 +62,6 @@ void	exec_cmd(t_data *data, t_env **head_env, char **word)
 		free_env_lst(head_env);
 		exit(127);
 	}
-	exec_builtin_child(data, word);
 	execve(data->cmd_path, word, NULL);
 }
 

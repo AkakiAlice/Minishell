@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/31 23:07:18 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/03 13:42:06 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	exit_cmd(t_data *data, t_cmdtable *head_table);
 void	exec_builtin_child(t_data *data, char **word);
 void	builtin_echo(char **word);
 void	builtin_pwd(void);
+void	builtin_unset(t_data *data, t_cmdtable *cmd_table);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
@@ -190,6 +191,8 @@ void	error_msg_exit(char *title, char *msg, int fd);
 void	sig_handle_exec_parent(int signum);
 void	sig_handle_heredoc_child(int signal);
 void	sig_handle_minishell(int signum);
+void	del_node(t_env **env_list, char *word);
+void	del_first_node(t_env **head_env);
 
 // UTILS
 void	put_msg(char *title, char *msg, int fd);
