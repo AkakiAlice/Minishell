@@ -6,13 +6,13 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:00:04 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/18 05:58:10 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 07:53:43 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	IS_VARIABLE
+/*	IS_EQUAL_SIGN
 **	------------
 **	DESCRIPTION
 **	Check the command line is a variable declaration.
@@ -21,7 +21,7 @@
 **	RETURN VALUES
 **	Return true if command line is variable declaration and false if it's not.
 */
-bool	is_variable(char *cmd)
+bool	is_equal_sign(char *cmd)
 {
 	if (ft_strchr(cmd, '=') == NULL)
 		return (false);

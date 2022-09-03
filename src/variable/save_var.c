@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 08:15:40 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 13:01:24 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 07:53:28 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	save_var(t_env **last_var, char *cmd)
 	char	*var_value;
 	char	*new_cmd;
 
-	if (!is_variable(cmd))
+	if (!is_equal_sign(cmd))
 		return (FAILURE);
 	new_cmd = remove_spaces_around_str(cmd);
 	if (new_cmd == NULL)

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 07:34:22 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 08:04:52 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ void	put_env(t_env *head_env)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(head_env->name, 1);
-		ft_putstr_fd("=\"", 1);
-		ft_putstr_fd(head_env->value, 1);
-		ft_putendl_fd("\"", 1);
+		if (head_env->value)
+		{
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(head_env->value, 1);
+			ft_putendl_fd("\"", 1);
+		}
+		else
+			ft_putstr_fd("\n", 1);
 		head_env = head_env->next;
 	}
 }
@@ -31,10 +36,22 @@ int	change_env_var(t_env *head_env, char *var_name, char *var_value)
 	{
 		if (strcmp_eq(head_env->name, var_name))
 		{
-			free(head_env->value);
+			if (head_env->value)
+				free(head_env->value);
 			head_env->value = var_value;
 			return (1);
 		}
+		head_env = head_env->next;
+	}
+	return (0);
+}
+
+int	env_var_exists(t_env *head_env, char *var_name)
+{
+	while (head_env != NULL)
+	{
+		if (strcmp_eq(head_env->name, var_name))
+			return (1);
 		head_env = head_env->next;
 	}
 	return (0);
@@ -45,8 +62,12 @@ void	save_env_var(t_data *data, char *variable)
 	char	**split_var;
 	char	*env_value;
 
-	if (!is_variable(variable))
+	if (!is_equal_sign(variable))
+	{
+		if (!env_var_exists(data->head_env, variable))
+			env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
 		return ;
+	}
 	split_var = ft_split(variable, '=');
 	if (split_var == NULL)
 		return;

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 07:11:06 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 07:53:28 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void	clear_minishell(void);
 int		save_var(t_env **last_var, char *cmd);
 char	*get_var_value(char *cmd, char *var_name);
 bool	validate_var(char *var_name, char *var_value);
-bool	is_variable(char *cmd);
+bool	is_equal_sign(char *cmd);
 int		free_variable(char **var_value, char **cmd, char ***split, int status);
 
 #endif

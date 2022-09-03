@@ -31,9 +31,13 @@ export STATUS="success"
 export STATUS="'alert'"
 export HELLO=123
 export HELLO=456
-
+export EMPTY=""
 export hello
+export hello="42"
+
 export A-
+export SIGN="> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
+export SIGN='> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<'
 export HELLO=123 A
 export HELLO="123 A-"
 export hello world

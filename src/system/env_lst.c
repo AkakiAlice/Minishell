@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 07:00:12 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 17:57:24 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 08:02:01 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	env_lst_add_back(t_env **head_env, char *name, char *value)
 	t_env	*new_node;
 	t_env	*temp;
 
-	if (!name || !value)
+	if (!name)
 		return (EXIT_FAILURE);
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
