@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 16:42:51 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 17:27:40 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	builtin_echo(char **word);
 void	builtin_pwd(void);
 void	builtin_unset(t_data *data, t_cmdtable *cmd_table);
 void	builtin_env(t_data *data, t_cmdtable *head_table);
+void	save_env_var(t_data *data, char *variable, int validate);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,

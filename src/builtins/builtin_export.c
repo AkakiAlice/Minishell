@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 16:36:19 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 17:26:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,19 @@ void	put_msg_builtin(char *title, char *builtin, char *eof, char *msg, int fd)
 	return ;
 }
 
-void	save_env_var(t_data *data, char *variable)
+void	save_env_var(t_data *data, char *variable, int validate)
 {
 	char	**split_var;
 	char	*env_value;
 
-	if (*variable == '=')
+	if (validate)
 	{
-		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
-		data->status = 1;
-		return ;
+		if (*variable == '=')
+		{
+			put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+			data->status = 1;
+			return ;
+		}
 	}
 	if (!is_equal_sign(variable))
 	{
@@ -100,7 +103,7 @@ void	save_env_var(t_data *data, char *variable)
 	split_var = ft_split(variable, '=');
 	if (split_var == NULL)
 		return;
-	if (!validate_var_name(split_var[0]))
+	if (validate && !validate_var_name(split_var[0]))
 	{
 		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
 		data->status = 1;
@@ -137,7 +140,7 @@ void	builtin_export(t_data *data, t_cmdtable *head_table)
 	}
 	while (head_table->word[i])
 	{
-		save_env_var(data, head_table->word[i]);
+		save_env_var(data, head_table->word[i], 1);
 		i++;
 	}
 }
