@@ -6,7 +6,7 @@
 #    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/09/03 15:26:39 by pmitsuko         ###   ########.fr        #
+#    Updated: 2022/09/03 16:34:01 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ FILES = main.c\
 		builtin_unset.c\
 		builtin_pwd.c\
 		builtin_export.c\
+		builtin_env.c\
 
 # COMPILED_SOURCES #
 

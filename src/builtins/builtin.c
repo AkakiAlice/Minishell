@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 16:06:02 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:42:25 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,27 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 	return (0);
 }
 
-void	exec_builtin_child(t_data *data, char **word)
+void	exec_builtin_child(t_data *data, t_cmdtable *head_table)
 {
-	if (strcmp_eq("echo", word[0]))
+	if (strcmp_eq("echo", head_table->word[0]))
 	{
-		builtin_echo(word);
+		builtin_echo(head_table->word);
 		free_minishell(data);
 		free_env_lst(&data->head_env);
 		free(data->cmd_path);
 		exit(0);
 	}
-	if (strcmp_eq("pwd", word[0]))
+	if (strcmp_eq("pwd", head_table->word[0]))
 	{
 		builtin_pwd();
+		free_minishell(data);
+		free_env_lst(&data->head_env);
+		free(data->cmd_path);
+		exit(0);
+	}
+	if (strcmp_eq("env", head_table->word[0]))
+	{
+		builtin_env(data, head_table);
 		free_minishell(data);
 		free_env_lst(&data->head_env);
 		free(data->cmd_path);

@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 15:26:56 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:42:51 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,11 @@ t_data	g_data;
 int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
 void	builtin_exit(t_data *data, t_cmdtable *head_table);
 void	builtin_export(t_data *data, t_cmdtable *head_table);
-void	exec_builtin_child(t_data *data, char **word);
+void	exec_builtin_child(t_data *data, t_cmdtable *head_table);
 void	builtin_echo(char **word);
 void	builtin_pwd(void);
 void	builtin_unset(t_data *data, t_cmdtable *cmd_table);
+void	builtin_env(t_data *data, t_cmdtable *head_table);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
@@ -141,7 +142,7 @@ void	open_redirection(t_data *data);
 // EXEC
 void	check_cmd(t_data *data, char **word);
 void	fork_it(t_data *data, t_env **head_env);
-void	exec_cmd(t_data *data, t_env **head_env, char **word);
+void	exec_cmd(t_data *data, t_env **head_env, t_cmdtable *head_table);
 char	*get_path(t_env *env_list);
 void	open_pipe(t_data *data);
 void	wait_all_pids(int pid[1024], int id, t_data *data);

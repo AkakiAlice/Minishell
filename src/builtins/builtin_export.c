@@ -6,13 +6,13 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 16:13:10 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:36:19 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_env(t_env *head_env, int fd)
+void	put_export(t_env *head_env, int fd)
 {
 	while (head_env != NULL)
 	{
@@ -131,7 +131,7 @@ void	builtin_export(t_data *data, t_cmdtable *head_table)
 	i = 1;
 	if (head_table->word[i] == NULL)
 	{
-		put_env(data->head_env, head_table->fdout);
+		put_export(data->head_env, head_table->fdout);
 		data->status = 0;
 		return ;
 	}

@@ -51,18 +51,18 @@ void	check_is_dir(char *word, t_env **head_env, t_data *data)
 **	RETURN VALUES
 **	-
 */
-void	exec_cmd(t_data *data, t_env **head_env, char **word)
+void	exec_cmd(t_data *data, t_env **head_env, t_cmdtable *head_table)
 {
-	exec_builtin_child(data, word);
+	exec_builtin_child(data, head_table);
 	if (data->cmd_path == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
-		put_msg(word[0], CMD_NOT_FOUND, 2);
+		put_msg(head_table->word[0], CMD_NOT_FOUND, 2);
 		free_minishell(data);
 		free_env_lst(head_env);
 		exit(127);
 	}
-	execve(data->cmd_path, word, NULL);
+	execve(data->cmd_path, head_table->word, NULL);
 }
 
 /*	CHECK_REDIRECT
@@ -104,7 +104,7 @@ void	child_process(t_data *data, t_env **head_env, t_cmdtable *head)
 		check_is_dir(head->word[0], head_env, data);
 	dup_fds(head);
 	close_list_fds(head);
-	exec_cmd(data, head_env, head->word);
+	exec_cmd(data, head_env, head);
 }
 
 /*	FORK_IT
