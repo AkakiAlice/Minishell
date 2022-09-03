@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 12:44:48 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:47:41 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	save_env_var(t_data *data, char *variable)
 	if (*variable == '=')
 	{
 		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+		data->status = 1;
 		return ;
 	}
 	if (!is_equal_sign(variable))
@@ -84,9 +85,15 @@ void	save_env_var(t_data *data, char *variable)
 		if (!env_var_exists(data->head_env, variable))
 		{
 			if (validate_var_name(variable))
+			{
 				env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
+				data->status = 0;
+			}
 			else
+			{
 				put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+				data->status = 1;
+			}
 		}
 		return ;
 	}
@@ -96,12 +103,14 @@ void	save_env_var(t_data *data, char *variable)
 	if (!validate_var_name(split_var[0]))
 	{
 		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
+		data->status = 1;
 		ft_matrix_free(&split_var);
 		return ;
 	}
 	env_value = get_env_value(variable, split_var[0]);
 	if (!change_env_var(data->head_env, split_var[0], env_value))
 		env_lst_add_back(&data->head_env, ft_strdup(split_var[0]), env_value);
+	data->status = 0;
 	ft_matrix_free(&split_var);
 }
 
@@ -120,6 +129,7 @@ void	builtin_export(t_data *data, t_cmdtable *head_table)
 	if (head_table->word[1] == NULL)
 	{
 		put_env(data->head_env);
+		data->status = 0;
 		return ;
 	}
 	save_env_var(data, head_table->word[1]);
