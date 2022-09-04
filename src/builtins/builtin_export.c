@@ -6,31 +6,24 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 17:26:14 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:03:37 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_export(t_env *head_env, int fd)
-{
-	while (head_env != NULL)
-	{
-		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(head_env->name, fd);
-		if (head_env->value)
-		{
-			ft_putstr_fd("=\"", fd);
-			ft_putstr_fd(head_env->value, fd);
-			ft_putendl_fd("\"", fd);
-		}
-		else
-			ft_putstr_fd("\n", fd);
-		head_env = head_env->next;
-	}
-}
-
-int	change_env_var(t_env *head_env, char *var_name, char *var_value)
+/*	CHANGE_ENV_VAR
+**	------------
+**	DESCRIPTION
+**	Check if the env variable exists and change value.
+**	PARAMETERS
+**	#1. The pointer to list "env" (head_env);
+**	#2. The string (var_name);
+**	#2. The string (var_value);
+**	RETURN VALUES
+**	Return 1 if env exists and 0 if not.
+*/
+static int	change_env_var(t_env *head_env, char *var_name, char *var_value)
 {
 	while (head_env != NULL)
 	{
@@ -46,7 +39,17 @@ int	change_env_var(t_env *head_env, char *var_name, char *var_value)
 	return (0);
 }
 
-int	env_var_exists(t_env *head_env, char *var_name)
+/*	ENV_VAR_EXISTS
+**	------------
+**	DESCRIPTION
+**	Check if the env variable exists.
+**	PARAMETERS
+**	#1. The pointer to list "env" (head_env);
+**	#2. The string (variable_name);
+**	RETURN VALUES
+**	Return 1 if env exists and 0 if not.
+*/
+static int	env_var_exists(t_env *head_env, char *var_name)
 {
 	while (head_env != NULL)
 	{
@@ -57,58 +60,57 @@ int	env_var_exists(t_env *head_env, char *var_name)
 	return (0);
 }
 
-void	put_msg_builtin(char *title, char *builtin, char *eof, char *msg, int fd)
+/*	SAVE_ONLY_NAME
+**	------------
+**	DESCRIPTION
+**	Save the env name in the linked list.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The string (variable);
+**	RETURN VALUES
+**	-
+*/
+static void	save_only_name(t_data *data, char *variable)
 {
-	ft_putstr_fd(title, fd);
-	ft_putstr_fd(": ", fd);
-	ft_putstr_fd(builtin, fd);
-	ft_putstr_fd(": `", fd);
-	ft_putstr_fd(eof, fd);
-	ft_putstr_fd("': ", fd);
-	ft_putendl_fd(msg, fd);
-	return ;
+	if (env_var_exists(data->head_env, variable))
+		return ;
+	if (validate_var_name(variable))
+	{
+		env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
+		data->status = 0;
+	}
+	else
+		export_error(data, variable);
 }
 
+/*	SAVE_ENV_VAR
+**	------------
+**	DESCRIPTION
+**	Validate the variable assignment and save the env variable in the linked
+**	list.
+**	PARAMETERS
+**	#1. The pointer to struct "data" (data);
+**	#2. The variable (variable);
+**	#3. The flag validate variable (validate);
+**	RETURN VALUES
+**	-
+*/
 void	save_env_var(t_data *data, char *variable, int validate)
 {
 	char	**split_var;
 	char	*env_value;
 
-	if (validate)
-	{
-		if (*variable == '=')
-		{
-			put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
-			data->status = 1;
-			return ;
-		}
-	}
+	if (validate && *variable == '=')
+		return (export_error(data, variable));
 	if (!is_equal_sign(variable))
-	{
-		if (!env_var_exists(data->head_env, variable))
-		{
-			if (validate_var_name(variable))
-			{
-				env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
-				data->status = 0;
-			}
-			else
-			{
-				put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
-				data->status = 1;
-			}
-		}
-		return ;
-	}
+		return (save_only_name(data, variable));
 	split_var = ft_split(variable, '=');
 	if (split_var == NULL)
-		return;
+		return ;
 	if (validate && !validate_var_name(split_var[0]))
 	{
-		put_msg_builtin("minishell", "export", variable, NOT_VALID_ID, 2);
-		data->status = 1;
 		ft_matrix_free(&split_var);
-		return ;
+		return (export_error(data, variable));
 	}
 	env_value = get_env_value(variable, split_var[0]);
 	if (!change_env_var(data->head_env, split_var[0], env_value))

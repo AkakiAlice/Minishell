@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 17:27:40 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:50:03 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ t_data	g_data;
 int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
 void	builtin_exit(t_data *data, t_cmdtable *head_table);
 void	builtin_export(t_data *data, t_cmdtable *head_table);
+void	put_export(t_env *head_env, int fd);
+void	export_error(t_data *data, char *variable);
 void	exec_builtin_child(t_data *data, t_cmdtable *head_table);
 void	builtin_echo(char **word);
 void	builtin_pwd(void);
