@@ -33,8 +33,10 @@ void	check_is_dir(char *word)
 		is_dir_exit(word);
 	}
 	else if ((ENOENT == errno && g_data.cmd_path == NULL)
-		|| (access(word, X_OK) == -1) || (access(word, X_OK) == 0))
+		|| (access(word, X_OK) == -1))
 		no_such_file_exit(word, 127);
+	else if ((access(word, X_OK) == 0))
+		g_data.cmd_path = word;
 }
 
 /*	EXEC_CMD
