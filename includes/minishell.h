@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 02:49:02 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:59:55 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@
 # define WORD 42
 # define S_QUOTE 39
 # define D_QUOTE 34
+
+# define EXIT 2
+# define EXPORT 3
+# define UNSET 4
+# define CD 5
 
 # define TOO_MANY_ARG "too many arguments"
 # define UNCLOSED_QUOTES "unclosed quotes"
@@ -119,7 +124,7 @@ typedef struct s_data
 t_data	g_data;
 
 // BUILTINS
-int		exec_builtin_parent(t_data *data, t_cmdtable *head_table);
+int		exec_builtin_parent(t_data *data, t_cmdtable *head_table, int builtin);
 void	builtin_exit(t_data *data, t_cmdtable *head_table);
 void	builtin_export(t_data *data, t_cmdtable *head_table);
 void	put_export(t_env *head_env, int fd);
@@ -131,6 +136,7 @@ void	builtin_unset(t_data *data, t_cmdtable *cmd_table);
 void	builtin_env(t_data *data, t_cmdtable *head_table);
 void	save_env_var(t_data *data, char *variable, int validate);
 void	builtin_cd(t_data *data, t_cmdtable *cmd_table);
+int		check_builtin(t_data *data, t_cmdtable *cmd_table);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,

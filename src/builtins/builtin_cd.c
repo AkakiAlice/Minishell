@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:54:06 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 13:15:14 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:19:07 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	check_is_dir_cd(t_cmdtable *cmd_table)
 		ft_putstr_fd("-minishell: ", 2);
 		ft_putstr_fd("cd: ", 2);
 		put_msg(cmd_table->word[1], NO_FILE_DIR, 2);
+		g_data.status = 1;
 		return (0);
 	}
 	if (access(cmd_table->word[1], F_OK) == 0 && !dir)
@@ -29,6 +30,7 @@ int	check_is_dir_cd(t_cmdtable *cmd_table)
 		ft_putstr_fd("-minishell: ", 2);
 		ft_putstr_fd("cd: ", 2);
 		put_msg(cmd_table->word[1], NO_DIR, 2);
+		g_data.status = 1;
 		return (0);
 	}
 	closedir(dir);
@@ -56,6 +58,7 @@ void	builtin_cd(t_data *data, t_cmdtable *cmd_table)
 	if (cmd_table->word[1] && cmd_table->word[2])
 	{
 		ft_putstr_fd("-minishell: cd: too many arguments\n", 2);
+		g_data.status = 1;
 		return ;
 	}
 	if (strcmp_eq(cmd_table->word[1], "-"))

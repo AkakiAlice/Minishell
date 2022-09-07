@@ -129,7 +129,7 @@ void	fork_it(t_data *data, t_env **head_env)
 	{
 		signal(SIGINT, sig_handle_exec_parent);
 		signal(SIGQUIT, sig_handle_exec_parent);
-		if (!exec_builtin_parent(data, head))
+		if (!check_builtin(data, head))
 		{
 			pid[++id] = fork();
 			if (pid[id] == 0)
