@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/09/07 18:58:20 by alida-si         ###   ########.fr        #
+#    Updated: 2022/09/07 19:31:36 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,8 @@ $(OBJ_DIR)%.o: %.c
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(OBJS)
+		@make -C $(LIBFT_DIR)
 		@echo "\n$(CYAN)----------------------------------------"
 		@echo "------------ MAKE MINISHELL ------------"
 		@echo "----------------------------------------\n$(DEFAULT)"
@@ -128,9 +129,6 @@ $(OBJS): | $(OBJ_DIR)
 
 $(OBJ_DIR):
 		@mkdir $(OBJ_DIR)
-
-$(LIBFT):
-		@make --no-print-directory -C $(LIBFT_DIR)
 
 clean:
 		@make clean --no-print-directory -C $(LIBFT_DIR)
@@ -145,54 +143,4 @@ fclean: clean
 
 re: fclean all
 
-# CHECK MEMORY LEAK #
-
-release: CFLAGS+=-g -fsanitize=address
-release: fclean
-release: $(NAME)
-
-debug: CFLAGS+=-g
-debug: fclean
-debug: $(NAME)
-
-valgrind: re
-	@valgrind --suppressions=./readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
-
-# NORMINETTE #
-norm:
-	norminette $(find -name '*.c' -not -path '*/tests/*')
-	norminette $(find -name '*.h' -not -path '*/tests/*')
-
-# **************************************************************************** #
-
-## TESTS ##
-
-TEST_DIR = ./tests/
-TEST_FLAG = -lcriterion
-
-# main file cannot be included in the tests
-TEST_FILES = $(wildcard $(TEST_DIR)*.c)
-TEST_FILES += $(wildcard ./src/builtins/*.c)
-TEST_FILES += $(wildcard ./src/command_table/*.c)
-TEST_FILES += $(wildcard ./src/exec/*.c)
-TEST_FILES += $(wildcard ./src/parser/*.c)
-TEST_FILES += $(wildcard ./src/quotes/*.c)
-TEST_FILES += $(wildcard ./src/system/*.c)
-TEST_FILES += $(wildcard ./src/utils/*.c)
-TEST_FILES += $(wildcard ./src/variable/*.c)
-
-TEST_OBJS = $(TEST_FILES:.c=.o)
-
-test: CFLAGS+=-fsanitize=address
-test:
-	@mkdir -p $(TEST_DIR)bin/
-	@gcc $(CFLAGS) $(TEST_FILES) $(HEADER) $(LIB_FLAGS) $(READLINE_FLAG) -o $(TEST_DIR)bin/test $(TEST_FLAG)
-
-
-run_tests: fclean $(LIBFT) test
-	$(TEST_DIR)bin/test
-
-run_tests_v: fclean $(LIBFT) test
-	$(TEST_DIR)bin/test --verbose
-
-.PHONY: all clean fclean re release valgrind norm run_tests run_tests_v
+.PHONY: all clean fclean re
