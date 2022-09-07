@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 15:17:45 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:50:52 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_data
 	bool		interrupt_heredoc;
 }	t_data;
 
-t_data	g_data;
+extern t_data g_data;
 
 // BUILTINS
 int		exec_builtin_parent(t_data *data, t_cmdtable *head_table, int builtin);
@@ -189,7 +189,7 @@ char	**split_cmd(char *cmd);
 
 // QUOTES
 int		is_quote_type(char ch);
-bool	validate_quote_closed(char *var_value);
+bool	validate_quote_closed(void);
 bool	validate_quote_space(char *var_value);
 char	*str_without_quotes(char *str);
 bool	check_var_expansion(char *var_value);

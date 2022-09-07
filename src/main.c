@@ -6,11 +6,13 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 15:18:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:49:29 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_data g_data;
 
 /*	RUN_CMD
 **	------------
@@ -53,7 +55,7 @@ int	main(int argc, char *argv[], char *envp[])
 		get_prompt();
 		if (*g_data.cmd_line)
 		{
-			if (validate_quote_closed(g_data.cmd_line))
+			if (validate_quote_closed())
 				run_cmd(&g_data);
 			else
 				put_msg("minishell", UNCLOSED_QUOTES, 2);

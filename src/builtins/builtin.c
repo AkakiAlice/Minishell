@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 14:16:22 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:03:21 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table, int builtin)
 int	check_builtin(t_data *data, t_cmdtable *cmd_table)
 {
 	if (!cmd_table->word)
-		return (0);
+		return (1);
 	if (strcmp_eq(*cmd_table->word, "exit"))
 		return (exec_builtin_parent(data, cmd_table, EXIT));
 	if (strcmp_eq(*cmd_table->word, "export"))

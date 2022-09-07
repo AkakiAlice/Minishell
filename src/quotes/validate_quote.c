@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:33:53 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/18 07:15:49 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:49:13 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,25 @@ int	is_quote_type(char ch)
 **	RETURN VALUES
 **	Return true if the quotes are closed and false if aren't not.
 */
-bool	validate_quote_closed(char *var_value)
+bool	validate_quote_closed(void)
 {
 	int		quote_type;
 	bool	quote_closed;
+	char	*cmd_line;
 
 	quote_closed = true;
-	while (*var_value)
+	cmd_line = g_data.cmd_line;
+	while (*cmd_line)
 	{
 		if (quote_closed)
 		{
-			quote_type = is_quote_type(*var_value);
+			quote_type = is_quote_type(*cmd_line);
 			if (quote_type != -1)
 				quote_closed = false;
 		}
-		else if (*var_value == quote_type)
+		else if (*cmd_line == quote_type)
 			quote_closed = true;
-		var_value++;
+		cmd_line++;
 	}
 	return (quote_closed);
 }
