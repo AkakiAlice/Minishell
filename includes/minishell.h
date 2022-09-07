@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 18:37:37 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:59:50 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ int		is_quote_type(char ch);
 bool	validate_quote_closed(void);
 bool	validate_quote_space(char *var_value);
 char	*str_without_quotes(char *str);
-bool	check_var_expansion(char *var_value);
 void	skip_quotes(char **cmd);
 
 // SYSTEM
@@ -211,18 +210,13 @@ void	del_first_node(t_env **head_env);
 void	put_msg(char *title, char *msg, int fd);
 void	put_msg_cmd(char *title, char *cmd, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
-char	*remove_spaces_outside_quote(char *str);
 void	free_minishell();
 void	minishell_init(void);
 int		strcmp_eq(char *s1, char *s2);
 void	clear_minishell(void);
 
 // VARIABLE
-int		save_var(t_env **last_var, char *cmd);
-char	*get_var_value(char *cmd, char *var_name);
-bool	validate_var(char *var_name, char *var_value);
 bool	validate_var_name(char *var_name);
 bool	is_equal_sign(char *cmd);
-int		free_variable(char **var_value, char **cmd, char ***split, int status);
 
 #endif

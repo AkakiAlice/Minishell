@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 22:04:34 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 17:17:15 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:57:05 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,6 @@ void	unset_env_var(t_env **env_list, char *word)
 		del_first_node(env_list);
 	else
 		del_node(env_list, word);
-}
-
-int	valid_unset_var(char *word)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isalpha(word[i]) != 0 || word[i] == '_')
-	{
-		while (word[i] != '\0')
-		{
-			if (ft_isalnum(word[i]) == 0 && word[i] != '_')
-				return (0);
-			i++;
-		}
-		return (1);
-	}
-	return (0);
 }
 
 void	unset_error_msg(char *word)
@@ -53,7 +35,7 @@ void	builtin_unset(t_cmdtable *cmd_table)
 	i = 1;
 	while (cmd_table->word[i] != NULL)
 	{
-		if (valid_unset_var(cmd_table->word[i]))
+		if (validate_var_name(cmd_table->word[i]))
 			unset_env_var(&g_data.head_env, cmd_table->word[i]);
 		else
 			unset_error_msg(cmd_table->word[i]);

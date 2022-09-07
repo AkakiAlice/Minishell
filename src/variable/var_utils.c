@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:00:04 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 07:53:43 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:50:23 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,4 @@ bool	is_equal_sign(char *cmd)
 	if (ft_strchr(cmd, '=') == NULL)
 		return (false);
 	return (true);
-}
-
-/*	FREE_VARIABLE
-**	------------
-**	DESCRIPTION
-**	Free all memory allocated in function save_var.
-**	PARAMETERS
-**	#1. The pointers to string variable value (var_value);
-**	#2. The pointers to string command (cmd);
-**	#3. The pointers to array of strings (split);
-**	#4. The status (status);
-**	RETURN VALUES
-**	Return status.
-*/
-int	free_variable(char **var_value, char **cmd, char ***split, int status)
-{
-	if (*var_value != NULL)
-		free(*var_value);
-	if (*cmd != NULL)
-		free(*cmd);
-	if (*split != NULL)
-		ft_matrix_free(&(*split));
-	return (status);
 }

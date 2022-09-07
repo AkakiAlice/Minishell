@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/09/06 12:55:09 by alida-si         ###   ########.fr        #
+#    Updated: 2022/09/07 18:58:20 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,6 @@ FILES = main.c\
 		validate_quote.c\
 		put_msg.c\
 		remove_spaces_around_str.c\
-		save_var.c\
 		validate_var.c\
 		var_utils.c\
 		error.c\
@@ -83,7 +82,6 @@ FILES = main.c\
 		create_cmd_table.c\
 		check_cmd.c\
 		syntax_error.c\
-		remove_spaces_outside_quotes.c\
 		split_cmd.c\
 		skip_with_quotes.c\
 		reserved_word.c\

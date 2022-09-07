@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 05:33:53 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 15:49:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:59:39 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,37 +93,4 @@ bool	validate_quote_space(char *var_value)
 		var_value++;
 	}
 	return (true);
-}
-
-/*	CHECK_VAR_EXPANSION
-**	------------
-**	DESCRIPTION
-**	Check exists variable expansion in double quotes.
-**	PARAMETERS
-**	#1. The pointers to variable value (var_value);
-**	RETURN VALUES
-**	Return true if contains variable expansion and false if its not.
-*/
-bool	check_var_expansion(char *var_value)
-{
-	int		quote_type;
-	bool	quote_closed;
-
-	quote_closed = true;
-	quote_type = -1;
-	while (*var_value)
-	{
-		if (quote_type == D_QUOTE && !quote_closed && *var_value == '$')
-			return (true);
-		if (quote_closed)
-		{
-			quote_type = is_quote_type(*var_value);
-			if (quote_type != -1)
-				quote_closed = false;
-		}
-		else if (*var_value == quote_type)
-			quote_closed = true;
-		var_value++;
-	}
-	return (false);
 }
