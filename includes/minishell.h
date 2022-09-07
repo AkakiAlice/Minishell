@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 15:07:29 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:17:45 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	skip_quotes(char **cmd);
 void	save_env(char **envp);
 int		env_lst_add_back(t_env **head_env, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
-void	get_prompt(t_data *data, t_env **head_env);
+void	get_prompt(void);
 void	free_env_lst(t_env **head_env);
 void	error_msg_exit(char *title, char *msg, int fd);
 void	sig_handle_exec_parent(int signum);

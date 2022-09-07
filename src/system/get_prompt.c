@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/31 07:57:48 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:17:23 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 **	RETURN VALUES
 **	-
 */
-void	free_prompt_line(t_data *data)
+void	free_prompt_line(void)
 {
-	free(data->prompt_line);
-	data->prompt_line = NULL;
-	if (data->cmd_path != NULL)
+	free(g_data.prompt_line);
+	g_data.prompt_line = NULL;
+	if (g_data.cmd_path != NULL)
 	{
-		free(data->cmd_path);
-		data->cmd_path = NULL;
+		free(g_data.cmd_path);
+		g_data.cmd_path = NULL;
 	}
 }
 
@@ -96,19 +96,19 @@ char	*get_prompt_line(void)
 **	RETURN VALUES
 **	-
 */
-void	get_prompt(t_data *data, t_env **head_env)
+void	get_prompt(void)
 {
-	data->prompt_line = get_prompt_line();
-	data->cmd_line = readline(data->prompt_line);
-	if (data->cmd_line == NULL)
+	g_data.prompt_line = get_prompt_line();
+	g_data.cmd_line = readline(g_data.prompt_line);
+	if (g_data.cmd_line == NULL)
 	{
-		free_prompt_line(data);
-		free_env_lst(head_env);
+		free_prompt_line();
+		free_env_lst(&g_data.head_env);
 		clear_minishell();
 		ft_putendl_fd("exit", 1);
 		exit(0);
 	}
-	else if (*data->cmd_line)
-		add_history(data->cmd_line);
-	free_prompt_line(data);
+	else if (*g_data.cmd_line)
+		add_history(g_data.cmd_line);
+	free_prompt_line();
 }
