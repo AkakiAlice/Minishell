@@ -6,36 +6,11 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/06 17:44:40 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:10:15 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*	GET_VAR_VALUE_EXPAND
-**	------------
-**	DESCRIPTION
-**	Loops through the linked list of environment variables
-**	until it finds the value corresponding to the received argument.
-**	PARAMETERS
-**	#1. The linked list of environment variables (env_list);
-**	#2. The name of the variable to look for (var);
-**	RETURN VALUES
-**	The value of the environment variable
-*/
-char	*get_var_value_expand(t_env *env_list, char *var)
-{
-	t_env	*ptr;
-
-	ptr = env_list;
-	while (ptr != NULL)
-	{
-		if (strcmp_eq(var, ptr->name))
-			return (ptr->value);
-		ptr = ptr->next;
-	}
-	return (NULL);
-}
 
 /*	EXPAND_ENV
 **	------------
@@ -43,11 +18,10 @@ char	*get_var_value_expand(t_env *env_list, char *var)
 **	Parses the variable name and finds its value.
 **	PARAMETERS
 **	#1. The name of the variable to expand (word);
-**	#2. The pointer to struct "data" (data);
 **	RETURN VALUES
 **	-
 */
-char	*expand_env(char *word, t_data *data)
+char	*expand_env(char *word)
 {
 	char	**temp;
 	char	*value;
@@ -55,7 +29,7 @@ char	*expand_env(char *word, t_data *data)
 	if (!ft_strncmp_eq(word, "$?", 2))
 	{
 		temp = ft_split2(word, '$');
-		value = get_var_value_expand(data->head_env, temp[0]);
+		value = search_env_value(temp[0]);
 		ft_matrix_free(&temp);
 	}
 	return (value);
@@ -79,7 +53,7 @@ void	is_dollar(char **str, t_data *data)
 		return ;
 	if (!ft_strncmp_eq(*str, "$?", 2))
 	{
-		aux = expand_env(*str, data);
+		aux = expand_env(*str);
 		free(*str);
 		if (aux == NULL)
 			*str = ft_strdup("");

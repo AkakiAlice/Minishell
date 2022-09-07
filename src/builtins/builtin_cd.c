@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:54:06 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 14:33:06 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:07:45 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	change_dir_old_pwd(t_data *data)
 {
 	char	*old_pwd;
 
-	old_pwd = get_var_value_expand(data->head_env, "OLDPWD");
+	old_pwd = search_env_value("OLDPWD");
 	if (old_pwd == NULL)
 	{
 		ft_putstr_fd("-minishell: cd: OLDPWD not set\n", 2);

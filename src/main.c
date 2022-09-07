@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/31 07:35:36 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:05:21 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	if (argc > 1)
 		error_msg_exit("minishell", TOO_MANY_ARG, 2);
-	minishell_init(&g_data);
-	save_env(&g_data.head_env, envp);
-	g_data.path_value = get_path(g_data.head_env);
+	minishell_init();
+	save_env(envp);
+	g_data.path_value = search_env_value("PATH");
 	while (1)
 	{
 		signal(SIGINT, sig_handle_minishell);

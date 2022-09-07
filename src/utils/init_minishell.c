@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:00 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/31 07:12:06 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:42:58 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@
 **	DESCRIPTION
 **	Initialize values from data struct.
 **	PARAMETERS
-**	#1. Pointer to struct data (data);
+**	-
 **	RETURN VALUES
 **	-
 */
-void	minishell_init(t_data *data)
+void	minishell_init(void)
 {
-	data->head_cmd = NULL;
-	data->head_env = NULL;
-	data->cmd_path = NULL;
-	data->cmd_line = NULL;
-	data->head_token = NULL;
-	data->splited_cmdl = NULL;
-	data->status = 0;
-	data->is_pipe = false;
-	data->interrupt_heredoc = false;
+	g_data.head_cmd = NULL;
+	g_data.head_env = NULL;
+	g_data.cmd_path = NULL;
+	g_data.cmd_line = NULL;
+	g_data.head_token = NULL;
+	g_data.splited_cmdl = NULL;
+	g_data.status = 0;
+	g_data.is_pipe = false;
+	g_data.interrupt_heredoc = false;
 }

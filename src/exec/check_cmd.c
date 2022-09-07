@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/03 13:19:31 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:05:34 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_cmd(t_data *data, char **word)
 	char	*aux;
 	int		i;
 
-	data->path_value = get_path(data->head_env);
+	data->path_value = search_env_value("PATH");
 	if (data->path_value != NULL)
 	{
 		path_list = ft_split(data->path_value, ':');

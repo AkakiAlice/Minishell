@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:51:39 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/03 13:24:02 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:04:24 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 **	RETURN VALUES
 **	Returns the string of the PATH value
 */
-char	*get_path(t_env *env_list)
+char	*search_env_value(char *var)
 {
 	t_env	*ptr;
 
-	ptr = env_list;
+	ptr = g_data.head_env;
 	while (ptr != NULL)
 	{
-		if (ft_strncmp("PATH", ptr->name, 4) == 0)
+		if (strcmp_eq(var, ptr->name))
 			return (ptr->value);
 		ptr = ptr->next;
 	}
