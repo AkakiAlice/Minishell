@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:54:06 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 03:16:51 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 13:15:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	builtin_cd(t_data *data, t_cmdtable *cmd_table)
 		}
 	}
 	else if (cmd_table->word[1] == NULL || strcmp_eq(cmd_table->word[1], "~")
-			|| strcmp_eq(cmd_table->word[1], "~/"))
-			change_dir(data, getenv("HOME"));
+		|| strcmp_eq(cmd_table->word[1], "~/"))
+		change_dir(data, getenv("HOME"));
 	else if (check_is_dir_cd(cmd_table))
 		change_dir(data, cmd_table->word[1]);
 }
