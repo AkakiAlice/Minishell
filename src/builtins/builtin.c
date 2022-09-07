@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 16:42:25 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/06 13:29:30 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ int	exec_builtin_parent(t_data *data, t_cmdtable *head_table)
 	{
 		if (!data->is_pipe && !check_redirect_parent(head_table))
 			builtin_unset(data, head_table);
+		return (1);
+	}
+	if (strcmp_eq(*head_table->word, "cd"))
+	{
+		if (!data->is_pipe && !check_redirect_parent(head_table))
+			builtin_cd(data, head_table);
 		return (1);
 	}
 	return (0);

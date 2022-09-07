@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/04 17:50:03 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 02:49:02 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define SYNTAX_ERR_NEWLINE "syntax error near unexpected token `newline'"
 # define IS_DIR "Is a directory"
 # define NO_FILE_DIR "No such file or directory"
+# define NO_DIR "Not a directory"
 # define INVALID_PERMISSION "Permission denied"
 # define CMD_NOT_FOUND "command not found"
 # define QUIT_HEREDOC "here-document delimited by end-of-file"
@@ -129,6 +130,7 @@ void	builtin_pwd(void);
 void	builtin_unset(t_data *data, t_cmdtable *cmd_table);
 void	builtin_env(t_data *data, t_cmdtable *head_table);
 void	save_env_var(t_data *data, char *variable, int validate);
+void	builtin_cd(t_data *data, t_cmdtable *cmd_table);
 
 // COMMAND_TABLE
 void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token,
@@ -162,6 +164,7 @@ int		is_double_single_quotes(char *str);
 int		dont_expand(char *str);
 void	clean_quotes(char **str, char quote);
 void	expand(t_data *data);
+char	*get_var_value_expand(t_env *env_list, char *var);
 
 // PARSER
 void	lexer(t_token **head_token, char **cmd);

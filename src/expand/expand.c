@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/30 11:38:26 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:44:40 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char	*get_var_value_expand(t_env *env_list, char *var)
 	t_env	*ptr;
 
 	ptr = env_list;
-	while (ptr->next != NULL)
+	while (ptr != NULL)
 	{
-		if (ft_strncmp(var, ptr->name, 4) == 0)
+		if (strcmp_eq(var, ptr->name))
 			return (ptr->value);
 		ptr = ptr->next;
 	}
