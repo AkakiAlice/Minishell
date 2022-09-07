@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*   exit_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 05:57:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:03:34 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/08/25 07:11:14 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_status(char *str)
 	return (status);
 }
 
-/*	BUILTIN_EXIT
+/*	EXIT_CMD
 **	------------
 **	DESCRIPTION
 **	Builtin exit.
@@ -61,7 +61,7 @@ static int	get_status(char *str)
 **	RETURN VALUES
 **	-
 */
-void	builtin_exit(t_cmdtable *head_table)
+void	exit_cmd(t_data *data, t_cmdtable *head_table)
 {
 	int	i;
 	int	status;
@@ -73,7 +73,7 @@ void	builtin_exit(t_cmdtable *head_table)
 	{
 		if (status != -1)
 		{
-			g_data.status = 1;
+			data->status = 1;
 			put_msg_cmd("minishell", "exit", TOO_MANY_ARG, 2);
 			return ;
 		}
@@ -82,8 +82,8 @@ void	builtin_exit(t_cmdtable *head_table)
 		i++;
 	}
 	if (status != -1)
-		g_data.status = status;
-	free_minishell(&g_data);
-	free_env_lst(&g_data.head_env);
-	exit(g_data.status);
+		data->status = status;
+	free_minishell(data);
+	free_env_lst(&data->head_env);
+	exit(data->status);
 }

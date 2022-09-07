@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/04 18:03:37 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:23:56 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@
 **	RETURN VALUES
 **	Return 1 if env exists and 0 if not.
 */
-static int	change_env_var(t_env *head_env, char *var_name, char *var_value)
+static int	change_env_var(char *var_name, char *var_value)
 {
+	t_env	*head_env;
+
+	head_env = g_data.head_env;
 	while (head_env != NULL)
 	{
 		if (strcmp_eq(head_env->name, var_name))
@@ -49,8 +52,11 @@ static int	change_env_var(t_env *head_env, char *var_name, char *var_value)
 **	RETURN VALUES
 **	Return 1 if env exists and 0 if not.
 */
-static int	env_var_exists(t_env *head_env, char *var_name)
+static int	env_var_exists(char *var_name)
 {
+	t_env	*head_env;
+
+	head_env = g_data.head_env;
 	while (head_env != NULL)
 	{
 		if (strcmp_eq(head_env->name, var_name))
@@ -70,17 +76,17 @@ static int	env_var_exists(t_env *head_env, char *var_name)
 **	RETURN VALUES
 **	-
 */
-static void	save_only_name(t_data *data, char *variable)
+static void	save_only_name(char *variable)
 {
-	if (env_var_exists(data->head_env, variable))
+	if (env_var_exists(variable))
 		return ;
 	if (validate_var_name(variable))
 	{
-		env_lst_add_back(&data->head_env, ft_strdup(variable), NULL);
-		data->status = 0;
+		env_lst_add_back(&g_data.head_env, ft_strdup(variable), NULL);
+		g_data.status = 0;
 	}
 	else
-		export_error(data, variable);
+		export_error(variable);
 }
 
 /*	SAVE_ENV_VAR
@@ -95,27 +101,27 @@ static void	save_only_name(t_data *data, char *variable)
 **	RETURN VALUES
 **	-
 */
-void	save_env_var(t_data *data, char *variable, int validate)
+void	save_env_var(char *variable, int validate)
 {
 	char	**split_var;
 	char	*env_value;
 
 	if (validate && *variable == '=')
-		return (export_error(data, variable));
+		return (export_error(variable));
 	if (!is_equal_sign(variable))
-		return (save_only_name(data, variable));
+		return (save_only_name(variable));
 	split_var = ft_split(variable, '=');
 	if (split_var == NULL)
 		return ;
 	if (validate && !validate_var_name(split_var[0]))
 	{
 		ft_matrix_free(&split_var);
-		return (export_error(data, variable));
+		return (export_error(variable));
 	}
 	env_value = get_env_value(variable, split_var[0]);
-	if (!change_env_var(data->head_env, split_var[0], env_value))
-		env_lst_add_back(&data->head_env, ft_strdup(split_var[0]), env_value);
-	data->status = 0;
+	if (!change_env_var(split_var[0], env_value))
+		env_lst_add_back(&g_data.head_env, ft_strdup(split_var[0]), env_value);
+	g_data.status = 0;
 	ft_matrix_free(&split_var);
 }
 
@@ -129,20 +135,20 @@ void	save_env_var(t_data *data, char *variable, int validate)
 **	RETURN VALUES
 **	-
 */
-void	builtin_export(t_data *data, t_cmdtable *head_table)
+void	builtin_export(t_cmdtable *head_table)
 {
 	int	i;
 
 	i = 1;
 	if (head_table->word[i] == NULL)
 	{
-		put_export(data->head_env, head_table->fdout);
-		data->status = 0;
+		put_export(head_table->fdout);
+		g_data.status = 0;
 		return ;
 	}
 	while (head_table->word[i])
 	{
-		save_env_var(data, head_table->word[i], 1);
+		save_env_var(head_table->word[i], 1);
 		i++;
 	}
 }

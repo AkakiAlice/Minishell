@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 16:46:30 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:21:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,19 +124,19 @@ typedef struct s_data
 extern t_data g_data;
 
 // BUILTINS
-int		exec_builtin_parent(t_data *data, t_cmdtable *head_table, int builtin);
-void	builtin_exit(t_data *data, t_cmdtable *head_table);
-void	builtin_export(t_data *data, t_cmdtable *head_table);
-void	put_export(t_env *head_env, int fd);
-void	export_error(t_data *data, char *variable);
+int		exec_builtin_parent(t_cmdtable *head_table, int builtin);
+void	builtin_exit(t_cmdtable *head_table);
+void	builtin_export(t_cmdtable *head_table);
+void	put_export(int fd);
+void	export_error(char *variable);
 void	exec_builtin_child(t_data *data, t_cmdtable *head_table);
 void	builtin_echo(char **word);
 void	builtin_pwd(void);
-void	builtin_unset(t_data *data, t_cmdtable *cmd_table);
+void	builtin_unset(t_cmdtable *cmd_table);
 void	builtin_env(t_data *data, t_cmdtable *head_table);
-void	save_env_var(t_data *data, char *variable, int validate);
-void	builtin_cd(t_data *data, t_cmdtable *cmd_table);
-int		check_builtin(t_data *data, t_cmdtable *cmd_table);
+void	save_env_var(char *variable, int validate);
+void	builtin_cd(t_cmdtable *cmd_table);
+int		check_builtin(t_cmdtable *cmd_table);
 
 // COMMAND_TABLE
 void	create_cmd_table(void);
@@ -147,7 +147,7 @@ void	init_count(t_counter *count);
 void	init_cmd_value(t_cmd_value *cmd_value, t_counter *count);
 bool	is_var_expansion(char *str);
 void	exec_heredoc(t_cmdtable *head_cmd, char *eof);
-void	open_redirection(t_data *data);
+void	open_redirection(void);
 
 // EXEC
 void	check_cmd(t_data *data, char **word);

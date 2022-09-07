@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 17:34:29 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/04 18:08:22 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:08:05 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 **	RETURN VALUES
 **	-
 */
-void	put_export(t_env *head_env, int fd)
+void	put_export(int fd)
 {
+	t_env	*head_env;
+
+	head_env = g_data.head_env;
 	while (head_env != NULL)
 	{
 		ft_putstr_fd("declare -x ", fd);
@@ -73,9 +76,9 @@ static void	put_msg_builtin(char *builtin, char *eof, char *msg, int fd)
 **	RETURN VALUES
 **	-
 */
-void	export_error(t_data *data, char *variable)
+void	export_error(char *variable)
 {
 	put_msg_builtin("export", variable, NOT_VALID_ID, 2);
-	data->status = 1;
+	g_data.status = 1;
 	return ;
 }

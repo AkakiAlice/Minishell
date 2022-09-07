@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 16:03:21 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:01:25 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,33 @@ int	check_redirect_parent(t_cmdtable *head)
 **	RETURN VALUES
 **	-
 */
-int	exec_builtin_parent(t_data *data, t_cmdtable *head_table, int builtin)
+int	exec_builtin_parent(t_cmdtable *head_table, int builtin)
 {
-	if (data->is_pipe || check_redirect_parent(head_table))
+	if (g_data.is_pipe || check_redirect_parent(head_table))
 		return (1);
 	if (builtin == EXIT)
-		builtin_exit(data, head_table);
+		builtin_exit(head_table);
 	else if (builtin == EXPORT)
-		builtin_export(data, head_table);
+		builtin_export(head_table);
 	else if (builtin == UNSET)
-		builtin_unset(data, head_table);
+		builtin_unset(head_table);
 	else if (builtin == CD)
-		builtin_cd(data, head_table);
+		builtin_cd(head_table);
 	return (1);
 }
 
-int	check_builtin(t_data *data, t_cmdtable *cmd_table)
+int	check_builtin(t_cmdtable *cmd_table)
 {
 	if (!cmd_table->word)
 		return (1);
 	if (strcmp_eq(*cmd_table->word, "exit"))
-		return (exec_builtin_parent(data, cmd_table, EXIT));
+		return (exec_builtin_parent(cmd_table, EXIT));
 	if (strcmp_eq(*cmd_table->word, "export"))
-		return (exec_builtin_parent(data, cmd_table, EXPORT));
+		return (exec_builtin_parent(cmd_table, EXPORT));
 	if (strcmp_eq(*cmd_table->word, "unset"))
-		return (exec_builtin_parent(data, cmd_table, UNSET));
+		return (exec_builtin_parent(cmd_table, UNSET));
 	if (strcmp_eq(*cmd_table->word, "cd"))
-		return (exec_builtin_parent(data, cmd_table, CD));
+		return (exec_builtin_parent(cmd_table, CD));
 	return (0);
 }
 

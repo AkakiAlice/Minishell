@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:32:42 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/04 18:09:31 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:22:46 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	builtin_env(t_data *data, t_cmdtable *head_table)
 	while (head_table->word[i])
 	{
 		if (*head_table->word[i] != '=')
-			save_env_var(data, head_table->word[i], 0);
+			save_env_var(head_table->word[i], 0);
 		else
 			ft_putendl_fd(head_table->word[i], 1);
 		i++;

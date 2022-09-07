@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 16:46:49 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:51:55 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	run_cmd(void)
 	create_cmd_table();
 	expand();
 	open_pipe();
-	open_redirection(&g_data);
+	open_redirection();
 	if (!g_data.interrupt_heredoc)
 		fork_it(&g_data, &g_data.head_env);
 }

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:54:06 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 15:49:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:20:32 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_is_dir_cd(t_cmdtable *cmd_table)
 	return (1);
 }
 
-void	change_dir(t_data *data, char *dir)
+void	change_dir(char *dir)
 {
 	char	*new_pwd;
 	char	cwd[1024];
@@ -49,13 +49,13 @@ void	change_dir(t_data *data, char *dir)
 	old_pwd = ft_strcat("OLDPWD=", getcwd(old_cwd, 1024));
 	chdir(dir);
 	new_pwd = ft_strcat("PWD=", getcwd(cwd, 1024));
-	save_env_var(data, new_pwd, 1);
-	save_env_var(data, old_pwd, 1);
+	save_env_var(new_pwd, 1);
+	save_env_var(old_pwd, 1);
 	free(new_pwd);
 	free(old_pwd);
 }
 
-void	change_dir_old_pwd(t_data *data)
+void	change_dir_old_pwd()
 {
 	char	*old_pwd;
 
@@ -68,11 +68,11 @@ void	change_dir_old_pwd(t_data *data)
 	else
 	{
 		ft_printf("%s\n", old_pwd);
-		change_dir(data, old_pwd);
+		change_dir(old_pwd);
 	}
 }
 
-void	builtin_cd(t_data *data, t_cmdtable *cmd_table)
+void	builtin_cd(t_cmdtable *cmd_table)
 {
 	if (cmd_table->word[1] && cmd_table->word[2])
 	{
@@ -81,10 +81,10 @@ void	builtin_cd(t_data *data, t_cmdtable *cmd_table)
 		return ;
 	}
 	if (strcmp_eq(cmd_table->word[1], "-"))
-		change_dir_old_pwd(data);
+		change_dir_old_pwd();
 	else if (cmd_table->word[1] == NULL || strcmp_eq(cmd_table->word[1], "~")
 		|| strcmp_eq(cmd_table->word[1], "~/"))
-		change_dir(data, getenv("HOME"));
+		change_dir(getenv("HOME"));
 	else if (check_is_dir_cd(cmd_table))
-		change_dir(data, cmd_table->word[1]);
+		change_dir(cmd_table->word[1]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 06:26:03 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 20:06:03 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:51:14 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ static void	open_redirect_table(t_cmdtable *head_cmd)
 **	RETURN VALUES
 **	-
 */
-void	open_redirection(t_data *data)
+void	open_redirection(void)
 {
 	t_cmdtable	*head_cmd;
 
-	head_cmd = data->head_cmd;
+	head_cmd = g_data.head_cmd;
 	while (head_cmd != NULL)
 	{
 		if (head_cmd->redirect)

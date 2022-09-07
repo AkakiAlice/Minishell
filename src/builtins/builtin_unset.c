@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 22:04:34 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/03 13:41:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:17:15 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	valid_unset_var(char *word)
 	return (0);
 }
 
-void	unset_error_msg(char *word, t_data *data)
+void	unset_error_msg(char *word)
 {
 	ft_putstr_fd("-minishell: unset: `", 2);
 	ft_putstr_fd(word, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);
-	data->status = 1;
+	g_data.status = 1;
 }
 
-void	builtin_unset(t_data *data, t_cmdtable *cmd_table)
+void	builtin_unset(t_cmdtable *cmd_table)
 {
 	int		i;
 
@@ -54,9 +54,9 @@ void	builtin_unset(t_data *data, t_cmdtable *cmd_table)
 	while (cmd_table->word[i] != NULL)
 	{
 		if (valid_unset_var(cmd_table->word[i]))
-			unset_env_var(&data->head_env, cmd_table->word[i]);
+			unset_env_var(&g_data.head_env, cmd_table->word[i]);
 		else
-			unset_error_msg(cmd_table->word[i], data);
+			unset_error_msg(cmd_table->word[i]);
 		i++;
 	}
 }

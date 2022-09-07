@@ -123,13 +123,13 @@ void	fork_it(t_data *data, t_env **head_env)
 	int			id;
 	t_cmdtable	*head;
 
-	head = data->head_cmd;
+	head = g_data.head_cmd;
 	id = -1;
 	while (head != NULL)
 	{
 		signal(SIGINT, sig_handle_exec_parent);
 		signal(SIGQUIT, sig_handle_exec_parent);
-		if (!check_builtin(data, head))
+		if (!check_builtin(head))
 		{
 			pid[++id] = fork();
 			if (pid[id] == 0)
@@ -139,5 +139,5 @@ void	fork_it(t_data *data, t_env **head_env)
 		head = head->next;
 	}
 	wait_all_pids(pid, id, data);
-	free_cmd_lst(&data->head_cmd);
+	free_cmd_lst(&g_data.head_cmd);
 }
