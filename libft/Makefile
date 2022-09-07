@@ -6,7 +6,7 @@
 #    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/30 19:35:16 by alida-si          #+#    #+#              #
-#    Updated: 2022/07/21 21:31:37 by alida-si         ###   ########.fr        #
+#    Updated: 2022/09/07 19:46:42 by alida-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,35 +128,4 @@ fclean: clean
 
 re: fclean all
 
-# **************************************************************************** #
-
-## TESTS ##
-
-TEST_DIR = ./tests/
-TEST_FLAG = -lcriterion
-
-# main file cannot be included in the tests
-TEST_FILES = $(wildcard $(TEST_DIR)str/*.c)
-TEST_FILES += $(wildcard ./src/gnl/*.c)
-TEST_FILES += $(wildcard ./src/is/*.c)
-TEST_FILES += $(wildcard ./src/lst/*.c)
-TEST_FILES += $(wildcard ./src/mem/*.c)
-TEST_FILES += $(wildcard ./src/printf/*.c)
-TEST_FILES += $(wildcard ./src/put/*.c)
-TEST_FILES += $(wildcard ./src/str/*.c)
-TEST_FILES += $(wildcard ./src/to/*.c)
-
-TEST_OBJS = $(TEST_FILES:.c=.o)
-
-test:
-	@mkdir -p $(TEST_DIR)bin/
-	@gcc $(CFLAGS) $(TEST_FILES) $(HEADER) -o $(TEST_DIR)bin/test $(TEST_FLAG)
-
-
-run_tests: test
-	$(TEST_DIR)bin/test
-
-run_tests_v: test
-	$(TEST_DIR)bin/test --verbose
-
-.PHONY: all clean fclean re run_tests run_tests_v
+.PHONY: all clean fclean re
