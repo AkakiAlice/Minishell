@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 15:49:29 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:13:05 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ t_data g_data;
 **	RETURN VALUES
 **	-
 */
-void	run_cmd(t_data *data)
+void	run_cmd(void)
 {
-	tokenizer(data);
-	if (data->splited_cmdl == NULL)
+	tokenizer(&g_data);
+	if (g_data.splited_cmdl == NULL)
 		return ;
-	lexer(&data->head_token, data->splited_cmdl);
-	if (parser(data) == FAILURE)
+	lexer(&g_data.head_token, g_data.splited_cmdl);
+	if (parser(&g_data) == FAILURE)
 		return ;
-	create_cmd_table(&data->head_cmd, data->head_token, data->splited_cmdl);
-	expand(data);
-	open_pipe(data);
-	open_redirection(data);
+	create_cmd_table(&g_data.head_cmd, g_data.head_token, g_data.splited_cmdl);
+	expand(&g_data);
+	open_pipe(&g_data);
+	open_redirection(&g_data);
 	if (!g_data.interrupt_heredoc)
-		fork_it(data, &data->head_env);
+		fork_it(&g_data, &g_data.head_env);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -56,7 +56,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (*g_data.cmd_line)
 		{
 			if (validate_quote_closed())
-				run_cmd(&g_data);
+				run_cmd();
 			else
 				put_msg("minishell", UNCLOSED_QUOTES, 2);
 			free_minishell(&g_data);
