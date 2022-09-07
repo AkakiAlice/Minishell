@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 20:14:05 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:28:54 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ static bool	is_redirect_redirect(int value, int next_value)
 **	RETURN VALUES
 **	Return 0 if successful and 1 if not
 */
-static int	syntax_redirect_error(t_data *data, int next_value)
+static int	syntax_redirect_error(int next_value)
 {
 	if (next_value == INPUT)
-		return (syntax_error(data, SYNTAX_ERR_INPUT));
+		return (syntax_error(SYNTAX_ERR_INPUT));
 	if (next_value == HEREDOC)
-		return (syntax_error(data, SYNTAX_ERR_HEREDOC));
+		return (syntax_error(SYNTAX_ERR_HEREDOC));
 	if (next_value == TRUNC)
-		return (syntax_error(data, SYNTAX_ERR_TRUNC));
+		return (syntax_error(SYNTAX_ERR_TRUNC));
 	if (next_value == APPEND)
-		return (syntax_error(data, SYNTAX_ERR_APPEND));
+		return (syntax_error(SYNTAX_ERR_APPEND));
 	return (0);
 }
 
@@ -96,28 +96,28 @@ static int	syntax_redirect_error(t_data *data, int next_value)
 **	RETURN VALUES
 **	Return 0 if successful and 1 if not
 */
-int	parser(t_data *data)
+int	parser(void)
 {
 	t_token	*temp;
 
-	if (data->head_token == NULL)
+	if (g_data.head_token == NULL)
 		return (0);
-	temp = data->head_token;
+	temp = g_data.head_token;
 	if (temp->value == PIPE)
-		return (syntax_error(data, SYNTAX_ERR_PIPE));
+		return (syntax_error(SYNTAX_ERR_PIPE));
 	while (temp->next != NULL)
 	{
 		if (is_pipe_pipe(temp->value, temp->next->value))
-			return (syntax_error(data, SYNTAX_ERR_PIPE));
+			return (syntax_error(SYNTAX_ERR_PIPE));
 		else if (is_redirect_pipe(temp->value, temp->next->value))
-			return (syntax_error(data, SYNTAX_ERR_PIPE));
+			return (syntax_error(SYNTAX_ERR_PIPE));
 		else if (is_redirect_redirect(temp->value, temp->next->value))
-			return (syntax_redirect_error(data, temp->next->value));
+			return (syntax_redirect_error(temp->next->value));
 		temp = temp->next;
 	}
 	if (temp->value == PIPE)
-		return (syntax_error(data, SYNTAX_ERR_PIPE));
+		return (syntax_error(SYNTAX_ERR_PIPE));
 	else if (temp->value != WORD)
-		return (syntax_error(data, SYNTAX_ERR_NEWLINE));
+		return (syntax_error(SYNTAX_ERR_NEWLINE));
 	return (0);
 }

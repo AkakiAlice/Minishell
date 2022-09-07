@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:42:40 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/09 08:37:51 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:16:43 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 **	RETURN VALUES
 **	-
 */
-void	tokenizer(t_data *data)
+void	tokenizer(void)
 {
-	data->splited_cmdl = split_cmd(data->cmd_line);
+	g_data.splited_cmdl = split_cmd(g_data.cmd_line);
 }

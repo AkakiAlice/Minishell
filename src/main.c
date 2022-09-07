@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 16:13:05 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:30:25 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ t_data g_data;
 */
 void	run_cmd(void)
 {
-	tokenizer(&g_data);
+	tokenizer();
 	if (g_data.splited_cmdl == NULL)
 		return ;
-	lexer(&g_data.head_token, g_data.splited_cmdl);
-	if (parser(&g_data) == FAILURE)
+	lexer();
+	if (parser() == FAILURE)
 		return ;
 	create_cmd_table(&g_data.head_cmd, g_data.head_token, g_data.splited_cmdl);
 	expand(&g_data);

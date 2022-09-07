@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/14 19:05:43 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:21:51 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ int	get_token(char *cmd)
 **	RETURN VALUES
 **	-
 */
-void	lexer(t_token **head_token, char **cmd)
+void	lexer(void)
 {
 	int	i;
 	int	token;
 
 	i = 0;
-	while (cmd[i])
+	while (g_data.splited_cmdl[i])
 	{
-		token = get_token(cmd[i]);
-		token_lst_add_back(head_token, token);
+		token = get_token(g_data.splited_cmdl[i]);
+		token_lst_add_back(&g_data.head_token, token);
 		i++;
 	}
 	return ;

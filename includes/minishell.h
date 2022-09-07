@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 15:50:52 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:27:32 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,13 @@ void	clean_quotes(char **str, char quote);
 void	expand(t_data *data);
 
 // PARSER
-void	lexer(t_token **head_token, char **cmd);
+void	lexer(void);
 int		get_token(char *cmd);
 int		token_lst_add_back(t_token **head_token, int value);
 void	free_token_lst(t_token **head_token);
-void	tokenizer(t_data *data);
-int		parser(t_data *data);
-int		syntax_error(t_data *data, char *msg);
+void	tokenizer(void);
+int		parser(void);
+int		syntax_error(char *msg);
 int		count_cmd_words(char *cmd);
 int		is_reserved_word(char c);
 bool	check_reserved_word(char **cmd, int *word_count, bool is_word);
