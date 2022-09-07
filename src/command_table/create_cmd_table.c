@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_table.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/21 19:48:16 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:38:48 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,20 @@ static bool	count_word_and_redirect(int token, t_counter *count)
 **	RETURN VALUES
 **	-
 */
-void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
+void	create_cmd_table(void)
 {
 	t_counter	count;
+	t_token		*head_token;
+	char		**cmd;
 
+	head_token = g_data.head_token;
 	init_count(&count);
+	cmd = g_data.splited_cmdl;
 	while (head_token != NULL)
 	{
 		if (head_token->value == PIPE)
 		{
-			save_cmd_line(head_cmd, &cmd, &count);
+			save_cmd_line(&g_data.head_cmd, &cmd, &count);
 			init_count(&count);
 			cmd++;
 		}
@@ -138,5 +142,5 @@ void	create_cmd_table(t_cmdtable **head_cmd, t_token *head_token, char **cmd)
 		head_token = head_token->next;
 	}
 	if (count.word || count.redirect)
-		save_cmd_line(head_cmd, &cmd, &count);
+		save_cmd_line(&g_data.head_cmd, &cmd, &count);
 }

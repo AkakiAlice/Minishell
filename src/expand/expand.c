@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 15:10:15 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:43:09 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*expand_env(char *word)
 **	RETURN VALUES
 **	-
 */
-void	is_dollar(char **str, t_data *data)
+void	is_dollar(char **str)
 {
 	char	*aux;
 
@@ -63,7 +63,7 @@ void	is_dollar(char **str, t_data *data)
 	if (ft_strncmp_eq(*str, "$?", 2))
 	{
 		free(*str);
-		*str = ft_itoa(data->status);
+		*str = ft_itoa(g_data.status);
 	}
 }
 
@@ -77,7 +77,7 @@ void	is_dollar(char **str, t_data *data)
 **	RETURN VALUES
 **	-
 */
-void	parse_expansion(char **word, t_data *data)
+void	parse_expansion(char **word)
 {
 	int	i;
 
@@ -91,7 +91,7 @@ void	parse_expansion(char **word, t_data *data)
 			if (is_double_single_quotes(word[i]) == 1)
 				clean_quotes(&word[i], '\'');
 			if (ft_strncmp_eq(word[i], "$", 1))
-				is_dollar(&word[i], data);
+				is_dollar(&word[i]);
 			if (is_double_single_quotes(word[i]) == 0)
 				clean_quotes(&word[i], '\'');
 		}
@@ -109,17 +109,17 @@ void	parse_expansion(char **word, t_data *data)
 **	RETURN VALUES
 **	-
 */
-void	expand(t_data *data)
+void	expand(void)
 {
 	t_cmdtable	*temp;
 
-	temp = data->head_cmd;
+	temp = g_data.head_cmd;
 	while (temp != NULL)
 	{
 		if (temp->redirect)
-			parse_expansion(temp->redirect, data);
+			parse_expansion(temp->redirect);
 		if (temp->word)
-			parse_expansion(temp->word, data);
+			parse_expansion(temp->word);
 		temp = temp->next;
 	}
 }

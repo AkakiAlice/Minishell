@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/30 09:02:00 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:46:02 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 **	RETURN VALUES
 **	-
 */
-void	open_pipe(t_data *data)
+void	open_pipe(void)
 {
 	int			pipe_fd[2];
 	t_cmdtable	*temp;
 
-	temp = data->head_cmd;
+	temp = g_data.head_cmd;
 	while (temp != NULL)
 	{
 		if (temp->next != NULL)
@@ -34,7 +34,7 @@ void	open_pipe(t_data *data)
 			pipe(pipe_fd);
 			temp->fdout = pipe_fd[1];
 			temp->next->fdin = pipe_fd[0];
-			data->is_pipe = true;
+			g_data.is_pipe = true;
 		}
 		temp = temp->next;
 	}

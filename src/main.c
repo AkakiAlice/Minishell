@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 16:30:25 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:46:49 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	run_cmd(void)
 	lexer();
 	if (parser() == FAILURE)
 		return ;
-	create_cmd_table(&g_data.head_cmd, g_data.head_token, g_data.splited_cmdl);
-	expand(&g_data);
-	open_pipe(&g_data);
+	create_cmd_table();
+	expand();
+	open_pipe();
 	open_redirection(&g_data);
 	if (!g_data.interrupt_heredoc)
 		fork_it(&g_data, &g_data.head_env);
