@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 16:46:02 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:10:01 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,13 @@ void	open_pipe(void)
 **	RETURN VALUES
 **	-
 */
-void	wait_all_pids(int pid[1024], int id, t_data *data)
+void	wait_all_pids(int pid[1024], int id)
 {
 	int	p_status;
 	int	j;
 
 	j = 0;
+	p_status = 0;
 	if (id == -1)
 		return ;
 	while (j <= id)
@@ -65,7 +66,7 @@ void	wait_all_pids(int pid[1024], int id, t_data *data)
 		j++;
 	}
 	if (WIFEXITED(p_status))
-		data->status = WEXITSTATUS(p_status);
+		g_data.status = WEXITSTATUS(p_status);
 }
 
 /*	CLOSE_NODE_FDS

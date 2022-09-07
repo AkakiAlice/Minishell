@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:01:25 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:46:04 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,28 +71,28 @@ int	check_builtin(t_cmdtable *cmd_table)
 	return (0);
 }
 
-void	exit_builtin_child(t_data *data)
+void	exit_builtin_child()
 {
 	clear_minishell();
-	free(data->cmd_path);
+	free(g_data.cmd_path);
 	exit(0);
 }
 
-void	exec_builtin_child(t_data *data, t_cmdtable *head_table)
+void	exec_builtin_child(t_cmdtable *head_table)
 {
 	if (strcmp_eq("echo", head_table->word[0]))
 	{
 		builtin_echo(head_table->word);
-		exit_builtin_child(data);
+		exit_builtin_child();
 	}
 	if (strcmp_eq("pwd", head_table->word[0]))
 	{
 		builtin_pwd();
-		exit_builtin_child(data);
+		exit_builtin_child();
 	}
 	if (strcmp_eq("env", head_table->word[0]))
 	{
-		builtin_env(data, head_table);
-		exit_builtin_child(data);
+		builtin_env(head_table);
+		exit_builtin_child();
 	}
 }

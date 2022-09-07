@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:21:14 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:34:04 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,11 @@ void	builtin_exit(t_cmdtable *head_table);
 void	builtin_export(t_cmdtable *head_table);
 void	put_export(int fd);
 void	export_error(char *variable);
-void	exec_builtin_child(t_data *data, t_cmdtable *head_table);
+void	exec_builtin_child(t_cmdtable *head_table);
 void	builtin_echo(char **word);
 void	builtin_pwd(void);
 void	builtin_unset(t_cmdtable *cmd_table);
-void	builtin_env(t_data *data, t_cmdtable *head_table);
+void	builtin_env(t_cmdtable *head_table);
 void	save_env_var(char *variable, int validate);
 void	builtin_cd(t_cmdtable *cmd_table);
 int		check_builtin(t_cmdtable *cmd_table);
@@ -150,18 +150,18 @@ void	exec_heredoc(t_cmdtable *head_cmd, char *eof);
 void	open_redirection(void);
 
 // EXEC
-void	check_cmd(t_data *data, char **word);
-void	fork_it(t_data *data, t_env **head_env);
-void	exec_cmd(t_data *data, t_env **head_env, t_cmdtable *head_table);
+void	check_cmd(char **word);
+void	fork_it();
+void	exec_cmd(t_cmdtable *head_table);
 char	*search_env_value(char *var);
 void	open_pipe(void);
-void	wait_all_pids(int pid[1024], int id, t_data *data);
+void	wait_all_pids(int pid[1024], int id);
 void	close_node_fds(t_cmdtable *head);
 void	close_list_fds(t_cmdtable *head);
 void	dup_fds(t_cmdtable *head);
-void	is_dir_exit(t_data *data, t_env **head_env, char *word);
-void	no_such_file_exit(t_data *data, char *word, int status);
-void	invalid_permission_exit(t_data *data, char *word, int status);
+void	is_dir_exit(char *word);
+void	no_such_file_exit(char *word, int status);
+void	invalid_permission_exit(char *word, int status);
 
 // EXPAND
 void	parse_expansion(char **word);

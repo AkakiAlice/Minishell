@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 15:59:41 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:40:31 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@
 **	RETURN VALUES
 **	-
 */
-void	check_cmd(t_data *data, char **word)
+void	check_cmd(char **word)
 {
 	char	**path_list;
 	char	*aux;
 	int		i;
 
-	data->path_value = search_env_value("PATH");
-	if (data->path_value != NULL)
+	g_data.path_value = search_env_value("PATH");
+	if (g_data.path_value != NULL)
 	{
-		path_list = ft_split(data->path_value, ':');
+		path_list = ft_split(g_data.path_value, ':');
 		aux = ft_strcat("/", word[0]);
 		i = 0;
 		while (path_list[i])
 		{
-			data->cmd_path = ft_strcat(path_list[i], aux);
-			if ((access(data->cmd_path, F_OK) == 0))
+			g_data.cmd_path = ft_strcat(path_list[i], aux);
+			if ((access(g_data.cmd_path, F_OK) == 0))
 			{
 				break ;
 			}
-			free(data->cmd_path);
-			data->cmd_path = NULL;
+			free(g_data.cmd_path);
+			g_data.cmd_path = NULL;
 			i++;
 		}
 		free(aux);

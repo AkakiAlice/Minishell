@@ -22,7 +22,7 @@
 **	RETURN VALUES
 **	-
 */
-void	check_is_dir(char *word, t_env **head_env, t_data *data)
+void	check_is_dir(char *word)
 {
 	DIR	*dir;
 
@@ -30,15 +30,11 @@ void	check_is_dir(char *word, t_env **head_env, t_data *data)
 	if (dir)
 	{
 		closedir(dir);
-		is_dir_exit(data, head_env, word);
+		is_dir_exit(word);
 	}
-	else if ((ENOENT == errno && data->cmd_path == NULL)
-		|| (access(word, X_OK) == -1))
-	{
-		no_such_file_exit(data, word, 127);
-	}
-	else if ((access(word, X_OK) == 0))
-		data->cmd_path = word;
+	else if ((ENOENT == errno && g_data.cmd_path == NULL)
+		|| (access(word, X_OK) == -1) || (access(word, X_OK) == 0))
+		no_such_file_exit(word, 127);
 }
 
 /*	EXEC_CMD
@@ -51,18 +47,18 @@ void	check_is_dir(char *word, t_env **head_env, t_data *data)
 **	RETURN VALUES
 **	-
 */
-void	exec_cmd(t_data *data, t_env **head_env, t_cmdtable *head_table)
+void	exec_cmd(t_cmdtable *head_table)
 {
-	exec_builtin_child(data, head_table);
-	if (data->cmd_path == NULL)
+	exec_builtin_child(head_table);
+	if (g_data.cmd_path == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		put_msg(head_table->word[0], CMD_NOT_FOUND, 2);
-		free_minishell(data);
-		free_env_lst(head_env);
+		free_minishell(&g_data);
+		free_env_lst(&g_data.head_env);
 		exit(127);
 	}
-	execve(data->cmd_path, head_table->word, NULL);
+	execve(g_data.cmd_path, head_table->word, NULL);
 }
 
 /*	CHECK_REDIRECT
@@ -75,14 +71,14 @@ void	exec_cmd(t_data *data, t_env **head_env, t_cmdtable *head_table)
 **	RETURN VALUES
 **	-
 */
-void	check_redirect(t_data *data, t_cmdtable *head)
+void	check_redirect(t_cmdtable *head)
 {
 	if (!head->err_file)
 		return ;
 	if (head->err_nb == ENOENT)
-		no_such_file_exit(data, head->err_file, 1);
+		no_such_file_exit(head->err_file, 1);
 	if (head->err_nb == EACCES)
-		invalid_permission_exit(data, head->err_file, 1);
+		invalid_permission_exit(head->err_file, 1);
 }
 
 /*	CHILD_PROCESS
@@ -96,15 +92,15 @@ void	check_redirect(t_data *data, t_cmdtable *head)
 **	RETURN VALUES
 **	-
 */
-void	child_process(t_data *data, t_env **head_env, t_cmdtable *head)
+void	child_process(t_cmdtable *head)
 {
-	check_redirect(data, head);
-	check_cmd(data, head->word);
+	check_redirect(head);
+	check_cmd(head->word);
 	if (ft_strchr(head->word[0], '/') != NULL)
-		check_is_dir(head->word[0], head_env, data);
+		check_is_dir(head->word[0]);
 	dup_fds(head);
 	close_list_fds(head);
-	exec_cmd(data, head_env, head);
+	exec_cmd(head);
 }
 
 /*	FORK_IT
@@ -117,7 +113,7 @@ void	child_process(t_data *data, t_env **head_env, t_cmdtable *head)
 **	RETURN VALUES
 **	-
 */
-void	fork_it(t_data *data, t_env **head_env)
+void	fork_it()
 {
 	int			pid[1024];
 	int			id;
@@ -133,11 +129,11 @@ void	fork_it(t_data *data, t_env **head_env)
 		{
 			pid[++id] = fork();
 			if (pid[id] == 0)
-				child_process(data, head_env, head);
+				child_process(head);
 		}
 		close_node_fds(head);
 		head = head->next;
 	}
-	wait_all_pids(pid, id, data);
+	wait_all_pids(pid, id);
 	free_cmd_lst(&g_data.head_cmd);
 }

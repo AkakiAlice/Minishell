@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:34:22 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 19:34:58 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:32:01 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 **	RETURN VALUES
 **	-
 */
-void	is_dir_exit(t_data *data, t_env **head_env, char *word)
+void	is_dir_exit(char *word)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, IS_DIR, 2);
-	free_minishell(data);
-	free_env_lst(head_env);
+	free_minishell(&g_data);
+	free_env_lst(&g_data.head_env);
 	exit(126);
 }
 
@@ -42,12 +42,13 @@ void	is_dir_exit(t_data *data, t_env **head_env, char *word)
 **	RETURN VALUES
 **	-
 */
-void	no_such_file_exit(t_data *data, char *word, int status)
+void	no_such_file_exit(char *word, int status)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, NO_FILE_DIR, 2);
-	free_minishell(data);
-	free_env_lst(&data->head_env);
+	free_minishell(&g_data);
+	free_env_lst(&g_data.head_env);
+	free(g_data.cmd_path);
 	exit(status);
 }
 
@@ -61,11 +62,11 @@ void	no_such_file_exit(t_data *data, char *word, int status)
 **	RETURN VALUES
 **	-
 */
-void	invalid_permission_exit(t_data *data, char *word, int status)
+void	invalid_permission_exit(char *word, int status)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, INVALID_PERMISSION, 2);
-	free_minishell(data);
-	free_env_lst(&data->head_env);
+	free_minishell(&g_data);
+	free_env_lst(&g_data.head_env);
 	exit(status);
 }

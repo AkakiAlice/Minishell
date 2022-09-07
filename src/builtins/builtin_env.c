@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:32:42 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:22:46 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:48:48 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,18 @@
 **	RETURN VALUES
 **	-
 */
-static void	put_env(t_env *head_env, int fd)
+static void	put_env(void)
 {
+	t_env	*head_env;
+
+	head_env = g_data.head_env;
 	while (head_env != NULL)
 	{
 		if (head_env->value)
 		{
-			ft_putstr_fd(head_env->name, fd);
-			ft_putstr_fd("=", fd);
-			ft_putendl_fd(head_env->value, fd);
+			ft_putstr_fd(head_env->name, 1);
+			ft_putstr_fd("=", 1);
+			ft_putendl_fd(head_env->value, 1);
 		}
 		head_env = head_env->next;
 	}
@@ -46,15 +49,15 @@ static void	put_env(t_env *head_env, int fd)
 **	RETURN VALUES
 **	-
 */
-void	builtin_env(t_data *data, t_cmdtable *head_table)
+void	builtin_env(t_cmdtable *head_table)
 {
 	int	i;
 
 	i = 1;
 	if (head_table->word[i] && !is_equal_sign(head_table->word[i]))
 	{
-		free(data->cmd_path);
-		no_such_file_exit(data, head_table->word[i], 127);
+		free(g_data.cmd_path);
+		no_such_file_exit(head_table->word[i], 127);
 	}
 	while (head_table->word[i])
 	{
@@ -64,5 +67,5 @@ void	builtin_env(t_data *data, t_cmdtable *head_table)
 			ft_putendl_fd(head_table->word[i], 1);
 		i++;
 	}
-	put_env(data->head_env, 1);
+	put_env();
 }
