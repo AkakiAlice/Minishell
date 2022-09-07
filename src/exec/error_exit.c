@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:34:22 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 18:32:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:43:16 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	is_dir_exit(char *word)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, IS_DIR, 2);
-	free_minishell(&g_data);
+	free_minishell();
 	free_env_lst(&g_data.head_env);
 	exit(126);
 }
@@ -46,7 +46,7 @@ void	no_such_file_exit(char *word, int status)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, NO_FILE_DIR, 2);
-	free_minishell(&g_data);
+	free_minishell();
 	free_env_lst(&g_data.head_env);
 	free(g_data.cmd_path);
 	exit(status);
@@ -66,7 +66,7 @@ void	invalid_permission_exit(char *word, int status)
 {
 	ft_putstr_fd("minishell: ", 2);
 	put_msg(word, INVALID_PERMISSION, 2);
-	free_minishell(&g_data);
+	free_minishell();
 	free_env_lst(&g_data.head_env);
 	exit(status);
 }

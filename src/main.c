@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 18:34:15 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:40:13 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char *argv[], char *envp[])
 				run_cmd();
 			else
 				put_msg("minishell", UNCLOSED_QUOTES, 2);
-			free_minishell(&g_data);
+			free_minishell();
 		}
 	}
 	return (0);

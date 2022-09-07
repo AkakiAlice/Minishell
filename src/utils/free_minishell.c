@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/31 07:33:25 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:39:48 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@
 **	RETURN VALUES
 **	-
 */
-void	free_minishell(t_data *data)
+void	free_minishell()
 {
-	free_token_lst(&data->head_token);
-	if (data->cmd_line != NULL)
+	free_token_lst(&g_data.head_token);
+	if (g_data.cmd_line != NULL)
 	{
-		free(data->cmd_line);
-		data->cmd_line = NULL;
+		free(g_data.cmd_line);
+		g_data.cmd_line = NULL;
 	}
-	free_cmd_lst(&data->head_cmd);
-	ft_matrix_free(&data->splited_cmdl);
-	data->splited_cmdl = NULL;
-	data->is_pipe = false;
-	data->interrupt_heredoc = false;
+	free_cmd_lst(&g_data.head_cmd);
+	ft_matrix_free(&g_data.splited_cmdl);
+	g_data.splited_cmdl = NULL;
+	g_data.is_pipe = false;
+	g_data.interrupt_heredoc = false;
 }

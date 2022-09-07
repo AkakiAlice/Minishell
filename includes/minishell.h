@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 18:34:04 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:37:37 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	put_msg(char *title, char *msg, int fd);
 void	put_msg_cmd(char *title, char *cmd, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
 char	*remove_spaces_outside_quote(char *str);
-void	free_minishell(t_data *data);
+void	free_minishell();
 void	minishell_init(void);
 int		strcmp_eq(char *s1, char *s2);
 void	clear_minishell(void);

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 05:57:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:03:34 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:43:00 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	builtin_exit(t_cmdtable *head_table)
 	}
 	if (status != -1)
 		g_data.status = status;
-	free_minishell(&g_data);
+	free_minishell();
 	free_env_lst(&g_data.head_env);
 	exit(g_data.status);
 }

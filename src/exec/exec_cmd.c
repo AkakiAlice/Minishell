@@ -54,7 +54,7 @@ void	exec_cmd(t_cmdtable *head_table)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		put_msg(head_table->word[0], CMD_NOT_FOUND, 2);
-		free_minishell(&g_data);
+		free_minishell();
 		free_env_lst(&g_data.head_env);
 		exit(127);
 	}
