@@ -113,7 +113,7 @@ void	child_process(t_cmdtable *head)
 **	RETURN VALUES
 **	-
 */
-void	fork_it()
+void	fork_it(void)
 {
 	int			pid[1024];
 	int			id;

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:46:04 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:05:44 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	check_builtin(t_cmdtable *cmd_table)
 	return (0);
 }
 
-void	exit_builtin_child()
+void	exit_builtin_child(void)
 {
 	clear_minishell();
 	free(g_data.cmd_path);

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 18:39:48 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:04:03 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 **	RETURN VALUES
 **	-
 */
-void	free_minishell()
+void	free_minishell(void)
 {
 	free_token_lst(&g_data.head_token);
 	if (g_data.cmd_line != NULL)

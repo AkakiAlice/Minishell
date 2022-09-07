@@ -6,13 +6,13 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 18:40:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:04:56 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_data g_data;
+t_data	g_data;
 
 /*	RUN_CMD
 **	------------

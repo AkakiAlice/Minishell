@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 18:59:50 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:07:01 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_data
 	bool		interrupt_heredoc;
 }	t_data;
 
-extern t_data g_data;
+extern t_data	g_data;
 
 // BUILTINS
 int		exec_builtin_parent(t_cmdtable *head_table, int builtin);
@@ -151,7 +151,7 @@ void	open_redirection(void);
 
 // EXEC
 void	check_cmd(char **word);
-void	fork_it();
+void	fork_it(void);
 void	exec_cmd(t_cmdtable *head_table);
 char	*search_env_value(char *var);
 void	open_pipe(void);
@@ -210,7 +210,7 @@ void	del_first_node(t_env **head_env);
 void	put_msg(char *title, char *msg, int fd);
 void	put_msg_cmd(char *title, char *cmd, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
-void	free_minishell();
+void	free_minishell(void);
 void	minishell_init(void);
 int		strcmp_eq(char *s1, char *s2);
 void	clear_minishell(void);

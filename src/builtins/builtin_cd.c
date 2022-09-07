@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:54:06 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 17:20:32 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:06:05 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	change_dir(char *dir)
 	free(old_pwd);
 }
 
-void	change_dir_old_pwd()
+void	change_dir_old_pwd(void)
 {
 	char	*old_pwd;
 
