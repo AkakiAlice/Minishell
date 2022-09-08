@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 07:00:12 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/03 15:27:35 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:52:25 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /*	ENV_LST_ADD_BACK
 **	------------
 **	DESCRIPTION
-**	Add the node at the end of the circular linked list and change the head_env
+**	Add the node at the end of the linked list and change the head_env
 **	pointer to the last node added.
 **	PARAMETERS
-**	#1. The pointer to list (head_env);
-**	#2. The pointer to environment name (name);
-**	#3. The pointer to environment value (value);
+**	#1. The pointer to env list (head_env);
+**	#2. The environment name (name);
+**	#3. The environment value (value);
 **	RETURN VALUES
 **	Return 0 if successful and 1 if there is memory allocation error or if there
 **	is no content in name and value
@@ -53,9 +53,9 @@ int	env_lst_add_back(t_env **head_env, char *name, char *value)
 /*	FREE_ENV_LST
 **	------------
 **	DESCRIPTION
-**	Free all memory allocated within environment circular linked list.
+**	Free all memory allocated within environment linked list.
 **	PARAMETERS
-**	#1. The pointer to list (head_env);
+**	#1. The pointer to env list (head_env);
 **	RETURN VALUES
 **	-
 */
@@ -70,6 +70,15 @@ void	free_env_lst(t_env **head_env)
 	*head_env = NULL;
 }
 
+/*	DEL_FIRST_NODE
+**	------------
+**	DESCRIPTION
+**	Free first node memory allocated within environment linked list.
+**	PARAMETERS
+**	#1. The pointer to env list (head_env);
+**	RETURN VALUES
+**	-
+*/
 void	del_first_node(t_env **head_env)
 {
 	t_env	*temp;
@@ -81,6 +90,17 @@ void	del_first_node(t_env **head_env)
 	*head_env = temp;
 }
 
+/*	DEL_NODE
+**	------------
+**	DESCRIPTION
+**	Deletes the node that contains the same name as the word in the environment
+**	linked list.
+**	PARAMETERS
+**	#1. The pointer to env list (env_list);
+**	#2. The comparison string (word);
+**	RETURN VALUES
+**	-
+*/
 void	del_node(t_env **env_list, char *word)
 {
 	t_env	*temp;

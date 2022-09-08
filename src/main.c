@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 20:33:28 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 19:36:06 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:41:37 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ t_data	g_data;
 **	DESCRIPTION
 **	Calls the parsing functions and executes the command.
 **	PARAMETERS
-**	#1. The pointer to struct data (data);
-**	#2. The pointer to path value (path_value);
+**	-
 **	RETURN VALUES
 **	-
 */

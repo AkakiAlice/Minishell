@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 06:57:58 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/27 07:14:54 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:52:44 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 **	DESCRIPTION
 **	Put message error and exit.
 **	PARAMETERS
-**	#1. The string (title);
-**	#1. The string (msg);
-**	#1. The number (fd);
+**	#1. The output title (title);
+**	#2. The output message (msg);
+**	#3. The file descriptor (fd);
 **	RETURN VALUES
 **	-
 */

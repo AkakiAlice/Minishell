@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:09:01 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/07/16 14:00:40 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:59:00 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	DESCRIPTION
 **	Count quotes closed.
 **	PARAMETERS
-**	#1. The pointers to variable value (var_value);
+**	#1. The variable value (var_value);
 **	RETURN VALUES
 **	Return count quotes.
 */
@@ -52,7 +52,7 @@ int	count_quotes_closed(char *var_value)
 **	DESCRIPTION
 **	Get string length without quotes.
 **	PARAMETERS
-**	#1. The pointers to variable value (var_value);
+**	#1. The variable value (var_value);
 **	RETURN VALUES
 **	Return string length.
 */
@@ -66,7 +66,8 @@ int	strlen_without_quotes(char *var_value)
 **	DESCRIPTION
 **	Check if the char can be saved.
 **	PARAMETERS
-**	#1. The pointers to variable value (var_value);
+**	#1. The pointers to quote struct (quote);
+**	#2. The character (ch);
 **	RETURN VALUES
 **	Return string length.
 */
@@ -95,7 +96,7 @@ bool	is_save_char(t_quotes *quote, char ch)
 **	DESCRIPTION
 **	Save string without quotes.
 **	PARAMETERS
-**	#1. The pointers to string (str);
+**	#1. The string (str);
 **	RETURN VALUES
 **	Return allocated memory.
 */
