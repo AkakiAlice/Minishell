@@ -64,20 +64,7 @@ export QUOTES_S'=single'
 export QUOTES_D"=single"
 export 'QUOTES_N'='double'
 export "QUOTES_M"="double"
-export < unit_test/test_files/infile_big
-export INPUT < unit_test/test_files/infile_big
 export $USER
-export < input_file
-export << eof
-export NOT_INPUT < not-exists
-export OUT > file
-export HERE << eof
-export append >> file
-export > output
-export >> output
-export PIPE | ls
-export PIPE | export CHILD
-cat | export CHILD
 export SIGN_D="> >> < * ? [ ] | ; [ ] || && ( ) & # $ $USER \ <<"
 export SIGN_S='> >> < * ? [ ] | ; [ ] || && ( ) & # $ $USER \ <<'
 export NAME=$USER
