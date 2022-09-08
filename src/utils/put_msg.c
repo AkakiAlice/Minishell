@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 14:06:33 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/25 07:12:56 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:43:05 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	put_msg(char *title, char *msg, int fd)
 **	Put message in 'title: cmd: description' format.
 **	PARAMETERS
 **	#1. The output title (title);
-**	#1. The output cmd (cmd);
-**	#2. The output description (msg);
-**	#3. The file descriptor (fd);
+**	#2. The output cmd (cmd);
+**	#3. The output description (msg);
+**	#4. The file descriptor (fd);
 **	RETURN VALUES
 **	-
 */

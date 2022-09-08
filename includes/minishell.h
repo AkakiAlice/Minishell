@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 19:07:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 08:00:44 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,6 @@ char	**split_cmd(char *cmd);
 // QUOTES
 int		is_quote_type(char ch);
 bool	validate_quote_closed(void);
-bool	validate_quote_space(char *var_value);
 char	*str_without_quotes(char *str);
 void	skip_quotes(char **cmd);
 

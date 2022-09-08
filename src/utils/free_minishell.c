@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:59:54 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 19:04:03 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:42:31 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	DESCRIPTION
 **	Free allocation memory in data struct.
 **	PARAMETERS
-**	#1. Pointer to struct data (data);
+**	-
 **	RETURN VALUES
 **	-
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 18:45:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 15:49:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:54:47 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 **	DESCRIPTION
 **	Get the environment value after the equal sign.
 **	PARAMETERS
-**	#1. The pointer to environment variable (envp);
-**	#2. The pointer to environment name (env_name);
+**	#1. The environment variable (envp);
+**	#2. The environment name (env_name);
 **	RETURN VALUES
 **	Return allocated memory from environment value
 */
@@ -39,10 +39,9 @@ char	*get_env_value(char *envp, char *env_name)
 /*	SAVE_ENV
 **	------------
 **	DESCRIPTION
-**	Save environment variables in circular linked list.
+**	Save environment variables in linked list.
 **	PARAMETERS
-**	#1. The last node of the circular linked list (env);
-**	#2. The array of pointers to environment variables (envp);
+**	#1. The array of pointers to environment variables (envp);
 **	RETURN VALUES
 **	-
 */

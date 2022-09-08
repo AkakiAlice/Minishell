@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 15:49:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:53:39 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 **	DESCRIPTION
 **	Frees the pointers that make up the command line.
 **	PARAMETERS
-**	#1. The pointer to the current working directory string (cwd);
-**	#2. The pointer to the login name (user@hostname) (login);
-**	#3. The pointer to the prompt line (prompt_line);
+**	-
 **	RETURN VALUES
 **	-
 */
@@ -92,7 +90,7 @@ char	*get_prompt_line(void)
 **	DESCRIPTION
 **	Create prompt and save history from command line.
 **	PARAMETERS
-**	#1. The pointer to structure that contains the command line variable (data);
+**	-
 **	RETURN VALUES
 **	-
 */

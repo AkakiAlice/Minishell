@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 07:17:18 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 15:49:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 07:42:20 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	DESCRIPTION
 **	Free allocation memory in data struct and initialize values.
 **	PARAMETERS
-**	#1. Pointer to struct data (data);
+**	-
 **	RETURN VALUES
 **	-
 */
