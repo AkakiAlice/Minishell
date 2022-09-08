@@ -17,8 +17,7 @@
 **	DESCRIPTION
 **	Checks if the argument received from the terminal is a dir or an executable.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	#1. The name of the directory (word);
 **	RETURN VALUES
 **	-
 */
@@ -44,8 +43,7 @@ void	check_is_dir(char *word)
 **	DESCRIPTION
 **	Executes the command received from the terminal with execve function.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	#1. The pointer to list (head_table);
 **	RETURN VALUES
 **	-
 */
@@ -68,8 +66,7 @@ void	exec_cmd(t_cmdtable *head_table)
 **	DESCRIPTION
 **	Checks the redirect.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	#1. The pointer to list (head);
 **	RETURN VALUES
 **	-
 */
@@ -88,9 +85,7 @@ void	check_redirect(t_cmdtable *head)
 **	DESCRIPTION
 **	Checks the redirect and command, then executes the commands.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
-**	#3. The pointer to list (head);
+**	#1. The pointer to list (head);
 **	RETURN VALUES
 **	-
 */
@@ -110,8 +105,7 @@ void	child_process(t_cmdtable *head)
 **	DESCRIPTION
 **	Creates a child process.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	-
 **	RETURN VALUES
 **	-
 */

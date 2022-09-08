@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:50:31 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 16:21:51 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:07:59 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int	get_token(char *cmd)
 **	DESCRIPTION
 **	Loops through the cmd matrix and does lexer.
 **	PARAMETERS
-**	#1. The pointer to list (head_token);
-**	#2. The array of pointers (cmd);
+**	-
 **	RETURN VALUES
 **	-
 */

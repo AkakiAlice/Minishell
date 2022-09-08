@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:52:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 17:40:31 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:59:19 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 **	DESCRIPTION
 **	Checks if the cmd received from the terminal exists in the PATH variable.
 **	PARAMETERS
-**	#1. The pointer to PATH value (env_value);
-**	#2. The pointer to struct "data" (data);
+**	#1. The command array (word);
 **	RETURN VALUES
 **	-
 */

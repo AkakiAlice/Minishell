@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 19:34:22 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 18:43:16 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:02:28 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 **	DESCRIPTION
 **	Displays the error message "Is a directory" and terminates the process.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	#1. The element to which the error message refers (word);
 **	RETURN VALUES
 **	-
 */
@@ -37,8 +36,8 @@ void	is_dir_exit(char *word)
 **	Displays the error message "No such file or directory"
 **	and terminates the process.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	#1. The element to which the error message refers (word);
+**	#2. The status that the process must be terminated (status);
 **	RETURN VALUES
 **	-
 */
@@ -57,8 +56,8 @@ void	no_such_file_exit(char *word, int status)
 **	DESCRIPTION
 **	Displays the error message "Permission denied" and terminates the process.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_env);
+**	#1. The element to which the error message refers (word);
+**	#2. The status that the process must be terminated (status);
 **	RETURN VALUES
 **	-
 */

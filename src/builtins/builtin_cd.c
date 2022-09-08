@@ -6,12 +6,22 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 12:54:06 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 19:06:05 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:25:12 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	ERROR_MSG_CD
+**	------------
+**	DESCRIPTION
+**	Prints on the screen the error message passed as an argument.
+**	PARAMETERS
+**	#1. The element to which the error message refers (str);
+**	#2. The message that will be displayed (msg);
+**	RETURN VALUES
+**	-
+*/
 void	error_msg_cd(char *str, char *msg)
 {
 	ft_putstr_fd("-minishell: ", 2);
@@ -20,6 +30,15 @@ void	error_msg_cd(char *str, char *msg)
 	g_data.status = 1;
 }
 
+/*	CHECK_IS_DIR_CD
+**	------------
+**	DESCRIPTION
+**	Checks if the passed argument is a directory or not.
+**	PARAMETERS
+**	#1. Command table struct (cmd_table);
+**	RETURN VALUES
+**	Returns 1 if the argument passed is a directory, otherwise returns 0
+*/
 int	check_is_dir_cd(t_cmdtable *cmd_table)
 {
 	DIR	*dir;
@@ -39,6 +58,15 @@ int	check_is_dir_cd(t_cmdtable *cmd_table)
 	return (1);
 }
 
+/*	CHANGE_DIR
+**	------------
+**	DESCRIPTION
+**	Changes directory and set PWD and OLDPWD.
+**	PARAMETERS
+**	#1. The directory name (dir);
+**	RETURN VALUES
+**	-
+*/
 void	change_dir(char *dir)
 {
 	char	*new_pwd;
@@ -55,6 +83,15 @@ void	change_dir(char *dir)
 	free(old_pwd);
 }
 
+/*	CHANGE_DIR_OLD_PWD
+**	------------
+**	DESCRIPTION
+**	Changes directory to OLDPWD.
+**	PARAMETERS
+**	-
+**	RETURN VALUES
+**	-
+*/
 void	change_dir_old_pwd(void)
 {
 	char	*old_pwd;
@@ -72,6 +109,15 @@ void	change_dir_old_pwd(void)
 	}
 }
 
+/*	BUILTIN_CD
+**	------------
+**	DESCRIPTION
+**	Parses the input and call the directory change functions.
+**	PARAMETERS
+**	#1. Command table struct (cmd_table);
+**	RETURN VALUES
+**	-
+*/
 void	builtin_cd(t_cmdtable *cmd_table)
 {
 	if (cmd_table->word[1] && cmd_table->word[2])

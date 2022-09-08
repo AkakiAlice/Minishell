@@ -6,12 +6,21 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 19:05:44 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:55:04 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	CHECK_REDIRECT_PARENT
+**	------------
+**	DESCRIPTION
+**	Checks if it's a valid redirect.
+**	PARAMETERS
+**	#1. The pointer to list (head);
+**	RETURN VALUES
+**	Returns 1 in case of invalid redirection
+*/
 int	check_redirect_parent(t_cmdtable *head)
 {
 	if (!head->err_file)
@@ -36,10 +45,10 @@ int	check_redirect_parent(t_cmdtable *head)
 **	DESCRIPTION
 **	Execute the builtins in the parent process.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_table);
+**	#1. The pointer to list (head_table);
+**	#2. The integer corresponding to a builtin (builtin);
 **	RETURN VALUES
-**	-
+**	Returns 1
 */
 int	exec_builtin_parent(t_cmdtable *head_table, int builtin)
 {
@@ -56,6 +65,15 @@ int	exec_builtin_parent(t_cmdtable *head_table, int builtin)
 	return (1);
 }
 
+/*	CHECK_BUILTIN
+**	------------
+**	DESCRIPTION
+**	Checks if the command is a builtin.
+**	PARAMETERS
+**	#1. The pointer to list (cmd_table);
+**	RETURN VALUES
+**	Returns 1 if the command is a builtin, otherwise returns 0
+*/
 int	check_builtin(t_cmdtable *cmd_table)
 {
 	if (!cmd_table->word)
@@ -71,6 +89,15 @@ int	check_builtin(t_cmdtable *cmd_table)
 	return (0);
 }
 
+/*	EXIT_BUILTIN_CHILD
+**	------------
+**	DESCRIPTION
+**	Frees the allocated pointers and terminate the process.
+**	PARAMETERS
+**	-
+**	RETURN VALUES
+**	-
+*/
 void	exit_builtin_child(void)
 {
 	clear_minishell();
@@ -78,6 +105,15 @@ void	exit_builtin_child(void)
 	exit(0);
 }
 
+/*	EXEC_BUILTIN_CHILD
+**	------------
+**	DESCRIPTION
+**	Execute the builtins in the child process.
+**	PARAMETERS
+**	#1. The pointer to list (head_table);
+**	RETURN VALUES
+**	-
+*/
 void	exec_builtin_child(t_cmdtable *head_table)
 {
 	if (strcmp_eq("echo", head_table->word[0]))

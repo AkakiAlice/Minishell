@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 06:26:03 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 16:51:14 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:57:42 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	open_redirect_table(t_cmdtable *head_cmd)
 **	DESCRIPTION
 **	Loops through the linked list of commands and opens a redirect to each node.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
+**	-
 **	RETURN VALUES
 **	-
 */

@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:31:08 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 18:10:01 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:03:34 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	DESCRIPTION
 **	Loops through the linked list of commands and opens a pipe to each node.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
+**	-
 **	RETURN VALUES
 **	-
 */
@@ -47,7 +47,6 @@ void	open_pipe(void)
 **	PARAMETERS
 **	#1. The process array;
 **	#2. The number of processes;
-**	#3. The pointer to struct "data" (data);
 **	RETURN VALUES
 **	-
 */
@@ -74,7 +73,7 @@ void	wait_all_pids(int pid[1024], int id)
 **	DESCRIPTION
 **	Closes file descriptors from one node.
 **	PARAMETERS
-**	#1. The command table linked list;
+**	#1. The command table linked list (head);
 **	RETURN VALUES
 **	-
 */
@@ -91,7 +90,7 @@ void	close_node_fds(t_cmdtable *head)
 **	DESCRIPTION
 **	Closes file descriptors of all list nodes.
 **	PARAMETERS
-**	#1. The command table linked list;
+**	#1. The command table linked list (head);
 **	RETURN VALUES
 **	-
 */
@@ -109,7 +108,7 @@ void	close_list_fds(t_cmdtable *head)
 **	DESCRIPTION
 **	Redirects the descriptors of the respective node.
 **	PARAMETERS
-**	#1. The command table linked list;
+**	#1. The command table linked list (head);
 **	RETURN VALUES
 **	-
 */

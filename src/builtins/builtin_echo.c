@@ -6,12 +6,21 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 17:48:45 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/31 21:49:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:14:50 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	BUILTIN_ECHO
+**	------------
+**	DESCRIPTION
+**	Displays the arguments passed to standard output..
+**	PARAMETERS
+**	#1. The content to be displayed (word);
+**	RETURN VALUES
+**	-
+*/
 void	builtin_echo(char **word)
 {
 	int	i;

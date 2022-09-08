@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 17:34:29 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:08:05 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:16:58 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 **	DESCRIPTION
 **	Prints all environment variables in the format: declare -x name="value"
 **	PARAMETERS
-**	#1. The pointer to list "env" (head_env);
-**	#2. The file descriptor (fd);
+**	#1. The file descriptor (fd);
 **	RETURN VALUES
 **	-
 */
@@ -71,8 +70,7 @@ static void	put_msg_builtin(char *builtin, char *eof, char *msg, int fd)
 **	DESCRIPTION
 **	Print invalid id error message and change exit code value.
 **	PARAMETERS
-**	#1. The pointer to list "env" (head_env);
-**	#2. The string (variable);
+**	#1. The string (variable);
 **	RETURN VALUES
 **	-
 */
