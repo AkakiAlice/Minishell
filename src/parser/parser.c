@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 05:24:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 16:28:54 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:08:34 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ static bool	is_redirect_redirect(int value, int next_value)
 **	DESCRIPTION
 **	Checks the next token value and put the syntax error message.
 **	PARAMETERS
-**	#1. The pointer to data struct (data);
-**	#2. The token value (next_value);
+**	#1. The token value (next_value);
 **	RETURN VALUES
 **	Return 0 if successful and 1 if not
 */
@@ -92,7 +91,7 @@ static int	syntax_redirect_error(int next_value)
 **	DESCRIPTION
 **	Checks the order of tokens to ensure it is grammatical.
 **	PARAMETERS
-**	#1. The pointer to data struct (data);
+**	-
 **	RETURN VALUES
 **	Return 0 if successful and 1 if not
 */

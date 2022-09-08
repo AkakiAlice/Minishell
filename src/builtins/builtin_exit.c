@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 05:57:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 18:43:00 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:15:43 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static int	get_status(char *str)
 **	DESCRIPTION
 **	Builtin exit.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_table);
+**	#1. The pointer to list (head_table);
 **	RETURN VALUES
 **	-
 */

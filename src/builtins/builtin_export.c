@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:23:56 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:18:28 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 **	DESCRIPTION
 **	Check if the env variable exists and change value.
 **	PARAMETERS
-**	#1. The pointer to list "env" (head_env);
-**	#2. The string (var_name);
+**	#1. The string (var_name);
 **	#2. The string (var_value);
 **	RETURN VALUES
 **	Return 1 if env exists and 0 if not.
@@ -47,8 +46,7 @@ static int	change_env_var(char *var_name, char *var_value)
 **	DESCRIPTION
 **	Check if the env variable exists.
 **	PARAMETERS
-**	#1. The pointer to list "env" (head_env);
-**	#2. The string (variable_name);
+**	#1. The string (var_name);
 **	RETURN VALUES
 **	Return 1 if env exists and 0 if not.
 */
@@ -71,8 +69,7 @@ static int	env_var_exists(char *var_name)
 **	DESCRIPTION
 **	Save the env name in the linked list.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The string (variable);
+**	#1. The string (variable);
 **	RETURN VALUES
 **	-
 */
@@ -95,9 +92,8 @@ static void	save_only_name(char *variable)
 **	Validate the variable assignment and save the env variable in the linked
 **	list.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The variable (variable);
-**	#3. The flag validate variable (validate);
+**	#1. The variable (variable);
+**	#2. The flag validate variable (validate);
 **	RETURN VALUES
 **	-
 */
@@ -130,8 +126,7 @@ void	save_env_var(char *variable, int validate)
 **	DESCRIPTION
 **	Builtin export.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_table);
+**	#1. The pointer to list (head_table);
 **	RETURN VALUES
 **	-
 */

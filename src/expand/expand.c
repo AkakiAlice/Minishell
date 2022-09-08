@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 16:43:09 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:07:46 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*expand_env(char *word)
 **	Replace the variable name with its value.
 **	PARAMETERS
 **	#1. The name of the variable to expand (str);
-**	#2. The pointer to struct "data" (data);
 **	RETURN VALUES
 **	-
 */
@@ -73,7 +72,6 @@ void	is_dollar(char **str)
 **	Loops through the array and checks if there are any variables to expand.
 **	PARAMETERS
 **	#1. The array of char "word" (word);
-**	#2. The pointer to struct "data" (data);
 **	RETURN VALUES
 **	-
 */
@@ -105,7 +103,7 @@ void	parse_expansion(char **word)
 **	Loops through the linked list and call the "parse_expression" function
 **	in case of redirections and words.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
+**	-
 **	RETURN VALUES
 **	-
 */

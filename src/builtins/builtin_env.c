@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:32:42 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/07 17:48:48 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:15:23 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 **	DESCRIPTION
 **	Prints all environment variables in the format: name=value
 **	PARAMETERS
-**	#1. The pointer to list "env" (head_env);
-**	#2. The file descriptor (fd);
+**	-
 **	RETURN VALUES
 **	-
 */
@@ -44,8 +43,7 @@ static void	put_env(void)
 **	DESCRIPTION
 **	Builtin env.
 **	PARAMETERS
-**	#1. The pointer to struct "data" (data);
-**	#2. The pointer to list (head_table);
+**	#1. The pointer to list (head_table);
 **	RETURN VALUES
 **	-
 */

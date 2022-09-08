@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 08:05:41 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/08/21 20:07:13 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:55:54 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	free_cmd_lst(t_cmdtable **head_cmd)
 **	Add the new node at the end of the singly linked list.
 **	PARAMETERS
 **	#1. The pointer to list (head_cmd);
-**	#2. The word array (word);
+**	#2. The word array (cmd_v);
 **	RETURN VALUES
 **	-
 */

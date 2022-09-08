@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:05:42 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/07 16:38:48 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:56:58 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,7 @@ static bool	count_word_and_redirect(int token, t_counter *count)
 **	Create the command table. Whenever there is a pipe, a new node is inserted
 **	in the linked list.
 **	PARAMETERS
-**	#1. Pointer to struct command table (head_cmd);
-**	#2. Pointer to struct token (head_token);
-**	#3. String array (cmd);
+**	-
 **	RETURN VALUES
 **	-
 */
