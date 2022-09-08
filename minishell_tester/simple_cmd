@@ -1,0 +1,16 @@
+ls
+'ls'
+'"ls"'
+"ls"
+"'ls'"
+'ls     '
+'     ls     '
+'     ls'
+     ls
+/bin/ls
+./bin/ls
+/bin
+lo
+./ls
+/bin/ls batata
+/bin/ls -batata
