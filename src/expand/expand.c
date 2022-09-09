@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/09 20:44:10 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/09 21:54:02 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	parse_expansion(char **word)
 	i = 0;
 	while (word[i])
 	{
-		if (is_var_expansion(word[i]) && (get_token(word[i - 1]) != HEREDOC))
+		if (is_var_expansion(word[i]))
 		{
 			if (ft_strncmp_eq(word[i], "\"", 1))
 				clean_quotes(&word[i], '\"');
