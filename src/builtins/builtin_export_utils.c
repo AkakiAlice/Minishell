@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 17:34:29 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/08 13:16:58 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/09 08:56:39 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,10 @@ static void	put_msg_builtin(char *builtin, char *eof, char *msg, int fd)
 **	PARAMETERS
 **	#1. The string (variable);
 **	RETURN VALUES
-**	-
+**	Return 0.
 */
-void	export_error(char *variable)
+int	export_error(char *variable)
 {
 	put_msg_builtin("export", variable, NOT_VALID_ID, 2);
-	g_data.status = 1;
-	return ;
+	return (0);
 }

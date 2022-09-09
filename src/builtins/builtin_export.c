@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 05:28:09 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/08 13:18:28 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/09 08:56:17 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,18 @@ static int	env_var_exists(char *var_name)
 **	PARAMETERS
 **	#1. The string (variable);
 **	RETURN VALUES
-**	-
+**	Return 1 if success and 0 if failure.
 */
-static void	save_only_name(char *variable)
+static int	save_only_name(char *variable)
 {
 	if (env_var_exists(variable))
-		return ;
+		return (1);
 	if (validate_var_name(variable))
 	{
 		env_lst_add_back(&g_data.head_env, ft_strdup(variable), NULL);
-		g_data.status = 0;
+		return (1);
 	}
-	else
-		export_error(variable);
+	return (export_error(variable));
 }
 
 /*	SAVE_ENV_VAR
@@ -95,9 +94,9 @@ static void	save_only_name(char *variable)
 **	#1. The variable (variable);
 **	#2. The flag validate variable (validate);
 **	RETURN VALUES
-**	-
+**	Return 1 if success and 0 if failure.
 */
-void	save_env_var(char *variable, int validate)
+int	save_env_var(char *variable, int validate)
 {
 	char	**split_var;
 	char	*env_value;
@@ -108,7 +107,7 @@ void	save_env_var(char *variable, int validate)
 		return (save_only_name(variable));
 	split_var = ft_split(variable, '=');
 	if (split_var == NULL)
-		return ;
+		return (0);
 	if (validate && !validate_var_name(split_var[0]))
 	{
 		ft_matrix_free(&split_var);
@@ -117,8 +116,8 @@ void	save_env_var(char *variable, int validate)
 	env_value = get_env_value(variable, split_var[0]);
 	if (!change_env_var(split_var[0], env_value))
 		env_lst_add_back(&g_data.head_env, ft_strdup(split_var[0]), env_value);
-	g_data.status = 0;
 	ft_matrix_free(&split_var);
+	return (1);
 }
 
 /*	BUILTIN_EXPORT
@@ -132,18 +131,23 @@ void	save_env_var(char *variable, int validate)
 */
 void	builtin_export(t_cmdtable *head_table)
 {
-	int	i;
+	int		i;
+	int		result;
+	bool	error;
 
 	i = 1;
+	error = false;
 	if (head_table->word[i] == NULL)
-	{
-		put_export(head_table->fdout);
-		g_data.status = 0;
-		return ;
-	}
+		return (put_export(head_table->fdout));
 	while (head_table->word[i])
 	{
-		save_env_var(head_table->word[i], 1);
+		result = save_env_var(head_table->word[i], 1);
+		if (!error && !result)
+			error = true;
 		i++;
 	}
+	if (error)
+		g_data.status = 1;
+	else
+		g_data.status = 0;
 }
