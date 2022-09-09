@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/08 08:00:44 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/09 13:50:56 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@
 # define CMD_NOT_FOUND "command not found"
 # define QUIT_HEREDOC "here-document delimited by end-of-file"
 # define NOT_VALID_ID "not a valid identifier"
+
+# define MAG "\001\033[1;35m\002"
+# define CYN "\001\033[1;36m\002"
+# define RESET "\001\033[0m\002"
 
 typedef struct s_env
 {
@@ -197,6 +201,8 @@ void	save_env(char **envp);
 int		env_lst_add_back(t_env **head_env, char *name, char *value);
 char	*get_env_value(char *envp, char *env_key);
 void	get_prompt(void);
+char	*colored_login(char **user, char **hostname);
+char	*colored_prompt_line(char **login);
 void	free_env_lst(t_env **head_env);
 void	error_msg_exit(char *title, char *msg, int fd);
 void	sig_handle_exec_parent(int signum);

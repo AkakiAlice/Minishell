@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 15:23:48 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/08 07:53:39 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/09 13:50:07 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,15 @@ char	*get_login(void)
 {
 	char	*user;
 	char	*hostname;
-	char	*login;
 
 	user = ft_strcat(getenv("USER"), "@");
 	if (getenv("HOSTNAME") != NULL)
-		hostname = ft_strcat(getenv("HOSTNAME"), ":");
+		hostname = ft_strdup(getenv("HOSTNAME"));
 	else if (getenv("NAME") != NULL)
-		hostname = ft_strcat(getenv("NAME"), ":");
+		hostname = ft_strdup(getenv("NAME"));
 	else
-		hostname = ft_strdup("minishell:");
-	login = ft_strcat(user, hostname);
-	free(user);
-	free(hostname);
-	return (login);
+		hostname = ft_strdup("minishell");
+	return (colored_login(&user, &hostname));
 }
 
 /*	GET_PROMPT_LINE
@@ -71,18 +67,10 @@ char	*get_login(void)
 */
 char	*get_prompt_line(void)
 {
-	char	*cwd;
-	char	aux[1024];
 	char	*login;
-	char	*prompt_line;
 
 	login = get_login();
-	getcwd(aux, sizeof(aux));
-	cwd = ft_strcat(aux, "$ ");
-	prompt_line = ft_strcat(login, cwd);
-	free(cwd);
-	free(login);
-	return (prompt_line);
+	return (colored_prompt_line(&login));
 }
 
 /*	GET_PROMPT
