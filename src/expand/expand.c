@@ -6,7 +6,7 @@
 /*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/08 14:07:46 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/09 20:44:10 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*expand_env(char *word)
 	char	**temp;
 	char	*value;
 
+	value = NULL;
 	if (!ft_strncmp_eq(word, "$?", 2))
 	{
 		temp = ft_split2(word, '$');
