@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 06:11:32 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/08 13:55:04 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/09 09:13:50 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,14 @@ int	check_redirect_parent(t_cmdtable *head)
 */
 int	exec_builtin_parent(t_cmdtable *head_table, int builtin)
 {
-	if (g_data.is_pipe || check_redirect_parent(head_table))
+	if (check_redirect_parent(head_table))
 		return (1);
+	if (g_data.is_pipe)
+	{
+		if (builtin == EXPORT && head_table->word[1] == NULL)
+			return (0);
+		return (1);
+	}
 	if (builtin == EXIT)
 		builtin_exit(head_table);
 	else if (builtin == EXPORT)
@@ -129,6 +135,12 @@ void	exec_builtin_child(t_cmdtable *head_table)
 	if (strcmp_eq("env", head_table->word[0]))
 	{
 		builtin_env(head_table);
+		exit_builtin_child();
+	}
+	if (strcmp_eq("export", head_table->word[0]) && head_table->word[1] == NULL)
+	{
+		head_table->fdout = 1;
+		builtin_export(head_table);
 		exit_builtin_child();
 	}
 }
