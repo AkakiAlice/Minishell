@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/08 08:00:44 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/09 05:28:52 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define CMD_NOT_FOUND "command not found"
 # define QUIT_HEREDOC "here-document delimited by end-of-file"
 # define NOT_VALID_ID "not a valid identifier"
+# define NUM_REQ "numeric argument required"
 
 typedef struct s_env
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 05:57:11 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/08 13:15:43 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/09 06:10:58 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "limits.h"
 
 /*	STR_IS_NUMERIC
 **	------------
@@ -23,32 +24,17 @@
 */
 static bool	str_is_numeric(char *str)
 {
+	if (*str == '+' || *str == '-')
+		str++;
+	if (!ft_isdigit(*str))
+		return (false);
 	while (*str)
 	{
-		if (!ft_isdigit(*str) && *str != '+' && *str != '-')
+		if (!ft_isdigit(*str))
 			return (false);
 		str++;
 	}
 	return (true);
-}
-
-/*	GET_STATUS
-**	------------
-**	DESCRIPTION
-**	Get the status. If the status is outside the range 0 to 255, 128 is returned
-**	PARAMETERS
-**	#1. The string (str);
-**	RETURN VALUES
-**	Return status.
-*/
-static int	get_status(char *str)
-{
-	int	status;
-
-	status = ft_atoi(str);
-	if (status < 0 || status > 255)
-		status = 128;
-	return (status);
 }
 
 /*	BUILTIN_EXIT
@@ -62,27 +48,28 @@ static int	get_status(char *str)
 */
 void	builtin_exit(t_cmdtable *head_table)
 {
-	int	i;
 	int	status;
 
-	i = 1;
-	status = -1;
-	ft_putendl_fd("exit", 2);
-	while (head_table->word[i])
+	status = 1;
+	ft_putendl_fd("exit", 1);
+	if (head_table->word[1] != NULL)
 	{
-		if (status != -1)
+		if (head_table->word[2] != NULL)
 		{
 			g_data.status = 1;
 			put_msg_cmd("minishell", "exit", TOO_MANY_ARG, 2);
 			return ;
 		}
-		if (str_is_numeric(head_table->word[i]))
-			status = get_status(head_table->word[i]);
-		i++;
+		if (str_is_numeric(head_table->word[1]))
+			status = ft_atoi(head_table->word[1]);
+		else
+		{
+			g_data.status = 2;
+			put_msg_cmd("minishell", "exit", NUM_REQ, 2);
+			return ;
+		}
 	}
-	if (status != -1)
-		g_data.status = status;
-	free_minishell();
-	free_env_lst(&g_data.head_env);
+	g_data.status = status;
+	clear_minishell();
 	exit(g_data.status);
 }
