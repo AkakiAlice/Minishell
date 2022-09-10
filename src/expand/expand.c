@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/10 17:28:37 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:59:49 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ void	parse_expansion(char **word)
 	{
 		if (is_var_expansion(word[i]))
 		{
-			if (ft_strncmp_eq(word[i], "\"", 1))
+			if (ft_strchr(word[i], '\"'))
 				clean_quotes(&word[i], '\"');
 			if (is_double_single_quotes(word[i]) == 1)
 				clean_quotes(&word[i], '\'');
-			if (!ft_strncmp_eq(word[i], "\'", 1))
+			if (!ft_strchr(word[i], '\''))
 				expand_word(&word[i]);
 			else
 				clean_quotes(&word[i], '\'');

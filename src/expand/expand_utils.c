@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 21:45:50 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/10 17:31:35 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:59:03 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,20 @@
 int	is_double_single_quotes(char *str)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (str[i] == '\'')
+	j = 0;
+	while (str[i] && str[i] != '\'')
+		i++;
+	while (str[i] && str[i] == '\'')
 	{
+		j++;
 		i++;
 	}
-	if (i % 2 == 0)
+	if (j == 0)
+		return (0);
+	if (j % 2 == 0)
 		return (1);
 	return (0);
 }
@@ -64,10 +71,20 @@ int	dont_expand(char *str)
 void	clean_quotes(char **str, char quote)
 {
 	char	**aux;
+	char	*swap;
+	int		i;
 
+	i = 0;
 	aux = ft_split(*str, quote);
 	free(*str);
-	*str = ft_strdup(aux[0]);
+	*str = ft_strdup("");
+	while (aux[i])
+	{
+		swap = *str;
+		*str = ft_strjoin(swap, aux[i]);
+		free(swap);
+		i++;
+	}
 	ft_matrix_free(&aux);
 }
 
