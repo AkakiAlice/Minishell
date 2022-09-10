@@ -6,7 +6,7 @@
 /*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/10 16:19:17 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:28:37 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,209 +36,64 @@ char	*expand_env(char *word)
 	return (value);
 }
 
-/*	IS_DOLLAR
+/*	CHECK_EXPAND
 **	------------
 **	DESCRIPTION
-**	Replace the variable name with its value.
+**	Save prefix expand and expanded value.
 **	PARAMETERS
-**	#1. The name of the variable to expand (str);
+**	#1. The result string (result);
+**	#2. The string from dollar char (dollar);
+**	#3. The string (str);
+**	#4. The flag to include space at the end (space);
 **	RETURN VALUES
 **	-
 */
-void	is_dollar(char **str)
+static void	check_expand(char **result, char *dollar, char *str, bool space)
 {
-	char	*aux;
-	char	*exit_code;
-
-	if (dont_expand(*str))
-		return ;
-	if (!ft_strncmp_eq(*str, "$?", 2))
-	{
-		aux = expand_env(*str);
-		free(*str);
-		if (aux == NULL)
-			*str = ft_strdup("");
-		else
-			*str = ft_strdup(aux);
-	}
-	if (ft_strncmp_eq(*str, "$?", 2))
-	{
-		if (ft_strlen(*str) > 2)
-		{
-			aux = ft_substr(*str, 2, ft_strlen(*str) - 2);
-			exit_code = ft_itoa(g_data.status);
-			free(*str);
-			*str = ft_strcat(exit_code, aux);
-			free(aux);
-			free(exit_code);
-		}
-		else
-		{
-			free(*str);
-			*str = ft_itoa(g_data.status);
-		}
-	}
+	if (dollar - str)
+		save_prefix(result, str, dollar - str);
+	if (!dollar[1])
+		save_str(result, str, space);
+	else if (dollar[1] == '?')
+		save_exit_code(result, dollar, space);
+	else
+		save_expand_env(result, dollar, space);
 }
 
-void	strcat_space(char **result, char *str, bool space)
+/*	EXPAND_WORD
+**	------------
+**	DESCRIPTION
+**	Expand all variables.
+**	PARAMETERS
+**	#1. The string (str);
+**	RETURN VALUES
+**	-
+*/
+static void	expand_word(char **str)
 {
-	char	*aux;
+	t_expand	exp;
+	int			i;
 
-	aux = ft_strdup(*result);
-	free(*result);
-	*result = ft_strcat(aux, str);
-	free(aux);
-	if (space)
-	{
-		aux = ft_strdup(*result);
-		free(*result);
-		*result = ft_strcat(aux, " ");
-		free(aux);
-	}
-}
-
-void	test_expand(char **str)
-{
-	char	**split;
-	char	*aux;
-	char	*aux2;
-	char	*aux3;
-	int		i;
-	char	*result;
-	char	*find_dollar;
-	int		diff;
-	char	*exit_code;
-	bool	space;
-
-	split = ft_split(*str, ' ');
+	exp.split = ft_split(*str, ' ');
 	i = 0;
-	result = NULL;
-	space = false;
-	while (split[i])
+	exp.result = NULL;
+	exp.space = false;
+	while (exp.split[i])
 	{
-		if (split[i + 1] == NULL)
-			space = false;
+		if (exp.split[i + 1] == NULL)
+			exp.space = false;
 		else
-			space = true;
-		find_dollar = ft_strchr(split[i], '$');
-		if (find_dollar == NULL)
-		{
-			if (result != NULL)
-			{
-				strcat_space(&result, split[i], space);
-			}
-			else
-			{
-				if (space)
-					result = ft_strcat(split[i], " ");
-				else
-					result = ft_strdup(split[i]);
-			}
-		}
+			exp.space = true;
+		exp.find_dollar = ft_strchr(exp.split[i], '$');
+		if (exp.find_dollar == NULL)
+			save_str(&exp.result, exp.split[i], exp.space);
 		else
-		{
-			diff = find_dollar - split[i];
-			if (diff)
-			{
-				if (result)
-				{
-					aux = ft_substr(split[i], 0, diff);
-					aux2 = ft_strdup(result);
-					free(result);
-					result = ft_strcat(aux2, aux);
-					free(aux);
-					free(aux2);
-				}
-				else
-					result = ft_substr(split[i], 0, diff);
-			}
-			if (!find_dollar[1])
-			{
-				if (result)
-					strcat_space(&result, split[i], space);
-				else
-				{
-					if (space)
-						result = ft_strcat(split[i], " ");
-					else
-						result = ft_strdup(split[i]);
-				}
-			}
-			else if (find_dollar[1] == '?')
-			{
-				exit_code = ft_itoa(g_data.status);
-				if (ft_strlen(find_dollar) > 2)
-				{
-					aux = ft_substr(find_dollar, 2, ft_strlen(find_dollar) - 2);
-					if (result)
-					{
-						aux3 = ft_strcat(exit_code, aux);
-						aux2 = ft_strdup(result);
-						free(result);
-						result = ft_strcat(aux2, aux3);
-						free(aux2);
-						free(aux3);
-					}
-					else
-					{
-						result = ft_strcat(exit_code, aux);
-						if (space)
-						{
-							aux2 = ft_strdup(result);
-							free(result);
-							result = ft_strcat(aux2, " ");
-							free(aux2);
-						}
-					}
-					free(aux);
-				}
-				else
-				{
-					if (result)
-						strcat_space(&result, exit_code, space);
-					else
-					{
-						result = ft_itoa(g_data.status);
-						if (space)
-						{
-							aux2 = ft_strdup(result);
-							free(result);
-							result = ft_strcat(aux2, " ");
-							free(aux2);
-						}
-					}
-				}
-				free(exit_code);
-			}
-			else
-			{
-				aux = expand_env(find_dollar);
-				if (result)
-				{
-					if (aux != NULL)
-						strcat_space(&result, aux, space);
-				}
-				else
-				{
-					if (aux == NULL)
-						result = ft_strdup("");
-					else
-						result = ft_strdup(aux);
-					if (space)
-					{
-						aux2 = ft_strdup(result);
-						free(result);
-						result = ft_strcat(aux2, " ");
-						free(aux2);
-					}
-				}
-			}
-		}
+			check_expand(&exp.result, exp.find_dollar, exp.split[i], exp.space);
 		i++;
 	}
 	free(*str);
-	*str = result;
-	ft_matrix_free(&split);
+	*str = exp.result;
+	ft_matrix_free(&exp.split);
 }
 
 /*	PARSE_EXPANSION
@@ -263,12 +118,9 @@ void	parse_expansion(char **word)
 				clean_quotes(&word[i], '\"');
 			if (is_double_single_quotes(word[i]) == 1)
 				clean_quotes(&word[i], '\'');
-			// if (ft_strncmp_eq(word[i], "$", 1))
-			// 	is_dollar(&word[i]);
-			// else
 			if (!ft_strncmp_eq(word[i], "\'", 1))
-				test_expand(&word[i]);
-			if (is_double_single_quotes(word[i]) == 0)
+				expand_word(&word[i]);
+			else
 				clean_quotes(&word[i], '\'');
 		}
 		i++;

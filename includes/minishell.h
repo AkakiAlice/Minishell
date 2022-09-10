@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/09 23:44:57 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:20:33 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ typedef struct s_quotes
 	int		type;
 	bool	in;
 }	t_quotes;
+
+typedef struct s_expand
+{
+	char	**split;
+	char	*result;
+	bool	space;
+	char	*find_dollar;
+}	t_expand;
 
 typedef struct s_split
 {
@@ -174,6 +182,14 @@ int		is_double_single_quotes(char *str);
 int		dont_expand(char *str);
 void	clean_quotes(char **str, char quote);
 void	expand(void);
+char	*expand_env(char *word);
+void	save_str(char **result, char *str, bool space);
+void	save_prefix(char **result, char *str, int diff);
+void	save_exit_code_suffix(char **result, char *str, char *exit, bool spc);
+void	save_exit_code(char **result, char *str, bool space);
+void	save_expand_env(char **result, char *str, bool space);
+void	strcat_space(char **result, char *str, bool space);
+void	add_space(char **result);
 
 // PARSER
 void	lexer(void);

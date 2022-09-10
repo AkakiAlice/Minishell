@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 21:45:50 by alida-si          #+#    #+#             */
-/*   Updated: 2022/08/26 22:32:13 by alida-si         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:31:35 by pmitsuko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,46 @@ void	clean_quotes(char **str, char quote)
 	free(*str);
 	*str = ft_strdup(aux[0]);
 	ft_matrix_free(&aux);
+}
+
+/*	ADD_SPACE
+**	------------
+**	DESCRIPTION
+**	Include space after the string.
+**	PARAMETERS
+**	#1. The result string (result);
+**	RETURN VALUES
+**	-
+*/
+void	add_space(char **result)
+{
+	char	*aux;
+
+	aux = ft_strdup(*result);
+	free(*result);
+	*result = ft_strcat(aux, " ");
+	free(aux);
+}
+
+/*	STRCAT_SPACE
+**	------------
+**	DESCRIPTION
+**	Concatenate string and include space after the string.
+**	PARAMETERS
+**	#1. The result string (result);
+**	#2. The string (str);
+**	#3. The flag to include space at the end (space);
+**	RETURN VALUES
+**	-
+*/
+void	strcat_space(char **result, char *str, bool space)
+{
+	char	*aux;
+
+	aux = ft_strdup(*result);
+	free(*result);
+	*result = ft_strcat(aux, str);
+	free(aux);
+	if (space)
+		add_space(result);
 }

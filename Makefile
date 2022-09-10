@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/16 23:17:06 by alida-si          #+#    #+#              #
-#    Updated: 2022/09/09 13:51:42 by alida-si         ###   ########.fr        #
+#    Updated: 2022/09/10 17:19:27 by pmitsuko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,8 @@ FILES = main.c\
 		builtin_export_utils.c\
 		builtin_env.c\
 		builtin_cd.c\
-		get_prompt_utils.c
+		get_prompt_utils.c\
+		save_expand_utils.c
 
 # COMPILED_SOURCES #
 
