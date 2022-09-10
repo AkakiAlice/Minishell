@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 06:09:46 by pmitsuko          #+#    #+#             */
-/*   Updated: 2022/09/10 17:20:33 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:57:22 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ void	put_msg_cmd(char *title, char *cmd, char *msg, int fd);
 char	*remove_spaces_around_str(char *str);
 void	free_minishell(void);
 void	minishell_init(void);
+int		init_expand(t_expand *exp, char *str);
 int		strcmp_eq(char *s1, char *s2);
 void	clear_minishell(void);
 

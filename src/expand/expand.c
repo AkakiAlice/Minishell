@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmitsuko <pmitsuko@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: alida-si <alida-si@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:51:33 by alida-si          #+#    #+#             */
-/*   Updated: 2022/09/10 17:28:37 by pmitsuko         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:58:49 by alida-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ static void	expand_word(char **str)
 	t_expand	exp;
 	int			i;
 
-	exp.split = ft_split(*str, ' ');
-	i = 0;
-	exp.result = NULL;
-	exp.space = false;
+	i = init_expand(&exp, *str);
 	while (exp.split[i])
 	{
 		if (exp.split[i + 1] == NULL)
@@ -87,6 +84,11 @@ static void	expand_word(char **str)
 		exp.find_dollar = ft_strchr(exp.split[i], '$');
 		if (exp.find_dollar == NULL)
 			save_str(&exp.result, exp.split[i], exp.space);
+		else if (dont_expand(exp.find_dollar))
+		{
+			ft_matrix_free(&exp.split);
+			return ;
+		}
 		else
 			check_expand(&exp.result, exp.find_dollar, exp.split[i], exp.space);
 		i++;
